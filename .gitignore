@@ -59,12 +59,14 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+
+### OTHER IGNORES ###
 **/ReHaB_BackUpThisFolder_ButDontShipItWithYourGame/
 **/ReHaB_V2_BackUpThisFolder_ButDontShipItWithYourGame/
 UserSettings/Layouts/
 **.idea
 Python/utils/__pycache__/
 Python/__pycache__/
-
 .idea
 ReHaB_BurstDebugInformation_DoNotShip/
+desktop.ini
