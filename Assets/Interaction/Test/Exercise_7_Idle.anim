@@ -1,0 +1,1713 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!74 &7400000
+AnimationClip:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Exercise_7_Idle
+  serializedVersion: 6
+  m_Legacy: 0
+  m_Compressed: 0
+  m_UseHighQualityCurve: 1
+  m_RotationCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.49917236, y: -0.50084406, z: -0.4991545, w: 0.50082624}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.49917236, y: -0.50084406, z: -0.4991545, w: 0.50082624}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.0000037413483, y: 0.000051352257, z: 0.0004640338, w: 0.9999999}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.0000037413483, y: 0.000051352257, z: 0.0004640338, w: 0.9999999}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.0000041375724, y: -0.00005136247, z: -0.008188475, w: 0.9999665}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.0000041375724, y: -0.00005136247, z: -0.008188475, w: 0.9999665}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.038999286, y: -0.7031615, z: -0.038584806, w: 0.70891064}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.038999286, y: -0.7031615, z: -0.038584806, w: 0.70891064}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.8918747, y: -0.0953441, z: 0.055089194, w: 0.4386733}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.8918747, y: -0.0953441, z: 0.055089194, w: 0.4386733}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.4149451, y: -0.051955577, z: -0.09287563, w: 0.903602}
+        inSlope: {x: 0.00015213512, y: -0.0003516873, z: -0.00022383068, w: -0.00011422652}
+        outSlope: {x: 0.00015213512, y: -0.0003516873, z: -0.00022383068, w: -0.00011422652}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.4149505, y: -0.051967867, z: -0.092883445, w: 0.90359795}
+        inSlope: {x: 0.00017057554, y: -0.0003849684, z: -0.00024464753, w: -0.00012680875}
+        outSlope: {x: 0.00017057554, y: -0.0003849684, z: -0.00024464753, w: -0.00012680875}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.7457155, y: -0.1727821, z: 0.1486266, w: 0.6260711}
+        inSlope: {x: -0.021581484, y: -0.0855732, z: 0.07234913, w: -0.014856344}
+        outSlope: {x: -0.021581484, y: -0.0855732, z: 0.07234913, w: -0.014856344}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.74504226, y: -0.17545255, z: 0.15088381, w: 0.625605}
+        inSlope: {x: -0.01883776, y: -0.07475592, z: 0.06316929, w: -0.0131244585}
+        outSlope: {x: -0.01883776, y: -0.07475592, z: 0.06316929, w: -0.0131244585}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.41322976, y: -0.40251893, z: -0.08832706, w: 0.81215584}
+        inSlope: {x: -0.10654851, y: 0.049843825, z: 0.07768514, w: -0.01584637}
+        outSlope: {x: -0.10654851, y: 0.049843825, z: 0.07768514, w: -0.01584637}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.4186946, y: -0.4001368, z: -0.08428612, w: 0.81112254}
+        inSlope: {x: -0.2229932, y: 0.09176542, z: 0.16665515, w: -0.049042195}
+        outSlope: {x: -0.2229932, y: 0.09176542, z: 0.16665515, w: -0.049042195}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.018462207, y: 0.033090368, z: 0.17582376, w: 0.9836921}
+        inSlope: {x: -0.012027676, y: -0.01322941, z: 0.043422, w: -0.0076185064}
+        outSlope: {x: -0.012027676, y: -0.01322941, z: 0.043422, w: -0.0076185064}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.019381814, y: 0.032055803, z: 0.17915751, w: 0.9830806}
+        inSlope: {x: -0.042464994, y: -0.04848629, z: 0.1548405, w: -0.029137917}
+        outSlope: {x: -0.042464994, y: -0.04848629, z: 0.1548405, w: -0.029137917}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01/GothGirlRArmDigit02
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.1087284, y: 0.079965025, z: 0.043147847, w: 0.9899101}
+        inSlope: {x: 0.012486791, y: -0.0028507935, z: 0.00008738667, w: 0.0015921802}
+        outSlope: {x: 0.012486791, y: -0.0028507935, z: 0.00008738667, w: 0.0015921802}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.107749894, y: 0.079743326, z: 0.043161087, w: 0.990021}
+        inSlope: {x: 0.045750443, y: -0.010341876, z: 0.0007063395, w: 0.004993565}
+        outSlope: {x: 0.045750443, y: -0.010341876, z: 0.0007063395, w: 0.004993565}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01/GothGirlRArmDigit02/GothGirlRArmDigit03
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.08887046, y: -0.06097328, z: 0.10031743, w: 0.9891038}
+        inSlope: {x: 0.002628978, y: -0.0038116365, z: 0.042487733, w: -0.0044163414}
+        outSlope: {x: 0.002628978, y: -0.0038116365, z: 0.042487733, w: -0.0044163414}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.03333664
+        value: {x: -0.088770166, y: -0.06111868, z: 0.10193823, w: 0.9889353}
+        inSlope: {x: 0.0034000976, y: -0.0049297162, z: 0.0549514, w: -0.0057130237}
+        outSlope: {x: 0.0034000976, y: -0.0049297162, z: 0.0549514, w: -0.0057130237}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.023426663, y: -0.006053644, z: 0.06421922, w: 0.99764395}
+        inSlope: {x: 0.0024610462, y: -0.006816665, z: 0.030920465, w: -0.0020316662}
+        outSlope: {x: 0.0024610462, y: -0.006816665, z: 0.030920465, w: -0.0020316662}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.03333664
+        value: {x: -0.023334285, y: -0.006309524, z: 0.065379895, w: 0.99756765}
+        inSlope: {x: 0.0030901115, y: -0.008559439, z: 0.038825523, w: -0.0025516385}
+        outSlope: {x: 0.0030901115, y: -0.008559439, z: 0.038825523, w: -0.0025516385}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11/GothGirlRArmDigit12
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.017156549, y: 0.0050157118, z: 0.035937674, w: 0.99919415}
+        inSlope: {x: -0.00000041127268, y: 0.0000001489187, z: -0.000000096112636,
+          w: 0}
+        outSlope: {x: -0.00000041127268, y: 0.0000001489187, z: -0.000000096112636,
+          w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.017156562, y: 0.005015717, z: 0.03593767, w: 0.99919415}
+        inSlope: {x: -0.00000042608, y: 0.00000016447594, z: -0.00000010987087, w: 0.00000001208202}
+        outSlope: {x: -0.00000042608, y: 0.00000016447594, z: -0.00000010987087, w: 0.00000001208202}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11/GothGirlRArmDigit12/GothGirlRArmDigit13
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.010561345, y: -0.02433333, z: 0.10500614, w: 0.99412054}
+        inSlope: {x: 0.0010462013, y: -0.00045089296, z: 0.0427025, w: -0.0046181767}
+        outSlope: {x: 0.0010462013, y: -0.00045089296, z: 0.0427025, w: -0.0046181767}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.03333664
+        value: {x: -0.010521438, y: -0.02435053, z: 0.10663513, w: 0.99394435}
+        inSlope: {x: 0.0013529592, y: -0.00058312045, z: 0.055229113, w: -0.0059740883}
+        outSlope: {x: 0.0013529592, y: -0.00058312045, z: 0.055229113, w: -0.0059740883}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.008758119, y: -0.021457909, z: 0.09252926, w: 0.9954402}
+        inSlope: {x: 0.0005807943, y: -0.00034778655, z: 0.010384036, w: -0.0009708634}
+        outSlope: {x: 0.0005807943, y: -0.00034778655, z: 0.010384036, w: -0.0009708634}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.008706083, y: -0.021486422, z: 0.09343629, w: 0.99533415}
+        inSlope: {x: 0.0025004316, y: -0.0013419831, z: 0.043336153, w: -0.0052952305}
+        outSlope: {x: 0.0025004316, y: -0.0013419831, z: 0.043336153, w: -0.0052952305}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21/GothGirlRArmDigit22
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.021773512, y: 0.014370259, z: -0.018608252, w: 0.9994864}
+        inSlope: {x: 0.00000016540314, y: -0.000000050291497, z: -0.00000049509185,
+          w: 0}
+        outSlope: {x: 0.00000016540314, y: -0.000000050291497, z: -0.00000049509185,
+          w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.021773506, y: 0.014370257, z: -0.018608268, w: 0.9994864}
+        inSlope: {x: 0.000000100620575, y: -0.000000037189967, z: -0.00000048479103,
+          w: 0}
+        outSlope: {x: 0.000000100620575, y: -0.000000037189967, z: -0.00000048479103,
+          w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21/GothGirlRArmDigit22/GothGirlRArmDigit23
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.015959315, y: 0.042337038, z: 0.102655016, w: 0.99369025}
+        inSlope: {x: -0.001786286, y: -0.00067775324, z: 0.04193724, w: -0.0044374466}
+        outSlope: {x: -0.001786286, y: -0.00067775324, z: 0.04193724, w: -0.0044374466}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.03333664
+        value: {x: -0.01602812, y: 0.04231093, z: 0.10427041, w: 0.9935193}
+        inSlope: {x: -0.0023512568, y: -0.0008922686, z: 0.055205423, w: -0.005842662}
+        outSlope: {x: -0.0023512568, y: -0.0008922686, z: 0.055205423, w: -0.005842662}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.0035291477, y: -0.0010467944, z: 0.07767423, w: 0.996972}
+        inSlope: {x: -0.0010077787, y: -0.0000629435, z: 0.010370403, w: -0.0008153107}
+        outSlope: {x: -0.0010077787, y: -0.0000629435, z: 0.010370403, w: -0.0008153107}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.003607984, y: -0.0010556872, z: 0.078580394, w: 0.99687964}
+        inSlope: {x: -0.003671456, y: -0.00046232913, z: 0.04329778, w: -0.0046425145}
+        outSlope: {x: -0.003671456, y: -0.00046232913, z: 0.04329778, w: -0.0046425145}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31/GothGirlRArmDigit32
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.007990896, y: -0.011501292, z: -0.009914888, w: 0.9998528}
+        inSlope: {x: 0.00000021379934, y: -0.00000044885715, z: -0.0000002775747,
+          w: 0}
+        outSlope: {x: 0.00000021379934, y: -0.00000044885715, z: -0.0000002775747,
+          w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.007990888, y: -0.011501306, z: -0.009914897, w: 0.9998528}
+        inSlope: {x: 0.00000022870272, y: -0.0000004453406, z: -0.00000030257337,
+          w: 0}
+        outSlope: {x: 0.00000022870272, y: -0.0000004453406, z: -0.00000030257337,
+          w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31/GothGirlRArmDigit32/GothGirlRArmDigit33
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.04263585, y: 0.03907951, z: 0.18708695, w: 0.98071784}
+        inSlope: {x: 0.050437707, y: -0.015352959, z: 0.12782739, w: -0.022278616}
+        outSlope: {x: 0.050437707, y: -0.015352959, z: 0.12782739, w: -0.022278616}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.0452265, y: 0.038367406, z: 0.19360176, w: 0.97947615}
+        inSlope: {x: 0.10582956, y: -0.02670774, z: 0.26454923, w: -0.053754326}
+        outSlope: {x: 0.10582956, y: -0.02670774, z: 0.26454923, w: -0.053754326}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.0011706245, y: 0.013784856, z: 0.017131805, w: 0.9997435}
+        inSlope: {x: -0.00060634594, y: 0.0082542505, z: 0.058105458, w: -0.0020038106}
+        outSlope: {x: -0.00060634594, y: 0.0082542505, z: 0.058105458, w: -0.0020038106}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.0012024845, y: 0.014189376, z: 0.019980913, w: 0.9996376}
+        inSlope: {x: -0.0013236615, y: 0.015919045, z: 0.112169944, w: -0.004417459}
+        outSlope: {x: -0.0013236615, y: 0.015919045, z: 0.112169944, w: -0.004417459}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41/GothGirlRArmDigit42
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.017958889, y: -0.016915035, z: 0.053613074, w: 0.998257}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.017958889, y: -0.016915035, z: 0.053613074, w: 0.998257}
+        inSlope: {x: 0, y: 0, z: 0, w: 0}
+        outSlope: {x: 0, y: 0, z: 0, w: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334, w: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41/GothGirlRArmDigit42/GothGirlRArmDigit43
+  m_CompressedRotationCurves: []
+  m_EulerCurves: []
+  m_PositionCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.16656509, y: -0.14497225, z: -0.07532414}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.16656509, y: -0.14497225, z: -0.07532414}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.020967277, y: 0.012467353, z: 0.000000012111664}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.020967277, y: 0.012467353, z: 0.000000012111664}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.10991589, y: 0.000000006055832, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.10991589, y: 0.000000006055832, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.05110367, y: 0.07022968, z: -0.027719505}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.05110367, y: 0.07022968, z: -0.027719505}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.1229518, y: -7.56979e-10, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.1229518, y: -7.56979e-10, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.22104932, y: -0.0000000011354685, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.22104932, y: -0.0000000011354685, z: 0}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.26205936, y: 0, z: -1.8924474e-10}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.26205936, y: 0, z: -1.8924474e-10}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.021025605, y: 0.0036336686, z: -0.030434698}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.021025605, y: 0.0036336686, z: -0.030434698}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.041246295, y: 2.8460456e-10, z: 0.000000030297066}
+        inSlope: {x: 0, y: -0.00000013340602, z: 0.0000003630419}
+        outSlope: {x: 0, y: -0.00000013340602, z: 0.0000003630419}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.041246295, y: -0.000000003027916, z: 0.000000048446655}
+        inSlope: {x: -3.021439e-16, y: -0.00000004548668, z: 0.00000072593525}
+        outSlope: {x: 0.00000029414477, y: -0.0000000452454, z: 0.0000007265718}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01/GothGirlRArmDigit02
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.028626477, y: 0.0000000032185132, z: -0.00000003406359}
+        inSlope: {x: -0.000000041909555, y: 0.000000048255405, z: 0.000000034062367}
+        outSlope: {x: -0.000000041909555, y: 0.000000048255405, z: 0.000000034062367}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.02862648, y: 0.0000000047557887, z: -0.000000030751977}
+        inSlope: {x: -0.00000003725276, y: 0.00000004327424, z: 0.0000001561219}
+        outSlope: {x: -0.00000003725276, y: 0.00000004327424, z: 0.0000001561219}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01/GothGirlRArmDigit02/GothGirlRArmDigit03
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.095714115, y: -0.0007337579, z: -0.029921075}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.095714115, y: -0.0007337579, z: -0.029921075}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.038104475, y: 0.000000022162281, z: -0.000000038587793}
+        inSlope: {x: -0.000000035292338, y: 0.000000027651435, z: 0.00000008485173}
+        outSlope: {x: -0.000000035292338, y: 0.000000027651435, z: 0.00000008485173}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.038104475, y: 0.00000002295807, z: -0.0000000354266}
+        inSlope: {x: -0.000000041909555, y: 0.000000020280503, z: 0.00000010446495}
+        outSlope: {x: -0.000000041909555, y: 0.000000020280503, z: 0.00000010446495}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11/GothGirlRArmDigit12
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.018694285, y: -0.000000012234787, z: -0.000000007566629}
+        inSlope: {x: 0.0000005308518, y: -0.00000035301775, z: 0.00000010598899}
+        outSlope: {x: 0.0000005308518, y: -0.00000035301775, z: 0.00000010598899}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.018694256, y: -0.000000024223327, z: 0}
+        inSlope: {x: 0.0000013452801, y: -0.00000036293713, z: 0.0000003631381}
+        outSlope: {x: 0.00000072671077, y: -0.0000003631585, z: 0.00000036306693}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11/GothGirlRArmDigit12/GothGirlRArmDigit13
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.10253279, y: 0.004004355, z: -0.007184527}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.10253279, y: 0.004004355, z: -0.007184527}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.033729255, y: 0.000000033769712, z: -0.0000000011900119}
+        inSlope: {x: 0.000000026609188, y: 0.000000050683695, z: -0.0000000063503656}
+        outSlope: {x: 0.000000026609188, y: 0.000000050683695, z: -0.0000000063503656}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.033729255, y: 0.000000035477232, z: -0.0000000014039895}
+        inSlope: {x: 0.000000034924465, y: 0.00000005161357, z: -0.000000006468915}
+        outSlope: {x: 0.000000034924465, y: 0.00000005161357, z: -0.000000006468915}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21/GothGirlRArmDigit22
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.027756954, y: -0.000000048446655, z: 0}
+        inSlope: {x: -2.2660792e-16, y: -1.885682e-10, z: -0.00000018155538}
+        outSlope: {x: 0.00000029414477, y: -6.7234264e-22, z: -0.00000018156685}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.02775693, y: -0.000000048446655, z: -0.000000006055832}
+        inSlope: {x: 0.00000029414477, y: -2.8814688e-22, z: -0.00000009074954}
+        outSlope: {x: 0.00000013842123, y: 2.5622265e-10, z: -0.00000009083749}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21/GothGirlRArmDigit22/GothGirlRArmDigit23
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.10244195, y: 0.0043968004, z: 0.012577939}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.10244195, y: 0.0043968004, z: 0.012577939}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.033735838, y: 0.000000025924905, z: 0.000000004518454}
+        inSlope: {x: -0.00000026542844, y: -0.000000045649927, z: -0.000000033317246}
+        outSlope: {x: -0.00000026542844, y: -0.000000045649927, z: -0.000000033317246}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.03373585, y: 0.00000002469664, z: 0.0000000032114091}
+        inSlope: {x: -0.0000006146823, y: -0.000000026785596, z: -0.000000045087386}
+        outSlope: {x: -0.0000006146823, y: -0.000000026785596, z: -0.000000045087386}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31/GothGirlRArmDigit32
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.019676534, y: -0.0000000028694906, z: 0.0000000045877337}
+        inSlope: {x: 0.00000009180245, y: 0.000000052598267, z: -0.000000016920238}
+        outSlope: {x: 0.00000009180245, y: 0.000000052598267, z: -0.000000016920238}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.019676533, y: -0.0000000013463269, z: 0.000000003876491}
+        inSlope: {x: 0.00000003725347, y: 0.000000038260456, z: -0.000000025849289}
+        outSlope: {x: 0.00000003725347, y: 0.000000038260456, z: -0.000000025849289}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31/GothGirlRArmDigit32/GothGirlRArmDigit33
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.09849728, y: 0.004366043, z: 0.0345202}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.09849728, y: 0.004366043, z: 0.0345202}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.024418745, y: -0.000000006076771, z: 0.0000000049207864}
+        inSlope: {x: 0.0000011176041, y: -0.00000090856656, z: 0.00000027966234}
+        outSlope: {x: 0.0000011176041, y: -0.00000090856656, z: 0.00000027966234}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.024418738, y: -0.000000048446655, z: 0.000000010597706}
+        inSlope: {x: -0.0000009970645, y: -0.0000014518097, z: -0.000000025671742}
+        outSlope: {x: -0.0000010208555, y: -0.0000014535269, z: -0.00000002533297}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41/GothGirlRArmDigit42
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.0139184715, y: 0.00000004550318, z: -0.000000001835611}
+        inSlope: {x: 0.0000003632154, y: -0.00000016253179, z: -0.000000016898875}
+        outSlope: {x: 0.0000003632154, y: -0.00000016253179, z: -0.000000016898875}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: -0.013918459, y: 0.000000038599595, z: -0.0000000024820461}
+        inSlope: {x: 0.0000003818408, y: -0.00000023686609, z: -0.000000019510479}
+        outSlope: {x: 0.0000003818408, y: -0.00000023686609, z: -0.000000019510479}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41/GothGirlRArmDigit42/GothGirlRArmDigit43
+  m_ScaleCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 1.0000001, y: 1.0000001, z: 0.9999999}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 1.0000001, y: 1.0000001, z: 0.9999999}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 1, y: 0.99999994, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 1, y: 0.99999994, z: 1}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 1.0000001, y: 0.9999995, z: 1.0000001}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 1.0000001, y: 0.9999995, z: 1.0000001}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999986, y: 1.0000011, z: 0.9999998}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999986, y: 1.0000011, z: 0.9999998}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999934, y: 1.0000062, z: 1.0000005}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999934, y: 1.0000062, z: 1.0000005}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999806, y: 1.0000077, z: 1.0000125}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999806, y: 1.0000077, z: 1.0000125}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.99995184, y: 1.0000021, z: 1.0000465}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.99995184, y: 1.0000021, z: 1.0000465}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.99999416, y: 1.0000259, z: 0.99998033}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.99999416, y: 1.0000259, z: 0.99998033}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01/GothGirlRArmDigit02
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999774, y: 1.0000211, z: 1.0000017}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999774, y: 1.0000211, z: 1.0000017}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit01/GothGirlRArmDigit02/GothGirlRArmDigit03
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999785, y: 1.0000021, z: 1.00002}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999785, y: 1.0000021, z: 1.00002}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999794, y: 1.0000023, z: 1.0000188}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999794, y: 1.0000023, z: 1.0000188}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11/GothGirlRArmDigit12
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999798, y: 1.0000015, z: 1.0000188}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999798, y: 1.0000015, z: 1.0000188}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit11/GothGirlRArmDigit12/GothGirlRArmDigit13
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999788, y: 1.0000027, z: 1.0000191}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999788, y: 1.0000027, z: 1.0000191}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999784, y: 1.0000033, z: 1.0000192}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999784, y: 1.0000033, z: 1.0000192}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21/GothGirlRArmDigit22
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.99998015, y: 1.0000012, z: 1.0000191}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.99998015, y: 1.0000012, z: 1.0000191}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit21/GothGirlRArmDigit22/GothGirlRArmDigit23
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999788, y: 1.0000026, z: 1.0000192}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999788, y: 1.0000026, z: 1.0000192}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.99997914, y: 1.0000026, z: 1.000019}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.99997914, y: 1.0000026, z: 1.000019}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31/GothGirlRArmDigit32
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999805, y: 1.0000013, z: 1.000019}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999805, y: 1.0000013, z: 1.000019}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit31/GothGirlRArmDigit32/GothGirlRArmDigit33
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.9999756, y: 1.0000056, z: 1.0000193}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.9999756, y: 1.0000056, z: 1.0000193}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 1.0000187, y: 1.0000014, z: 0.9999805}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 1.0000187, y: 1.0000014, z: 0.9999805}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41/GothGirlRArmDigit42
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: 0.99998, y: 1.0000017, z: 1.000019}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      - serializedVersion: 3
+        time: 0.033332825
+        value: {x: 0.99998, y: 1.0000017, z: 1.000019}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0.33333334, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: GothGirlPelvis/GothGirlSpine/GothGirlRibcage/GothGirlRArmCollarbone/GothGirlRArm1/GothGirlRArm2/GothGirlRArmPalm/GothGirlRArmDigit41/GothGirlRArmDigit42/GothGirlRArmDigit43
+  m_FloatCurves: []
+  m_PPtrCurves: []
+  m_SampleRate: 30
+  m_WrapMode: 0
+  m_Bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  m_ClipBindingConstant:
+    genericBindings: []
+    pptrCurveMapping: []
+  m_AnimationClipSettings:
+    serializedVersion: 2
+    m_AdditiveReferencePoseClip: {fileID: 0}
+    m_AdditiveReferencePoseTime: 0
+    m_StartTime: 0
+    m_StopTime: 0.03333664
+    m_OrientationOffsetY: 0
+    m_Level: 0
+    m_CycleOffset: 0
+    m_HasAdditiveReferencePose: 0
+    m_LoopTime: 0
+    m_LoopBlend: 0
+    m_LoopBlendOrientation: 0
+    m_LoopBlendPositionY: 0
+    m_LoopBlendPositionXZ: 0
+    m_KeepOriginalOrientation: 0
+    m_KeepOriginalPositionY: 1
+    m_KeepOriginalPositionXZ: 0
+    m_HeightFromFeet: 0
+    m_Mirror: 0
+  m_EditorCurves: []
+  m_EulerEditorCurves: []
+  m_HasGenericRootTransform: 0
+  m_HasMotionFloatCurves: 0
+  m_Events: []

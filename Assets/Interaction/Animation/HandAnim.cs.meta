@@ -1,0 +1,14 @@
+fileFormatVersion: 2
+guid: a56c9d3051bf06f4ea4f47fdf791965b
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - handAnimator: {instanceID: 0}
+  - objectWithPhotonView: {instanceID: 0}
+  - handObject: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
