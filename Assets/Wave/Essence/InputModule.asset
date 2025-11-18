@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: b60dfd212d4dc1c4b83ad6b28d708d38, type: 3}
   m_Name: InputModule
-  m_EditorClassIdentifier: Wave.Essence.Editor:Wave.Essence.Editor:PackageEssenceAsset
+  m_EditorClassIdentifier: 
   importedControllerModelPackage: 0
   importedInputModulePackage: 1
   importedHandModelPackage: 0

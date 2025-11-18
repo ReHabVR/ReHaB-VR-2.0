@@ -19,7 +19,7 @@ MonoBehaviour:
   adaptiveQualityMode: 2
   AQ_SendQualityEvent: 1
   AQ_AutoFoveation: 1
-  useAQDynamicResolution: 0
+  useAQDynamicResolution: 1
   DR_DefaultIndex: 0
   DR_TextSize: 20
   DR_ResolutionScaleList:
@@ -62,7 +62,6 @@ MonoBehaviour:
   EnableEyeTracking: 0
   EnableEyeExpression: 0
   EnableLipExpression: 0
-  EnableBodyTracking: 0
   EnableScenePerception: 0
   EnableSceneMesh: 0
   EnableMarker: 0

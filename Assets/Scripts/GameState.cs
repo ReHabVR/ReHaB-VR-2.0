@@ -13,7 +13,7 @@ public class GameState : MonoBehaviour
 public class GameStateValue
 {
     public bool buttonPressed = false;
-
+    
 }
 
 
@@ -22,12 +22,10 @@ public class GameControl
 {
     public bool movement = true;
     public bool left = false;
-    public float leftProbability = 0;
     public bool right = false;
-    public float rightProbability = 0;
 
     public bool applyMode = false;
-
+    
     //Default mode is moving hands when there is movement
     public int mode = 0;
     public bool dataAcquisition = false;

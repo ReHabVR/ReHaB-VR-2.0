@@ -1,4 +1,0 @@
-cwiczenie 1 klatki: 0-500
-cwiczenie 2a klatki: 600-1033
-cwiczenie 7 klatki: 1050-1330
-
