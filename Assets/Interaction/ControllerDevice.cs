@@ -40,12 +40,16 @@ public class ControllerDevice : MonoBehaviour
     void Update()
     {
         if (!DevicesDetected) 
+        {
             TryGetDevices();
+        }
         
         _lastPressed += Time.deltaTime;
 
         if (!_canPressMenu && _lastPressed > _pressDelay)
+        {
             _canPressMenu = true;
+        }
 
         GetOutput();
     }
