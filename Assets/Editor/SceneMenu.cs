@@ -1,34 +1,43 @@
-using UnityEngine;
+#if UNITY_EDITOR
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-[InitializeOnLoad]
-public class SceneMenu : MonoBehaviour
+namespace EditorTools
 {
-    static SceneMenu() {}
-
-    [MenuItem("Scenes/Launch Init Scene")]
-    private static void PlayInitScene()
+    [InitializeOnLoad]
+    public static class SceneMenu
     {
-        EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
-        EditorApplication.isPlaying = true;
-    }
+        private const string KEY = "StartAsHost";
+                
+        static SceneMenu() {}
 
-    [MenuItem("Scenes/Go To Scene/Init")]
-    private static void OpenInitScene()
-    {
-        EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
-    }
+        [MenuItem("Scenes/Launch/Server")]
+        private static void LaunchServer()
+        {
+            EditorPrefs.SetBool(KEY, true);
+            EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
+            EditorApplication.isPlaying = true;
+        }
 
-    [MenuItem("Scenes/Go To Scene/Lobby")]
-    private static void OpenLobbyScene()
-    {
-        EditorSceneManager.OpenScene("Assets/Scenes/Lobby.unity", OpenSceneMode.Single);
-    }
+        [MenuItem("Scenes/Launch/Client")]
+        private static void LaunchClient()
+        {
+            EditorPrefs.SetBool(KEY, false);
+            EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
+            EditorApplication.isPlaying = true;
+        }
 
-    [MenuItem("Scenes/Go To Scene/Room")]
-    private static void OpenRoomScene()
-    {
-        EditorSceneManager.OpenScene("Assets/Scenes/Scena_Rehab.unity", OpenSceneMode.Single);
+        [MenuItem("Scenes/Go To Scene/Init")]
+        private static void OpenInitScene()
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
+        }
+
+        [MenuItem("Scenes/Go To Scene/Room")]
+        private static void OpenRoomScene()
+        {
+            EditorSceneManager.OpenScene("Assets/Scenes/Scena_Rehab.unity", OpenSceneMode.Single);
+        }
     }
 }
+#endif

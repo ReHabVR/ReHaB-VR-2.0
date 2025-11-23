@@ -141,11 +141,6 @@ public class CurrentTaskManager : MonoBehaviour
         string fname =  DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + "_" + Enum.GetName(typeof(EGameState), (int)gameState) + ".txt";
         string path = Path.Combine(Application.persistentDataPath, fname);
 
-        // Camera data
-        string fovData = $"FOV: {XRPlayerController.renderCamera.GetFov()}";
-        string heightData = $"Height offset: {XRPlayerController.cameraOffset.transform.position.y}";
-        string distanceData = $"Distance offset: {XRPlayerController.cameraOffset.transform.position.z}";
-
         // Task data
         string timeElapsed = $"Time elapsed: {endTime - startTime:F2} sec.";
         string totalMoves = $"Total moves: {totalGrabsCount}";
@@ -157,9 +152,6 @@ public class CurrentTaskManager : MonoBehaviour
         }
 
         StringBuilder sb = new StringBuilder()
-            .AppendLine(fovData)
-            .AppendLine(heightData)
-            .AppendLine(distanceData)
             .AppendLine(timeElapsed)
             .AppendLine(totalMoves)
             .AppendLine(correctMoves)

@@ -156,6 +156,8 @@ MonoBehaviour:
   mainSceneIndex: 1
   port: 27015
   isHost: 1
+  playerPrefab: {fileID: 4051770860812974642, guid: 6f718d0dd5efda64aa241278eb9da50d,
+    type: 3}
   runner: {fileID: 1167505158}
 --- !u!114 &1167505158
 MonoBehaviour:

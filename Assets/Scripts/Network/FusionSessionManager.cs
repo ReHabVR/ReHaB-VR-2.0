@@ -3,9 +3,14 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-public class SessionInitializer : MonoBehaviour, INetworkRunnerCallbacks
+public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 {
+    [Header("Initialization")]
+
     [Tooltip("LAN host IP")]
     public string hostAddress = "192.168.1.12"; 
 
@@ -15,13 +20,39 @@ public class SessionInitializer : MonoBehaviour, INetworkRunnerCallbacks
     public ushort port = 27015;
 
     [Tooltip("PC = host, HMD = client")]
-    public bool isHost; // (PC = host, HMD = client)
+    public bool isHost;
+
+    [Header("Session Settings")]
+
+    [SerializeField]
+    private NetworkObject playerPrefab;
+
+    [Header("")]
 
     [SerializeField]
     private NetworkRunner runner;
 
-    async void Start()
+    public static FusionSessionManager Instance { get; private set; }
+
+    private void Awake() 
     {
+        if (Instance == null) 
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else 
+        {
+            Destroy(gameObject);
+        }
+#if UNITY_EDITOR
+        isHost = EditorPrefs.GetBool("StartAsHost", true);
+#endif
+    }
+
+    private async void Start()
+    {
+        Debug.LogWarning($"Starting as: {(isHost ? "SERVER" : "CLIENT")}");
         if (runner == null)
         {
             runner = gameObject.GetComponent<NetworkRunner>();    
@@ -49,11 +80,10 @@ public class SessionInitializer : MonoBehaviour, INetworkRunnerCallbacks
             args.Address = NetAddress.CreateFromIpPort(hostAddress, port);
             args.SessionName = "ReHaB_Room";
         }
-
+        
         args.SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
-
+        
         StartGameResult result = await runner.StartGame(args);
-
         if (!result.Ok)
         {
             Debug.LogError("Connection failed: " + result.ShutdownReason);
@@ -113,7 +143,27 @@ public class SessionInitializer : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        //throw new NotImplementedException();
+        if (!runner.IsServer) // Authority check.
+        {
+            return;
+        }
+
+        if (player == runner.LocalPlayer)
+        {
+            // Don't spawn a player for the host/server.
+            return;
+        }
+
+        Transform spawn = FindObjectOfType<PlayerSpawnManager>().GetSpawnPointForPlayer(player);
+        if (spawn)
+        {
+            runner.Spawn(
+                playerPrefab,
+                spawn.position,
+                spawn.rotation,
+                player
+            );
+        }
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
