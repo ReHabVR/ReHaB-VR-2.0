@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
+using System.Collections;
+using System.Linq;
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -32,9 +35,13 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField]
     private NetworkRunner runner;
 
+    private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
+    private readonly List<PlayerRef> _activePlayers = new();
+    private bool _sceneLoaded = false;
+
     public static FusionSessionManager Instance { get; private set; }
 
-    private void Awake() 
+    private void Awake()
     {
         if (Instance == null) 
         {
@@ -62,27 +69,20 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             }
         }
         
-        runner.ProvideInput = true;
+        runner.ProvideInput = !isHost;
         runner.AddCallbacks(this);
 
-        StartGameArgs args = new();
+        StartGameArgs args = new()
+        {
+            GameMode = isHost ? GameMode.Server : GameMode.Client,
+            Address = isHost ? NetAddress.Any(port) : NetAddress.CreateFromIpPort(hostAddress, port),
+            Scene = SceneRef.FromIndex(mainSceneIndex),
+            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
+            DisableNATPunchthrough = true
+        };
 
-        if (isHost)
-        {
-            args.GameMode = GameMode.Host;
-            args.Address = NetAddress.Any(port);
-            args.SessionName = "ReHaB_Room";
-            args.Scene = SceneRef.FromIndex(mainSceneIndex);
-        }
-        else
-        {
-            args.GameMode = GameMode.Client;
-            args.Address = NetAddress.CreateFromIpPort(hostAddress, port);
-            args.SessionName = "ReHaB_Room";
-        }
-        
-        args.SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>();
-        
+        Debug.LogWarning(args);
+
         StartGameResult result = await runner.StartGame(args);
         if (!result.Ok)
         {
@@ -90,7 +90,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             // TODO: show a retry popup
         }
     }
-
+    
+#region INetworkRunnerCallbacks
     public void OnConnectedToServer(NetworkRunner runner)
     {
         //throw new NotImplementedException();
@@ -143,32 +144,49 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (!runner.IsServer) // Authority check.
+        // Authority check.
+        if (!runner.IsServer) 
         {
             return;
         }
 
-        if (player == runner.LocalPlayer)
-        {
-            // Don't spawn a player for the host/server.
+        // Don't spawn a player for the host/server.
+        if (runner.IsServer && player == runner.LocalPlayer)
+        {    
             return;
         }
 
-        Transform spawn = FindObjectOfType<PlayerSpawnManager>().GetSpawnPointForPlayer(player);
-        if (spawn)
+        // Register player
+        if (!_activePlayers.Contains(player))
         {
-            runner.Spawn(
-                playerPrefab,
-                spawn.position,
-                spawn.rotation,
-                player
-            );
+            _activePlayers.Add(player);    
         }
+        
+        StartCoroutine(
+            SpawnDeferred(player)
+        );
     }
 
     public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
     {
-        //throw new NotImplementedException();
+        // Authority check.
+        if (!runner.IsServer) 
+        {
+            return;
+        }
+
+        if (_playerObjects.TryGetValue(player, out var list))
+        {
+            foreach (NetworkObject no in list)
+            {
+                if (no != null && no.Runner != null)
+                {
+                    runner.Despawn(no);
+                }
+            }
+
+            _playerObjects.Remove(player);
+        }
     }
 
     public void OnReliableDataProgress(NetworkRunner runner, PlayerRef player, ReliableKey key, float progress)
@@ -183,7 +201,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        //throw new NotImplementedException();
+        _sceneLoaded = true;
     }
 
     public void OnSceneLoadStart(NetworkRunner runner)
@@ -204,5 +222,40 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message)
     {
         //throw new NotImplementedException();
+    }
+    #endregion
+
+    private IEnumerator SpawnDeferred(PlayerRef player)
+    {
+        yield return new WaitUntil(() => _sceneLoaded);
+        yield return new WaitForEndOfFrame();
+
+        int playerIndex = _activePlayers.IndexOf(player);
+
+        Transform spawn = PlayerSpawnManager.Instance.GetSpawnPointForPlayer(playerIndex);
+        if (spawn)
+        {
+            NetworkObject spawnedPlayer = runner.Spawn(
+                playerPrefab,
+                spawn.position,
+                spawn.rotation,
+                player
+            );
+            
+            if (spawnedPlayer)
+            {
+                if (!_playerObjects.TryGetValue(player, out var list))
+                {
+                    list = new List<NetworkObject>();
+                    _playerObjects[player] = list;
+                }
+
+                list.Add(spawnedPlayer);
+            }
+            else
+            {
+                Debug.LogError("Failed to spawn player for " + player);
+            }    
+        }
     }
 }
