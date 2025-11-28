@@ -30,10 +30,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField]
     private NetworkObject playerPrefab;
 
-    [Header("")]
-
-    [SerializeField]
-    private NetworkRunner runner;
+    private NetworkRunner _runner;
+    private NetworkSceneManagerDefault _sceneManager;
 
     private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
     private readonly List<PlayerRef> _activePlayers = new();
@@ -60,31 +58,31 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private async void Start()
     {
         Debug.LogWarning($"Starting as: {(isHost ? "SERVER" : "CLIENT")}");
-        if (runner == null)
-        {
-            runner = gameObject.GetComponent<NetworkRunner>();    
-            if (runner == null)
-            {
-                runner = gameObject.AddComponent<NetworkRunner>();
-            }
-        }
+
+        _runner = gameObject.AddComponent<NetworkRunner>();
+        _runner.ProvideInput = !isHost;
+        _runner.AddCallbacks(this);
         
-        runner.ProvideInput = !isHost;
-        runner.AddCallbacks(this);
+        _sceneManager = _runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
+        Debug.LogWarning($"SceneManager: {_sceneManager}");
+        Debug.LogWarning($"runner.ProvideInput: {_runner.ProvideInput}");
 
         StartGameArgs args = new()
         {
             GameMode = isHost ? GameMode.Server : GameMode.Client,
             Address = isHost ? NetAddress.Any(port) : NetAddress.CreateFromIpPort(hostAddress, port),
             Scene = SceneRef.FromIndex(mainSceneIndex),
-            SceneManager = gameObject.AddComponent<NetworkSceneManagerDefault>(),
+            SceneManager = _sceneManager,
             DisableNATPunchthrough = true
         };
-
         Debug.LogWarning(args);
 
-        StartGameResult result = await runner.StartGame(args);
-        if (!result.Ok)
+        StartGameResult result = await _runner.StartGame(args);
+        if (result.Ok)
+        {
+            Debug.LogWarning($"Dedicated server started on {hostAddress}:{port}.");
+        }
+        else
         {
             Debug.LogError("Connection failed: " + result.ShutdownReason);
             // TODO: show a retry popup
@@ -206,7 +204,11 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        //throw new NotImplementedException();
+        Application.logMessageReceived += (log, stack, type) =>
+        {
+            if (type == UnityEngine.LogType.Exception)
+                Debug.LogError("Exception detected: " + log + "\n" + stack);
+        };
     }
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)
@@ -235,7 +237,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         Transform spawn = PlayerSpawnManager.Instance.GetSpawnPointForPlayer(playerIndex);
         if (spawn)
         {
-            NetworkObject spawnedPlayer = runner.Spawn(
+            NetworkObject spawnedPlayer = _runner.Spawn(
                 playerPrefab,
                 spawn.position,
                 spawn.rotation,
