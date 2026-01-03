@@ -8,6 +8,8 @@ public class PlayerSpawnManager : MonoBehaviour
     private List<Transform> _spawnPoints;
 
     public static PlayerSpawnManager Instance { get; private set; }
+
+    public bool IsReady { get; private set; }
     
     private void Awake() 
     {
@@ -21,9 +23,27 @@ public class PlayerSpawnManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        IsReady = true;
+    }
+
     public Transform GetSpawnPointForPlayer(int playerIndex)
     {
+        if (_spawnPoints.Count == 0)
+        {
+            Debug.LogError("[PlayerSpawnManager] No spawn points assigned!");
+            return null;
+        }
+
         int clampIndex = Mathf.Clamp(playerIndex, 0, _spawnPoints.Count - 1);
-        return _spawnPoints[clampIndex].transform;
+        Transform spawnPoint = _spawnPoints[clampIndex];
+        if (spawnPoint == null) 
+        {
+            Debug.LogError($"[PlayerSpawnManager] Spawn point at index {clampIndex} is null!");
+            return null;
+        }
+        
+        return spawnPoint.transform;
     }
 }

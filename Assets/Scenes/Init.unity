@@ -154,8 +154,8 @@ MonoBehaviour:
   hostAddress: 192.168.1.12
   mainSceneIndex: 1
   port: 27015
-  isHost: 1
-  playerPrefab: {fileID: 4051770860812974642, guid: 6f718d0dd5efda64aa241278eb9da50d,
+  startAsHost: 0
+  playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
     type: 3}
 --- !u!4 &1167505159
 Transform:

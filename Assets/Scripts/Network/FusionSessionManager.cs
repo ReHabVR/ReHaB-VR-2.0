@@ -22,8 +22,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public ushort port = 27015;
 
-    [Tooltip("PC = host, HMD = client")]
-    public bool isHost;
+    [Header("Editor Only")]
+    public bool startAsHost = false;
 
     [Header("Session Settings")]
 
@@ -50,37 +50,35 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             Destroy(gameObject);
         }
-#if UNITY_EDITOR
-        isHost = EditorPrefs.GetBool("StartAsHost", true);
-#endif
     }
 
     private async void Start()
     {
-        Debug.LogWarning($"Starting as: {(isHost ? "SERVER" : "CLIENT")}");
+        bool _isHost = ResolveHost();
+        Debug.Log($"Starting as: {(_isHost ? "SERVER" : "CLIENT")}");
 
         _runner = gameObject.AddComponent<NetworkRunner>();
-        _runner.ProvideInput = !isHost;
+        _runner.ProvideInput = !_isHost;
         _runner.AddCallbacks(this);
         
         _sceneManager = _runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
-        Debug.LogWarning($"SceneManager: {_sceneManager}");
-        Debug.LogWarning($"runner.ProvideInput: {_runner.ProvideInput}");
+        Debug.Log($"SceneManager: {_sceneManager}");
+        Debug.Log($"runner.ProvideInput: {_runner.ProvideInput}");
 
         StartGameArgs args = new()
         {
-            GameMode = isHost ? GameMode.Server : GameMode.Client,
-            Address = isHost ? NetAddress.Any(port) : NetAddress.CreateFromIpPort(hostAddress, port),
+            GameMode = _isHost ? GameMode.Server : GameMode.Client,
+            Address = _isHost ? NetAddress.Any(port) : NetAddress.CreateFromIpPort(hostAddress, port),
             Scene = SceneRef.FromIndex(mainSceneIndex),
             SceneManager = _sceneManager,
             DisableNATPunchthrough = true
         };
-        Debug.LogWarning(args);
+        Debug.Log(args);
 
         StartGameResult result = await _runner.StartGame(args);
         if (result.Ok)
         {
-            Debug.LogWarning($"Dedicated server started on {hostAddress}:{port}.");
+            Debug.Log($"Dedicated server started on {hostAddress}:{port}.");
         }
         else
         {
@@ -227,37 +225,63 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     #endregion
 
+    private bool ResolveHost()
+    {
+#if DEDICATED_SERVER
+        return true;
+#elif HMD_CLIENT
+        return false;
+#else
+    #if UNITY_EDITOR
+        return startAsHost;
+    #else
+        return false;
+    #endif
+#endif
+    }
+
     private IEnumerator SpawnDeferred(PlayerRef player)
     {
-        yield return new WaitUntil(() => _sceneLoaded);
+        Debug.LogWarning($"[SpawnDeferred] Called for player {player}, IsServer={_runner.IsServer}");
+
+        yield return new WaitUntil(() =>
+            _sceneLoaded 
+            && PlayerSpawnManager.Instance != null 
+            && PlayerSpawnManager.Instance.IsReady
+        );
         yield return new WaitForEndOfFrame();
 
         int playerIndex = _activePlayers.IndexOf(player);
-
         Transform spawn = PlayerSpawnManager.Instance.GetSpawnPointForPlayer(playerIndex);
-        if (spawn)
+        if (spawn == null)
         {
-            NetworkObject spawnedPlayer = _runner.Spawn(
-                playerPrefab,
-                spawn.position,
-                spawn.rotation,
-                player
-            );
-            
-            if (spawnedPlayer)
-            {
-                if (!_playerObjects.TryGetValue(player, out var list))
-                {
-                    list = new List<NetworkObject>();
-                    _playerObjects[player] = list;
-                }
-
-                list.Add(spawnedPlayer);
-            }
-            else
-            {
-                Debug.LogError("Failed to spawn player for " + player);
-            }    
+            Debug.LogError("Failed to spawn player for " + player);
+            yield break;
         }
+
+        NetworkObject spawnedPlayer = _runner.Spawn(
+            playerPrefab,
+            spawn.position,
+            spawn.rotation,
+            player,
+            (runner, obj) =>
+            {
+                obj.transform.SetPositionAndRotation(spawn.position, spawn.rotation);
+            }
+        );
+        
+        if (spawnedPlayer == null)
+        {
+            Debug.LogError("Failed to spawn player for " + player);
+            yield break;
+        }
+
+        if (!_playerObjects.TryGetValue(player, out var list))
+        {
+            list = new List<NetworkObject>();
+            _playerObjects[player] = list;
+        }
+
+        list.Add(spawnedPlayer);
     }
 }
