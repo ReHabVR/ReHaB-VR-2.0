@@ -16,6 +16,11 @@ public struct PoseData : INetworkStruct
     public Quaternion rhandRot;
 }
 
+public struct PoseInput : INetworkInput
+{
+    public PoseData pose;
+}
+
 public class NetworkPoseBridge : NetworkBehaviour
 {
     [Header("XR Controllers")]
@@ -25,7 +30,6 @@ public class NetworkPoseBridge : NetworkBehaviour
     private Transform XRLeftHand;
     [SerializeField] 
     private Transform XRRightHand;
-
     [Header("Bridge Targets")]
     [SerializeField] 
     private Transform bridgeHead;
@@ -42,13 +46,17 @@ public class NetworkPoseBridge : NetworkBehaviour
     [SerializeField] 
     private Transform fallbackRightHand;
 
-    private PoseData _currentPose;
+    private PoseData _localPose;
+    private PlayerRef _playerRef;
+
     private bool _xrActive;
 
     private readonly WaitForSeconds _waitForThreeSeconds = new(3);
 
     [Networked]
     private PoseData NetworkPose { get => default; set {} }
+
+    public bool IsReady { get; private set; }
 
     private bool IsXRTrackingValid => 
         XRLeftHand.position.sqrMagnitude > 0.0001f &&
@@ -61,29 +69,55 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Spawned()
     {
+        if (HasInputAuthority && Object.InputAuthority == Runner.LocalPlayer)
+        {
+            FusionSessionManager.Instance.SetLocalBridge(this);
+            _localPose = GetPose();
+            IsReady = true;
+        }
+
         if (HasStateAuthority)
         {
-            NetworkPose = CaptureFallback();
+            NetworkPose = GetPose();
+            IsReady = true;
+        }
+
+        foreach (ExternalPoseProvider provider in GetComponentsInChildren<ExternalPoseProvider>(true))
+        {
+            provider.OnSpawned();
+        }
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!HasStateAuthority || !IsReady)
+        { 
+            return;
+        }
+
+        if (Runner.TryGetInputForPlayer<PoseInput>(Object.InputAuthority, out var input))
+        {
+            Debug.Log($"[SERVER] Received input {input.pose.lhandPos}");
+            NetworkPose = input.pose;
+        }
+        else
+        {
+            Debug.Log($"[SERVER] No input for {Object.InputAuthority}");
         }
     }
 
     public override void Render()
     {
-        PoseData newPose = (HasInputAuthority && _xrActive && IsXRTrackingValid) ? _currentPose : CaptureFallback();
-
-        bridgeHead.SetPositionAndRotation(newPose.headPos, newPose.headRot);
-        bridgeLeftHand.SetPositionAndRotation(newPose.lhandPos, newPose.lhandRot);
-        bridgeRightHand.SetPositionAndRotation(newPose.rhandPos, newPose.rhandRot);
+        PoseData renderedPose = HasInputAuthority ? _localPose : NetworkPose;
+        
+        bridgeHead.SetPositionAndRotation(renderedPose.headPos, renderedPose.headRot);
+        bridgeLeftHand.SetPositionAndRotation(renderedPose.lhandPos, renderedPose.lhandRot);
+        bridgeRightHand.SetPositionAndRotation(renderedPose.rhandPos, renderedPose.rhandRot);
     }
 
-    public override void FixedUpdateNetwork()
-    {
-        if (HasStateAuthority)
-        {
-            _currentPose = GetPose();
-            NetworkPose = _currentPose;
-        }
-    }
+    public PoseData GetLocalPose() => _localPose;
+    public void SetLocalPose(PoseData pose) { _localPose = pose; }
+    public void SetPlayerRef(PlayerRef player) { _playerRef = player; }
 
     private IEnumerator QueryXRState()
     {
@@ -98,7 +132,7 @@ public class NetworkPoseBridge : NetworkBehaviour
         }
     }
 
-    private PoseData GetPose()
+    public PoseData GetPose()
     {
         if (HasInputAuthority && _xrActive && IsXRTrackingValid)
         {

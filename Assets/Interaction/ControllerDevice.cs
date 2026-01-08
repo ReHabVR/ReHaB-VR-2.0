@@ -4,6 +4,7 @@ using UnityEngine.XR;
 using TMPro;
 using UnityEngine.Events;
 using System.Text;
+using Fusion;
 
 public class ControllerDevice : MonoBehaviour
 {

@@ -4,11 +4,6 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using System.Collections;
-using System.Linq;
-
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
 public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 {
@@ -32,6 +27,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private NetworkRunner _runner;
     private NetworkSceneManagerDefault _sceneManager;
+    private NetworkPoseBridge _localPlayerBridge;
 
     private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
     private readonly List<PlayerRef> _activePlayers = new();
@@ -58,12 +54,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log($"Starting as: {(_isHost ? "SERVER" : "CLIENT")}");
 
         _runner = gameObject.AddComponent<NetworkRunner>();
-        _runner.ProvideInput = !_isHost;
-        _runner.AddCallbacks(this);
         
         _sceneManager = _runner.gameObject.AddComponent<NetworkSceneManagerDefault>();
-        Debug.Log($"SceneManager: {_sceneManager}");
-        Debug.Log($"runner.ProvideInput: {_runner.ProvideInput}");
+        Debug.Log($"[Fusion] SceneManager: {_sceneManager}");
 
         StartGameArgs args = new()
         {
@@ -78,11 +71,19 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         StartGameResult result = await _runner.StartGame(args);
         if (result.Ok)
         {
-            Debug.Log($"Dedicated server started on {hostAddress}:{port}.");
+            if (_isHost) 
+            {
+                Debug.Log($"[Fusion] Dedicated server started on {hostAddress}:{port}.");  
+            }
+
+            _runner.ProvideInput = !_isHost;
+            _runner.AddCallbacks(this);
+            
+            Debug.LogWarning($"[Fusion] runner.ProvideInput: {_runner.ProvideInput}, runner.Mode={_runner.GameMode}");
         }
         else
         {
-            Debug.LogError("Connection failed: " + result.ShutdownReason);
+            Debug.LogError("[Fusion] Connection failed: " + result.ShutdownReason);
             // TODO: show a retry popup
         }
     }
@@ -120,7 +121,18 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        //throw new NotImplementedException();
+        if (_localPlayerBridge == null || !_localPlayerBridge.IsReady || !_localPlayerBridge.HasInputAuthority) 
+        {
+            return;
+        }
+
+        PoseData _pose = _localPlayerBridge.GetPose();
+        _localPlayerBridge.SetLocalPose(_pose);
+        input.Set(
+            new PoseInput {
+                pose = _pose
+            }
+        );
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -182,6 +194,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             }
 
             _playerObjects.Remove(player);
+            Debug.Log($"[SessionManager] Player {player} left.");
         }
     }
 
@@ -225,6 +238,16 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     #endregion
 
+    public void SetLocalBridge(NetworkPoseBridge bridge) 
+    { 
+        // Only allow setting NetworkBridge reference if LocalPlayer matches InputAuthority
+        // (ie. on the same client)
+        if (bridge.Object.InputAuthority == _runner.LocalPlayer)
+        {
+            _localPlayerBridge = bridge;
+        }
+    }
+
     private bool ResolveHost()
     {
 #if DEDICATED_SERVER
@@ -242,12 +265,10 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private IEnumerator SpawnDeferred(PlayerRef player)
     {
-        Debug.LogWarning($"[SpawnDeferred] Called for player {player}, IsServer={_runner.IsServer}");
-
         yield return new WaitUntil(() =>
-            _sceneLoaded 
-            && PlayerSpawnManager.Instance != null 
-            && PlayerSpawnManager.Instance.IsReady
+            _sceneLoaded && 
+            PlayerSpawnManager.Instance != null && 
+            PlayerSpawnManager.Instance.IsReady
         );
         yield return new WaitForEndOfFrame();
 
@@ -276,6 +297,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             yield break;
         }
 
+        spawnedPlayer.GetComponent<NetworkPoseBridge>().SetPlayerRef(player);
+
         if (!_playerObjects.TryGetValue(player, out var list))
         {
             list = new List<NetworkObject>();
@@ -283,5 +306,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         list.Add(spawnedPlayer);
+        Debug.LogWarning($"Spawned object for {player}; HasInputAuthority={spawnedPlayer.HasInputAuthority}, HasStateAuthority={spawnedPlayer.HasStateAuthority}");
     }
 }
