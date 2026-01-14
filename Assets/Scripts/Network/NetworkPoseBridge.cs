@@ -73,19 +73,19 @@ public class NetworkPoseBridge : NetworkBehaviour
         {
             FusionSessionManager.Instance.SetLocalBridge(this);
             _localPose = GetPose();
-            IsReady = true;
         }
 
         if (HasStateAuthority)
         {
             NetworkPose = GetPose();
-            IsReady = true;
         }
 
         foreach (ExternalPoseProvider provider in GetComponentsInChildren<ExternalPoseProvider>(true))
         {
             provider.OnSpawned();
         }
+
+        IsReady = true;
     }
 
     public override void FixedUpdateNetwork()
@@ -97,12 +97,7 @@ public class NetworkPoseBridge : NetworkBehaviour
 
         if (Runner.TryGetInputForPlayer<PoseInput>(Object.InputAuthority, out var input))
         {
-            Debug.Log($"[SERVER] Received input {input.pose.lhandPos}");
             NetworkPose = input.pose;
-        }
-        else
-        {
-            Debug.Log($"[SERVER] No input for {Object.InputAuthority}");
         }
     }
 

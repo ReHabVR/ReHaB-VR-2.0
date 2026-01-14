@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1167505159}
   - component: {fileID: 1167505157}
+  - component: {fileID: 1167505160}
   m_Layer: 0
   m_Name: NetworkRunnerObject
   m_TagString: Untagged
@@ -155,7 +156,12 @@ MonoBehaviour:
   mainSceneIndex: 1
   port: 27015
   startAsHost: 0
+  selectedRole: 1
   playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
+    type: 3}
+  trainerPrefab: {fileID: 4051770860812974642, guid: fba387262495c1e4da29fc005f433291,
+    type: 3}
+  playerState: {fileID: 5102999956502205173, guid: faa8d2fcbca07354e87216e688828779,
     type: 3}
 --- !u!4 &1167505159
 Transform:
@@ -172,3 +178,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1167505160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1167505156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3982133588
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
