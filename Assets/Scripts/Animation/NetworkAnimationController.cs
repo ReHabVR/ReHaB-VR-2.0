@@ -16,17 +16,22 @@ public class NetworkAnimationController : NetworkBehaviour
     [SerializeField]
     private Animator animator;
 
-    [Networked] 
-    private int ClipHash { get; set; }
+    [SerializeField] 
+    private AnimationCommandSource currentAdapter;
 
-    int lastPlayedHash;
+    [Networked] private int ClipHash { get; set; }
+    private int lastPlayedHash;
 
     public override void Spawned()
     {
-        // TODO: replace with controller logic
-        if (Object.HasInputAuthority)
+    }
+
+    public override void FixedUpdateNetwork()
+    {
+        if (currentAdapter && currentAdapter.TryGetCommand(out var cmd))
         {
-            ClipHash = Animator.StringToHash("TestAnimation");
+            Debug.LogError($"Command from adapter: {cmd.ClipKey}");
+            RequestPlay(cmd.ClipKey);
         }
     }
 
@@ -43,8 +48,27 @@ public class NetworkAnimationController : NetworkBehaviour
             return;
         }
 
-        animator.SetTrigger("PlayTestAnim"); // Temporary workaround
         animator.Play(ClipHash, 0, 0f);
         lastPlayedHash = ClipHash;
+    }
+
+    public void RequestPlay(string clipName)
+    {
+        int hash = Animator.StringToHash(clipName);
+
+        if (Object.HasStateAuthority)
+        {
+            ClipHash = hash;
+        }
+        else
+        {
+            RPC_RequestPlay(hash);
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_RequestPlay(int hash)
+    {
+        ClipHash = hash;
     }
 }

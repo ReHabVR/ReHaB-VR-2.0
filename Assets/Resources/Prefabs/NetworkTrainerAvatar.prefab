@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6811728238161990035}
   - component: {fileID: 4582629275181737806}
   - component: {fileID: 6279682919035450124}
+  - component: {fileID: 3538589753800930226}
+  - component: {fileID: 7088681799487194918}
   m_Layer: 0
   m_Name: NetworkTrainerAvatar
   m_TagString: Untagged
@@ -86,6 +88,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 6279682919035450124}
+  currentAdapter: {fileID: 0}
 --- !u!95 &6279682919035450124
 Animator:
   serializedVersion: 5
@@ -107,6 +110,31 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &3538589753800930226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27148097519863014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 124f59769037be3469bfe0f9f19a7b0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clipName: TestAnimation
+--- !u!114 &7088681799487194918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27148097519863014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b9f60284411da54da822a97fad666a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &45215132639115586
 GameObject:
   m_ObjectHideFlags: 0

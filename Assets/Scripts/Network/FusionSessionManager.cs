@@ -25,7 +25,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     [Header("Editor Only")]
     public bool startAsHost = false;
-    public PlayerRole selectedRole = PlayerRole.Player;
+    //public PlayerRole selectedRole = PlayerRole.Player;
 
     [Header("Session Settings")]
 
@@ -89,9 +89,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         StartGameResult result = await _sessionRunner.StartGame(args);
         if (result.Ok)
         {
-#if UNITY_EDITOR
-            LocalPlayer.LocalRole = selectedRole;
-#endif
+//#if UNITY_EDITOR
+//LocalPlayer.LocalRole = selectedRole;
+//#endif
             if (_isHost) 
             {
                 Debug.Log($"[Fusion] Dedicated server started on {hostAddress}:{port}.");
@@ -179,24 +179,17 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             _activePlayers.Add(player);
         }
 
-        // Spawn the server-owned trainer avatar immediately
-        // TODO: replace with join logic
-        int playerIndex = _activePlayers.IndexOf(player);
-        Transform trainerSpawnPoint = PlayerSpawnManager.Instance.GetSpawnPointForPlayer((playerIndex + 1) % 2);
-        NetworkObject trainer = _sessionRunner.Spawn(
-            trainerPrefab,
-            trainerSpawnPoint.position,
-            trainerSpawnPoint.rotation,
-            inputAuthority: PlayerRef.None
-        );
-
-        if (!_playerObjects.ContainsKey(player)){
+        if (!_playerObjects.ContainsKey(player))
+        {
             _playerObjects[player] = new();
         }
-        _playerObjects[player].Add(trainer);
+
+        // Temporary workaround - assign roles by join order
+        PlayerRole role = _activePlayers.Count == 1 ? PlayerRole.Trainer : PlayerRole.Player;
+        _playerRoles[player] = role;
 
         StartCoroutine(
-            SpawnDeferred(player, playerIndex)
+            SpawnDeferred(player, _activePlayers.IndexOf(player))
         );
     }
 
@@ -295,7 +288,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             PlayerSpawnManager.Instance != null && 
             PlayerSpawnManager.Instance.IsReady
         );
-        // Wait a while longer, just to be sure
+
+        // Wait a while longer to avoid race conditions
         yield return new WaitForSeconds(0.1f);
 
         Transform spawn = PlayerSpawnManager.Instance.GetSpawnPointForPlayer(playerIndex % 2);
@@ -304,7 +298,10 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             Debug.LogError("Failed to spawn player for " + player);
             yield break;
         }
-        NetworkObject prefab = playerPrefab;//_playerRoles[player] == PlayerRole.Trainer ? trainerPrefab : playerPrefab;
+
+        PlayerRole role = _playerRoles[player];
+        NetworkObject prefab = role == PlayerRole.Trainer ? trainerPrefab : playerPrefab;
+
         NetworkObject playerAvatar = _sessionRunner.Spawn(
             prefab,
             spawn.position,
@@ -315,24 +312,20 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                 obj.transform.SetPositionAndRotation(spawn.position, spawn.rotation);
             }
         );
-        
+
         if (playerAvatar == null)
         {
             Debug.LogError("Failed to spawn player for " + player);
             yield break;
         }
 
-        if (playerAvatar.TryGetComponent<NetworkPoseBridge>(out var poseBridge))
+        if (role == PlayerRole.Player && playerAvatar.TryGetComponent<NetworkPoseBridge>(out var poseBridge))
         {
             poseBridge.SetPlayerRef(player);
         }
 
-        if (!_playerObjects.ContainsKey(player))
-        {
-            _playerObjects[player] = new();
-        }
-
         _playerObjects[player].Add(playerAvatar);
+
         Debug.LogWarning($"Spawned avatar for {player}; HasInputAuthority={playerAvatar.HasInputAuthority}, HasStateAuthority={playerAvatar.HasStateAuthority}");
     }
 }

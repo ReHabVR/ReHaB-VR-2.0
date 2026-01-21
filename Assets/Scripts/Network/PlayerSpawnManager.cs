@@ -36,8 +36,7 @@ public class PlayerSpawnManager : MonoBehaviour
             return null;
         }
 
-        // FIXME: temporary change for testing
-        int clampIndex = playerIndex % 2;//Mathf.Clamp(playerIndex, 0, _spawnPoints.Count - 1); 
+        int clampIndex = Mathf.Clamp(playerIndex, 0, _spawnPoints.Count - 1); 
         Transform spawnPoint = _spawnPoints[clampIndex];
         if (spawnPoint == null) 
         {
