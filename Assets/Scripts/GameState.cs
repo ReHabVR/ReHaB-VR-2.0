@@ -13,9 +13,7 @@ public class GameState : MonoBehaviour
 public class GameStateValue
 {
     public bool buttonPressed = false;
-    
 }
-
 
 [Serializable]
 public class GameControl

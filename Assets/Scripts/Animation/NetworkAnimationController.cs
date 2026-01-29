@@ -19,8 +19,24 @@ public class NetworkAnimationController : NetworkBehaviour
     [SerializeField] 
     private AnimationCommandSource currentAdapter;
 
-    [Networked] private int ClipHash { get; set; }
-    private int lastPlayedHash;
+    [Networked] 
+    private int ClipHash { get; set; }
+    [Networked] 
+    private int PlayId { get; set; }
+
+    private int _lastPlayedId;
+
+    void Awake()
+    {
+        PythonAdapter adapter = GetComponent<PythonAdapter>();
+        if (adapter == null)
+        {
+            return;
+        }
+
+        PythonSocket socket = GetComponent<PythonSocket>();
+        adapter.Bind(socket);
+    }
 
     public override void Spawned()
     {
@@ -35,9 +51,9 @@ public class NetworkAnimationController : NetworkBehaviour
         }
     }
 
-    public override void Render()
+    public void LateUpdate()
     {
-        if (ClipHash == 0 || ClipHash == lastPlayedHash)
+        if (PlayId == _lastPlayedId || ClipHash == 0)
         {
             return;
         }
@@ -49,16 +65,16 @@ public class NetworkAnimationController : NetworkBehaviour
         }
 
         animator.Play(ClipHash, 0, 0f);
-        lastPlayedHash = ClipHash;
+        _lastPlayedId = PlayId;
     }
 
     public void RequestPlay(string clipName)
     {
         int hash = Animator.StringToHash(clipName);
-
         if (Object.HasStateAuthority)
         {
             ClipHash = hash;
+            PlayId++;
         }
         else
         {
@@ -70,5 +86,6 @@ public class NetworkAnimationController : NetworkBehaviour
     private void RPC_RequestPlay(int hash)
     {
         ClipHash = hash;
+        PlayId++;
     }
 }
