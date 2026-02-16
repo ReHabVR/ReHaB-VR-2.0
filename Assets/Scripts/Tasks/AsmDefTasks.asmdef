@@ -1,0 +1,28 @@
+{
+    "name": "AsmDefTasks",
+    "rootNamespace": "",
+    "references": [
+        "AsmDefCore",
+        "AsmDefInteraction",
+        "Wave.Essence",
+        "Wave.Essence.Controller.Model",
+        "Wave.Essence.Editor",
+        "Wave.Essence.Hand.Model",
+        "Wave.Essence.InputModule",
+        "Wave.Essence.Interaction.Mode",
+        "Unity.InputSystem",
+        "Unity.TextMeshPro",
+        "Unity.XR.Interaction.Toolkit",
+        "Unity.XR.OpenXR",
+        "UnityEditor.SpatialTracking"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

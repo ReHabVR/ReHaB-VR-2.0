@@ -1,0 +1,17 @@
+{
+    "name": "AsmDefAnimation",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9efd3df33c1195345931739af0868a73",
+        "GUID:75469ad4d38634e559750d17036d5f7c"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

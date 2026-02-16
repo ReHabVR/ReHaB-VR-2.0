@@ -69,7 +69,6 @@ public class CurrentTaskManager : MonoBehaviour
         return spawnedObject;
     }
 
-
     private void DeleteAllTasks()
     {
         stopButton.SetActive(false);
@@ -81,7 +80,7 @@ public class CurrentTaskManager : MonoBehaviour
         if (spawnedObjectReference != null) 
         {
             Destroy(spawnedObjectReference);
-        }    
+        }
     }
 
     public void OnTaskButtonPressed(GameObject objectToSpawn, Vector3 pos, EGameState newState)

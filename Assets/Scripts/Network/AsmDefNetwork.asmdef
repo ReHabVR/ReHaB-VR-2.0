@@ -1,0 +1,23 @@
+{
+    "name": "AsmDefNetwork",
+    "rootNamespace": "",
+    "references": [
+        "GUID:9efd3df33c1195345931739af0868a73",
+        "GUID:0ee4d70f57ec60647969ab40c172c897",
+        "GUID:11b54744b618c0f49805f984696aa8eb",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:d9d8635f8670c0c44ba7a8140f7ac7b9",
+        "GUID:1baf1ffff1031e948b3b228ab3453251",
+        "GUID:4d449a4732e064d26a3069f2cfd88917",
+        "GUID:a10ff188cbfd201409863c062b118e1d"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": true,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

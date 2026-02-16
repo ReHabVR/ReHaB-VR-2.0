@@ -25,7 +25,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     [Header("Editor Only")]
     public bool startAsHost = false;
-    //public PlayerRole selectedRole = PlayerRole.Player;
+    public PlayerRole editorPlayerRole = PlayerRole.Player;
 
     [Header("Session Settings")]
 
@@ -89,9 +89,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         StartGameResult result = await _sessionRunner.StartGame(args);
         if (result.Ok)
         {
-//#if UNITY_EDITOR
-//LocalPlayer.LocalRole = selectedRole;
-//#endif
             if (_isHost) 
             {
                 Debug.Log($"[Fusion] Dedicated server started on {hostAddress}:{port}.");
@@ -184,8 +181,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             _playerObjects[player] = new();
         }
 
-        // Temporary workaround - assign roles by join order
-        PlayerRole role = _activePlayers.Count == 1 ? PlayerRole.Trainer : PlayerRole.Player;
+        PlayerRole role = PlayerRole.Player; // build always joins as player rig
         _playerRoles[player] = role;
 
         StartCoroutine(

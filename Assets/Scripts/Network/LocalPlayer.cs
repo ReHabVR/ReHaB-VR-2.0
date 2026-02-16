@@ -5,11 +5,6 @@ using Fusion;
 
 public class LocalPlayer : NetworkBehaviour
 {
-    public static PlayerRole LocalRole;
-
-    [Networked]
-    public PlayerRole NetworkRole { get; private set; }
-
     [SerializeField] 
     private Camera playerCamera;
     [SerializeField] 
@@ -20,20 +15,13 @@ public class LocalPlayer : NetworkBehaviour
         bool isLocal = HasInputAuthority;
 
         if (playerCamera != null)
+        {
             playerCamera.enabled = isLocal;
+        }
 
         if (audioListener != null)
-            audioListener.enabled = isLocal;
-
-        if (isLocal)
         {
-            RPC_SetRole(LocalRole);
+            audioListener.enabled = isLocal;
         }
-    }
-
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
-    private void RPC_SetRole(PlayerRole role)
-    {
-        NetworkRole = role;
     }
 }

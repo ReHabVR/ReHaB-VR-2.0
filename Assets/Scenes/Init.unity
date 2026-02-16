@@ -152,10 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0497779960ec51642870ab61936fde07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostAddress: 192.168.100.48
+  hostAddress: 192.168.1.12
   mainSceneIndex: 1
   port: 27015
   startAsHost: 0
+  editorPlayerRole: 1
   playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
     type: 3}
   trainerPrefab: {fileID: 4051770860812974642, guid: fba387262495c1e4da29fc005f433291,
