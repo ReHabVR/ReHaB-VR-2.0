@@ -2,24 +2,26 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 using System.Collections.Generic;
+using Fusion;
 
 public class TaskButton : MonoBehaviour
 {
     public GameObject button;
     public UnityEvent onPress;
     public UnityEvent onRelease;
-    public Transform spawnPositon;
-    public GameObject objectToSpawn;
+
+    public Transform spawnPoint;
+    public NetworkObject objectToSpawn;
     public int taskId;
 
     private GameObject _presser;
     private bool _isPressed = false;
-    private DateTime lastButtonClickedTimestamp = DateTime.Now;
+    private DateTime _lastButtonClickedTimestamp = DateTime.Now;
 
     public void Start()
     {
         _isPressed = false;
-        lastButtonClickedTimestamp = DateTime.Now;
+        _lastButtonClickedTimestamp = DateTime.Now;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -42,10 +44,10 @@ public class TaskButton : MonoBehaviour
             onRelease?.Invoke();
             _isPressed = false;
 
-            if (now.Subtract(lastButtonClickedTimestamp).TotalSeconds < 1.0f)
+            if (now.Subtract(_lastButtonClickedTimestamp).TotalSeconds < 1.0f)
                 return;
 
-            lastButtonClickedTimestamp = DateTime.Now;
+            _lastButtonClickedTimestamp = DateTime.Now;
         }
     }
 }

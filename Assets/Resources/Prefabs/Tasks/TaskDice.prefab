@@ -749,6 +749,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7884729631486332321}
   - component: {fileID: 8655735943916181393}
+  - component: {fileID: 4312263740993501170}
   m_Layer: 0
   m_Name: TaskDice
   m_TagString: Untagged
@@ -795,6 +796,24 @@ MonoBehaviour:
   anyDiePlaced:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4312263740993501170
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5018118611775914778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 992309042
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours: []
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &5229937808757271357
 GameObject:
   m_ObjectHideFlags: 0

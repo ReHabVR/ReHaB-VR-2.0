@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Fusion;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class CurrentTaskManager : MonoBehaviour
+public class CurrentTaskManager : NetworkBehaviour
 {
     public enum EGameState
     {
@@ -13,18 +15,31 @@ public class CurrentTaskManager : MonoBehaviour
         Dice,
         Sorting
     }
-
-    public ControllerDevice XRPlayerController;
     public List<GameObject> taskButtons = new();
     public GameObject stopButton;
 
     private EGameState gameState = EGameState.None;
-    private GameObject spawnedObjectReference;
+    private NetworkObject spawnedObjectReference;
 
     private int totalGrabsCount = -1;
     private int totalCorrectMoves = 0;
     private float startTime;
     private float endTime;
+
+    public static CurrentTaskManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null) 
+        {
+            Instance = this;
+            //DontDestroyOnLoad(gameObject);
+        }
+        else 
+        {
+            Destroy(gameObject);
+        }
+    }
 
     private void Start()
     {
@@ -34,15 +49,61 @@ public class CurrentTaskManager : MonoBehaviour
             taskButton.onRelease.AddListener(delegate{
                 OnTaskButtonPressed(
                     taskButton.objectToSpawn, 
-                    taskButton.spawnPositon.position, 
+                    taskButton.spawnPoint, 
                     (EGameState)taskButton.taskId
                 );
             });
         }
     }
 
-    private void SpawnTask(GameObject objectToSpawn, Vector3 pos)
+    #region DEBUG
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_ToggleTestTask()
     {
+        if (!Object.HasStateAuthority) 
+        {
+            return;
+        }
+
+        if (gameState == EGameState.None)
+        {
+            TaskButton sortingTask = taskButtons[0].GetComponentInChildren<TaskButton>();
+            OnTaskButtonPressed(
+                sortingTask.objectToSpawn,
+                sortingTask.spawnPoint,
+                EGameState.Sorting
+            );
+        }
+        else if (gameState == EGameState.Sorting)
+        {
+            OnStopButtonPressed();
+        }
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    public void RPC_DebugMove(bool correctMove)
+    {
+        if (!Object.HasStateAuthority) 
+        {
+            return;
+        }
+
+        IncrementGrabCount();
+        if (correctMove)
+        {
+            IncrementCorrectMovesCount();
+        }
+    }
+    #endregion
+
+    private void SpawnTask(NetworkObject objectToSpawn, Transform spawnPoint)
+    {
+        // Only server should spawn network objects
+        if (!Runner.IsServer) 
+        {
+            return;
+        }
+
         if (objectToSpawn == null)  
         {
             Debug.LogWarning("No object to spawn defined.");
@@ -55,17 +116,23 @@ public class CurrentTaskManager : MonoBehaviour
             button.SetActive(false);
         }
 
-        spawnedObjectReference = SpawnObject(objectToSpawn, pos);
+        spawnedObjectReference = SpawnObject(objectToSpawn, spawnPoint);
         stopButton.SetActive(true);
     }
 
-    private GameObject SpawnObject(GameObject obj, Vector3 pos)
+    private NetworkObject SpawnObject(NetworkObject obj, Transform spawnPoint)
     {
-        GameObject spawnedObject = Instantiate(
+        NetworkObject spawnedObject = Runner.Spawn(
             obj, 
-            pos,
-            obj.transform.rotation
+            spawnPoint.position,
+            spawnPoint.rotation
+            //null,
+            //(runner, instance) =>
+            //{
+                //instance.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
+            //}
         );
+        Debug.LogError($"Spawned at {spawnedObject.transform.position}");
         return spawnedObject;
     }
 
@@ -79,41 +146,30 @@ public class CurrentTaskManager : MonoBehaviour
 
         if (spawnedObjectReference != null) 
         {
-            Destroy(spawnedObjectReference);
+            if (spawnedObjectReference.TryGetComponent<IMinigameManager>(out IMinigameManager manager))
+            {
+                manager.OnMove -= IncrementGrabCount;
+                manager.OnCorrectMove -= IncrementCorrectMovesCount;
+            }
+
+            Runner.Despawn(spawnedObjectReference);
+            spawnedObjectReference = null;
         }
     }
 
-    public void OnTaskButtonPressed(GameObject objectToSpawn, Vector3 pos, EGameState newState)
+    public void OnTaskButtonPressed(NetworkObject objectToSpawn, Transform spawnPoint, EGameState newState)
     {
         totalGrabsCount = 0;
         totalCorrectMoves = 0;
         gameState = newState;
-        SpawnTask(objectToSpawn, pos);
-
-        switch(gameState)
+        
+        SpawnTask(objectToSpawn, spawnPoint);
+        if (spawnedObjectReference.TryGetComponent<IMinigameManager>(out var manager))
         {
-            case EGameState.Shapes:
-            {
-                ShapesManager gm = spawnedObjectReference.GetComponent<ShapesManager>();
-                gm.anyShapePlaced.AddListener(IncrementGrabCount);
-                gm.correctShapePlaced.AddListener(IncrementCorrectMovesCount);
-                break;
-            }
-            case EGameState.Dice:
-            {
-                DiceManager gm = spawnedObjectReference.GetComponent<DiceManager>();
-                gm.anyDiePlaced.AddListener(IncrementGrabCount);
-                gm.correctDiePlaced.AddListener(IncrementCorrectMovesCount);
-                break;
-            }
-            case EGameState.Sorting:
-            {
-                SortingTaskManager gm = spawnedObjectReference.GetComponent<SortingTaskManager>();
-                gm.anyBallPlaced.AddListener(IncrementGrabCount);
-                gm.correctBallPlaced.AddListener(IncrementCorrectMovesCount);
-                break;
-            }
+            manager.OnMove += IncrementGrabCount;
+            manager.OnCorrectMove += IncrementCorrectMovesCount;
         }
+
         startTime = Time.time;
     }
 

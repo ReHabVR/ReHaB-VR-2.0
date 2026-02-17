@@ -59,7 +59,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         else 
         {
             Destroy(gameObject);
-            return;
         }
     }
 

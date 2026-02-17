@@ -1,9 +1,12 @@
+using System;
+using Fusion;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit;
 
-public class SortingTaskManager : MonoBehaviour, IMinigameManager
+public class SortingTaskManager : NetworkBehaviour, IMinigameManager
 {
+    public event Action OnMove;
+    public event Action OnCorrectMove;
 
     [SerializeField]
     private GameObject ballManager;
@@ -12,15 +15,9 @@ public class SortingTaskManager : MonoBehaviour, IMinigameManager
     private BoxCollider detectorBlue;
     [SerializeField]
     private BoxCollider detectorRed;
-    [SerializeField]
-    private Material blueMaterial;
-    [SerializeField]
-    private Material redMaterial;
-    
-    public UnityEvent correctBallPlaced;
-    public UnityEvent anyBallPlaced;
     
     private const string TAG = "Ball";
+
 
     private void Start()
     {
@@ -45,7 +42,10 @@ public class SortingTaskManager : MonoBehaviour, IMinigameManager
 
     public void OnObjectPlaced(IXRSelectInteractor _interactor)
     {
-        anyBallPlaced?.Invoke();
+        if (Object.HasStateAuthority)
+        {
+            OnMove?.Invoke();
+        }
     }
 
     public void OnCollision(GameObject go, int colliderId)
@@ -55,7 +55,7 @@ public class SortingTaskManager : MonoBehaviour, IMinigameManager
         
         if (go.GetComponent<BallColor>().ColorID == colliderId)
         {
-            correctBallPlaced?.Invoke();
+            OnCorrectMove?.Invoke();
         }
     }
 }

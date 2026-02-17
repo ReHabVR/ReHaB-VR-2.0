@@ -12,9 +12,12 @@ public class DiceManager : MonoBehaviour, IMinigameManager
     public UnityEvent correctDiePlaced;
     public UnityEvent anyDiePlaced;
 
-    private List<int> pipCount = new() {1, 2, 3, 4, 5, 6};
+    private readonly List<int> pipCount = new() {1, 2, 3, 4, 5, 6};
     
     private const string TAG = "Die";
+
+    public event System.Action OnMove;
+    public event System.Action OnCorrectMove;
 
     private void Start()
     {
@@ -62,7 +65,7 @@ public class DiceManager : MonoBehaviour, IMinigameManager
 
     public void OnObjectPlaced(IXRSelectInteractor _interactor)
     {
-        anyDiePlaced?.Invoke();
+        OnMove?.Invoke();
     }
 
     public void OnCollision(GameObject go, int colliderId)
@@ -78,7 +81,7 @@ public class DiceManager : MonoBehaviour, IMinigameManager
         
         if (die.GetPipCount() == plaqueDie.GetPipCount()) 
         {
-            correctDiePlaced?.Invoke();
+            OnCorrectMove?.Invoke();
         }
     }
 

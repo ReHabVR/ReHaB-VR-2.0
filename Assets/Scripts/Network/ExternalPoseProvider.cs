@@ -37,6 +37,8 @@ public class ExternalPoseProvider : MonoBehaviour
     private float _lhandRaise;
     private float _rhandRaise;
 
+    private CurrentTaskManager _taskman;
+
     private void Awake()
     {
         _leftHandStart = lhandFallback.localPosition;
@@ -46,6 +48,8 @@ public class ExternalPoseProvider : MonoBehaviour
         lhandBridge.localPosition = _leftHandStart;
         rhandBridge.localPosition = _rightHandStart;
         headBridge.localPosition = headFallback.localPosition;        
+
+        _taskman = CurrentTaskManager.Instance;
     }
 
     public void OnSpawned()
@@ -65,7 +69,7 @@ public class ExternalPoseProvider : MonoBehaviour
         }
 
         // Left hand
-        bool raiseLeft =  Keyboard.current.qKey.isPressed;
+        bool raiseLeft = Keyboard.current.qKey.isPressed;
 
         _lhandRaise = Mathf.MoveTowards(
             _lhandRaise,
@@ -93,5 +97,26 @@ public class ExternalPoseProvider : MonoBehaviour
         // Fix head position
         headFallback.localPosition = _headStart;
         headBridge.localPosition = headFallback.localPosition;
+
+        #region DEBUG
+        if (_taskman == null)
+        {
+            return;
+        }
+        
+        if (Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            _taskman.RPC_ToggleTestTask();
+        }
+        // Debug moves
+        if (Keyboard.current.oKey.wasPressedThisFrame)
+        {
+            _taskman.RPC_DebugMove(false); // regular move
+        }
+        if (Keyboard.current.pKey.wasPressedThisFrame)
+        {
+            _taskman.RPC_DebugMove(true); // correct move
+        }
+        #endregion
     }
 }

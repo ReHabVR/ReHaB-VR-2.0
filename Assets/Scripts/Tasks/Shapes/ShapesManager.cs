@@ -17,6 +17,9 @@ public class ShapesManager : MonoBehaviour, IMinigameManager
     
     private const string TAG = "Shape";
 
+    public event System.Action OnMove;
+    public event System.Action OnCorrectMove;
+
     private void Start()
     {
         AssignProperties();
@@ -57,7 +60,7 @@ public class ShapesManager : MonoBehaviour, IMinigameManager
 
     public void OnObjectPlaced(IXRSelectInteractor _interactor)
     {
-        anyShapePlaced?.Invoke();
+        OnMove?.Invoke();
     }
 
     public void OnCollision(GameObject go, int colliderId)
@@ -68,7 +71,7 @@ public class ShapesManager : MonoBehaviour, IMinigameManager
 
         if (go.GetComponent<ShapeIdentifier>().ShapeType == colliderId)
         {
-            correctShapePlaced?.Invoke();
+            OnCorrectMove?.Invoke();
         }
     }
 

@@ -1,17 +1,37 @@
+using Fusion;
 using UnityEngine;
 
-public class BallColor : MonoBehaviour
+[RequireComponent(typeof(Renderer))]
+public class BallColor : NetworkBehaviour
 {
-    public enum Color {
-        Blue = 0,
-        Red = 1
+    public enum Color 
+    { 
+        Blue = 0, 
+        Red = 1 
     }
-    
-    private Color colorId;
 
-    public int ColorID
+    [Networked]
+    public int ColorID { get; set; }
+
+    public Material blueMaterial;
+    public Material redMaterial;
+
+    private Renderer _renderer;
+
+    void Awake()
     {
-        get { return (int)colorId; }
-        set { colorId = (Color)value; } 
+        _renderer = GetComponent<Renderer>();
+    }
+
+    void Start()
+    {
+        if (ColorID == (int)Color.Blue)
+        {
+            _renderer.material = blueMaterial;
+        }
+        else
+        {
+            _renderer.material = redMaterial;
+        }
     }
 }

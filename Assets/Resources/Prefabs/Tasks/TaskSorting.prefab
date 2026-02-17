@@ -106,6 +106,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2521734065910008523}
+  - component: {fileID: 3590674036478923248}
   - component: {fileID: 7403004161459687168}
   - component: {fileID: 3989842112167483249}
   - component: {fileID: 943252830769047262}
@@ -136,6 +137,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3590674036478923248
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 381229478392244537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &7403004161459687168
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -236,6 +254,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -266,6 +285,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -325,6 +356,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -386,6 +421,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &544445914222485363
 GameObject:
   m_ObjectHideFlags: 0
@@ -589,6 +627,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8003360641870523880}
+  - component: {fileID: 5099862614766177437}
   - component: {fileID: 8493857990261845992}
   - component: {fileID: 1758936968335206034}
   - component: {fileID: 1121028759625730881}
@@ -619,6 +658,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5099862614766177437
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1048202099472339801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &8493857990261845992
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -719,6 +775,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -749,6 +806,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -808,6 +877,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -869,6 +942,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &1301405719611566753
 GameObject:
   m_ObjectHideFlags: 0
@@ -878,6 +954,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5315178526805754982}
+  - component: {fileID: 4401344398620398147}
   - component: {fileID: 7370118393607510826}
   - component: {fileID: 3488327121285979351}
   - component: {fileID: 3845924574835974284}
@@ -908,6 +985,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4401344398620398147
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301405719611566753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &7370118393607510826
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1008,6 +1102,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -1038,6 +1133,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -1097,6 +1204,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -1158,6 +1269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &1523948237833670001
 GameObject:
   m_ObjectHideFlags: 0
@@ -1229,6 +1343,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1051349538211960308}
+  - component: {fileID: 3434849849614656186}
   - component: {fileID: 9217774972785026550}
   - component: {fileID: 5751175499357200670}
   - component: {fileID: 6306528799512591444}
@@ -1259,6 +1374,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3434849849614656186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1637300577273162414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &9217774972785026550
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1359,6 +1491,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -1389,6 +1522,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -1448,6 +1593,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -1509,6 +1658,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &1657399518017975850
 GameObject:
   m_ObjectHideFlags: 0
@@ -1848,6 +2000,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4411749381100886345}
   - component: {fileID: 7884164148657262262}
+  - component: {fileID: 2365456572274881044}
+  - component: {fileID: 8629593843409155601}
   m_Layer: 0
   m_Name: TaskSorting
   m_TagString: Untagged
@@ -1863,7 +2017,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2761944668548929211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1889,14 +2043,64 @@ MonoBehaviour:
   ballManager: {fileID: 6805287887828920544}
   detectorBlue: {fileID: 8771861965274749447}
   detectorRed: {fileID: 3782686966981848833}
-  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
-  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
-  correctBallPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  anyBallPlaced:
-    m_PersistentCalls:
-      m_Calls: []
+--- !u!114 &2365456572274881044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761944668548929211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 4199141978
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 7884164148657262262}
+  - {fileID: 8629593843409155601}
+  - {fileID: 1852830170818121514}
+  - {fileID: 881244197598995706}
+  - {fileID: 8871541234445217565}
+  - {fileID: 5099862614766177437}
+  - {fileID: 8448473521492485681}
+  - {fileID: 9113354198362799258}
+  - {fileID: 7859567114286165662}
+  - {fileID: 3267594387734984922}
+  - {fileID: 208122895488873256}
+  - {fileID: 5247942176306250870}
+  - {fileID: 5512925547708507395}
+  - {fileID: 3434849849614656186}
+  - {fileID: 2961287851290921380}
+  - {fileID: 4383972203025508709}
+  - {fileID: 4028191463624083017}
+  - {fileID: 4401344398620398147}
+  - {fileID: 5889228630405554310}
+  - {fileID: 5641498041444988601}
+  - {fileID: 3142562128328222191}
+  - {fileID: 3590674036478923248}
+  - {fileID: 852993968601106066}
+  ForceRemoteRenderTimeframe: 0
+--- !u!114 &8629593843409155601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2761944668548929211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!1 &3017525704977470993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2453,6 +2657,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3250538172206410602}
+  - component: {fileID: 881244197598995706}
   - component: {fileID: 5936949040445667481}
   - component: {fileID: 2401891705735346748}
   - component: {fileID: 2445911855110365127}
@@ -2483,6 +2688,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &881244197598995706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4532564962007570965}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &5936949040445667481
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -2583,6 +2805,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -2613,6 +2836,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -2672,6 +2907,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -2733,6 +2972,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &4573201342463415635
 GameObject:
   m_ObjectHideFlags: 0
@@ -2974,6 +3216,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1822197358113131364}
+  - component: {fileID: 4383972203025508709}
   - component: {fileID: 4706454866889306938}
   - component: {fileID: 2932922392793402681}
   - component: {fileID: 4924620543881756249}
@@ -3004,6 +3247,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4383972203025508709
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5415948713035882786}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &4706454866889306938
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3104,6 +3364,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -3134,6 +3395,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -3193,6 +3466,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -3254,6 +3531,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &5555387277706256272
 GameObject:
   m_ObjectHideFlags: 0
@@ -3263,6 +3543,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8283495022911592735}
+  - component: {fileID: 5641498041444988601}
   - component: {fileID: 7734629808695289201}
   - component: {fileID: 2150914002313179686}
   - component: {fileID: 5090789379767205375}
@@ -3293,6 +3574,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5641498041444988601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5555387277706256272}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &7734629808695289201
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3393,6 +3691,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -3423,6 +3722,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -3482,6 +3793,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -3543,6 +3858,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &6047541502854124352
 GameObject:
   m_ObjectHideFlags: 0
@@ -3649,6 +3967,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6127440443234713997}
+  - component: {fileID: 3267594387734984922}
   - component: {fileID: 1439660772256154000}
   - component: {fileID: 2496156480623808168}
   - component: {fileID: 5583645949408737366}
@@ -3679,6 +3998,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3267594387734984922
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6238505460088125989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &1439660772256154000
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3779,6 +4115,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -3809,6 +4146,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -3868,6 +4217,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -3929,6 +4282,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &6805287887828920544
 GameObject:
   m_ObjectHideFlags: 0
@@ -3983,8 +4339,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8696cebf79c0a94e95e2b72b05a7de5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
-  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
   blueCount: 5
   redCount: 5
 --- !u!1 &7380288663614058149
@@ -4093,6 +4447,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1415743879410104643}
+  - component: {fileID: 5247942176306250870}
   - component: {fileID: 1350500199192996922}
   - component: {fileID: 2286010294684573397}
   - component: {fileID: 3623616641025628589}
@@ -4123,6 +4478,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5247942176306250870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7428834153585706629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &1350500199192996922
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4223,6 +4595,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -4253,6 +4626,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -4312,6 +4697,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -4373,6 +4762,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &7608617564664078133
 GameObject:
   m_ObjectHideFlags: 0
@@ -4382,6 +4774,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7523989750741793366}
+  - component: {fileID: 9113354198362799258}
   - component: {fileID: 5947366713644287952}
   - component: {fileID: 5165840346481161350}
   - component: {fileID: 8801835889570550024}
@@ -4412,6 +4805,23 @@ Transform:
   m_Father: {fileID: 5721376578369302526}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9113354198362799258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7608617564664078133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &5947366713644287952
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -4512,6 +4922,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   m_DistanceCalculationMode: 1
   m_SelectMode: 0
+  m_FocusMode: 1
   m_CustomReticle: {fileID: 0}
   m_AllowGazeInteraction: 0
   m_AllowGazeSelect: 0
@@ -4542,6 +4953,18 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_SelectExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FirstFocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_LastFocusExited:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusEntered:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FocusExited:
     m_PersistentCalls:
       m_Calls: []
   m_Activated:
@@ -4601,6 +5024,10 @@ MonoBehaviour:
   m_SmoothRotation: 1
   m_SmoothRotationAmount: 5
   m_TightenRotation: 0.5
+  m_TrackScale: 1
+  m_SmoothScale: 0
+  m_SmoothScaleAmount: 8
+  m_TightenScale: 0.1
   m_ThrowOnDetach: 1
   m_ThrowSmoothingDuration: 0.25
   m_ThrowSmoothingCurve:
@@ -4662,6 +5089,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb1fe550e1b25bb47869ae60c7e2dd8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ColorID: 0
+  blueMaterial: {fileID: 2100000, guid: 5e6dfcc5e98c8194b9919f05718035d4, type: 2}
+  redMaterial: {fileID: 2100000, guid: 78894a7e182f0e84f88c446a5000e63f, type: 2}
 --- !u!1 &8062749188013846848
 GameObject:
   m_ObjectHideFlags: 0
