@@ -40,9 +40,10 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkSceneManagerDefault _sceneManager;
     private NetworkPoseBridge _localPlayerBridge;
 
-    private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
     private readonly List<PlayerRef> _activePlayers = new();
+    private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
     private readonly Dictionary<PlayerRef, PlayerRole> _playerRoles = new();
+    private readonly Queue<PlayerRole> _pendingRoles = new();
 
     private bool _sceneLoaded = false;
 
@@ -76,13 +77,16 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
         Debug.LogWarning($"[Fusion] runner.ProvideInput: {_sessionRunner.ProvideInput}, runner.Mode={_sessionRunner.GameMode}");
 
+        PlayerRole localRole = ResolvePlayerRole();
+
         StartGameArgs args = new()
         {
             GameMode = _isHost ? GameMode.Server : GameMode.Client,
             Address = _isHost ? NetAddress.Any(port) : NetAddress.CreateFromIpPort(hostAddress, port),
             Scene = SceneRef.FromIndex(mainSceneIndex),
             SceneManager = _sceneManager,
-            DisableNATPunchthrough = true
+            DisableNATPunchthrough = true,
+            ConnectionToken = BitConverter.GetBytes((int)localRole) // convert into binary token
         };
         Debug.Log(args);
 
@@ -114,7 +118,19 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token)
     {
-        //throw new NotImplementedException();
+        if (!runner.IsServer)
+        {
+            return;
+        }
+
+        PlayerRole role = PlayerRole.Player; // fallback
+        if (token != null && token.Length >= 4)
+        {
+            role = (PlayerRole)BitConverter.ToInt32(token, 0);
+        }
+
+        _pendingRoles.Enqueue(role);
+        request.Accept();
     }
 
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data)
@@ -181,7 +197,13 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             _playerObjects[player] = new();
         }
 
-        PlayerRole role = PlayerRole.Player; // build always joins as player rig
+        PlayerRole role = PlayerRole.Player;
+
+        if (_pendingRoles.Count > 0)
+        {
+            role = _pendingRoles.Dequeue();
+        }
+
         _playerRoles[player] = role;
 
         StartCoroutine(
@@ -275,6 +297,15 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         return false;
     #endif
 #endif
+    }
+
+    private PlayerRole ResolvePlayerRole()
+    {
+    #if UNITY_EDITOR
+        return editorPlayerRole;
+    #else
+        return PlayerRole.Player; // VR build is always Player
+    #endif
     }
 
     private IEnumerator SpawnDeferred(PlayerRef player, int playerIndex)
