@@ -22,7 +22,7 @@ public class SortingTaskManager : NetworkBehaviour, IMinigameManager
     private void Start()
     {
         AssignProperties();
-        ConnectNotifiers();
+        //ConnectNotifiers();
     }
     
     public void AssignProperties() 
@@ -42,16 +42,37 @@ public class SortingTaskManager : NetworkBehaviour, IMinigameManager
 
     public void OnObjectPlaced(IXRSelectInteractor _interactor)
     {
-        if (Object.HasStateAuthority)
+        OnMove?.Invoke();
+
+        // HACK: Physics are server sided, so we cannot use OnCollision on clients
+        if (_interactor.transform.TryGetComponent(out BallColor ball))
         {
-            OnMove?.Invoke();
+            Vector3 ballPos = ball.transform.position;
+            int zoneID = -1;
+            if (detectorBlue.bounds.Contains(ballPos))
+            {
+                zoneID = 0;
+            }
+            if (detectorRed.bounds.Contains(ballPos))
+            {
+                zoneID = 1;
+            }
+            if (zoneID != -1 && ball.ColorID == zoneID)
+            {
+                OnCorrectMove?.Invoke();
+            }
         }
     }
 
+    // This fires only on server.
     public void OnCollision(GameObject go, int colliderId)
     {
+        return; // Temporary solution
+
         if (!go.CompareTag(TAG))
+        {
             return;
+        }
         
         if (go.GetComponent<BallColor>().ColorID == colliderId)
         {

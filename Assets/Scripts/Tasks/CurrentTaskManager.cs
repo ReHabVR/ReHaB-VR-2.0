@@ -1,10 +1,9 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using Fusion;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class CurrentTaskManager : NetworkBehaviour
 {
@@ -15,16 +14,17 @@ public class CurrentTaskManager : NetworkBehaviour
         Dice,
         Sorting
     }
+
+    public event Action OnTaskStarted;
+    public event Action OnMove;
+    public event Action OnCorrectMove;
+    public event Action OnTaskStopped;
+
     public List<GameObject> taskButtons = new();
     public GameObject stopButton;
 
     private EGameState gameState = EGameState.None;
     private NetworkObject spawnedObjectReference;
-
-    private int totalGrabsCount = -1;
-    private int totalCorrectMoves = 0;
-    private float startTime;
-    private float endTime;
 
     public static CurrentTaskManager Instance { get; private set; }
 
@@ -46,17 +46,19 @@ public class CurrentTaskManager : NetworkBehaviour
         foreach (GameObject go in taskButtons)
         {
             TaskButton taskButton = go.GetComponentInChildren<TaskButton>();
-            taskButton.onRelease.AddListener(delegate{
-                OnTaskButtonPressed(
-                    taskButton.objectToSpawn, 
-                    taskButton.spawnPoint, 
-                    (EGameState)taskButton.taskId
-                );
+            taskButton.onRelease.AddListener(delegate {
+                if (Runner.IsServer) {
+                    OnTaskButtonPressed(
+                        taskButton.objectToSpawn, 
+                        taskButton.spawnPoint, 
+                        (EGameState)taskButton.taskId
+                    );
+                }
             });
         }
     }
 
-    #region DEBUG
+#region DEBUG
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_ToggleTestTask()
     {
@@ -80,25 +82,19 @@ public class CurrentTaskManager : NetworkBehaviour
         }
     }
 
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_DebugMove(bool correctMove)
+    public void DebugMove(bool correctMove)
     {
-        if (!Object.HasStateAuthority) 
-        {
-            return;
-        }
-
         IncrementGrabCount();
         if (correctMove)
         {
             IncrementCorrectMovesCount();
         }
     }
-    #endregion
+#endregion
 
     private void SpawnTask(NetworkObject objectToSpawn, Transform spawnPoint)
     {
-        // Only server should spawn network objects
+        // Only server spawns network objects
         if (!Runner.IsServer) 
         {
             return;
@@ -116,24 +112,13 @@ public class CurrentTaskManager : NetworkBehaviour
             button.SetActive(false);
         }
 
-        spawnedObjectReference = SpawnObject(objectToSpawn, spawnPoint);
-        stopButton.SetActive(true);
-    }
-
-    private NetworkObject SpawnObject(NetworkObject obj, Transform spawnPoint)
-    {
-        NetworkObject spawnedObject = Runner.Spawn(
-            obj, 
+        spawnedObjectReference = Runner.Spawn(
+            objectToSpawn, 
             spawnPoint.position,
             spawnPoint.rotation
-            //null,
-            //(runner, instance) =>
-            //{
-                //instance.transform.SetPositionAndRotation(spawnPoint.position, spawnPoint.rotation);
-            //}
         );
-        Debug.LogError($"Spawned at {spawnedObject.transform.position}");
-        return spawnedObject;
+
+        stopButton.SetActive(true);
     }
 
     private void DeleteAllTasks()
@@ -146,77 +131,49 @@ public class CurrentTaskManager : NetworkBehaviour
 
         if (spawnedObjectReference != null) 
         {
-            if (spawnedObjectReference.TryGetComponent<IMinigameManager>(out IMinigameManager manager))
+            if (Runner.IsServer)
             {
-                manager.OnMove -= IncrementGrabCount;
-                manager.OnCorrectMove -= IncrementCorrectMovesCount;
+                Runner.Despawn(spawnedObjectReference);
             }
 
-            Runner.Despawn(spawnedObjectReference);
             spawnedObjectReference = null;
         }
     }
 
     public void OnTaskButtonPressed(NetworkObject objectToSpawn, Transform spawnPoint, EGameState newState)
     {
-        totalGrabsCount = 0;
-        totalCorrectMoves = 0;
-        gameState = newState;
-        
-        SpawnTask(objectToSpawn, spawnPoint);
-        if (spawnedObjectReference.TryGetComponent<IMinigameManager>(out var manager))
+        if (Runner.IsServer)
         {
-            manager.OnMove += IncrementGrabCount;
-            manager.OnCorrectMove += IncrementCorrectMovesCount;
+            SpawnTask(objectToSpawn, spawnPoint);
+            RPC_TaskStarted(newState);
         }
-
-        startTime = Time.time;
     }
-
+    
     public void OnStopButtonPressed()
     {
-        endTime = Time.time;
-        DeleteAllTasks();
-        SaveResults();
+        if (Runner.IsServer)
+        {
+            DeleteAllTasks();
+            RPC_TaskStopped();
+        }
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_TaskStarted(EGameState newState)
+    {
+        gameState = newState;
+        OnTaskStarted?.Invoke();
+    }
+
+    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+    private void RPC_TaskStopped()
+    {
+        OnTaskStopped?.Invoke();
         gameState = EGameState.None;
     }
 
-    private void IncrementGrabCount() 
-    {
-        totalGrabsCount++;
-    }
+    public EGameState GetGameState() => gameState;
 
-    private void IncrementCorrectMovesCount() 
-    {
-        totalCorrectMoves++; 
-    }
-
-    private void SaveResults() 
-    {
-        string fname =  DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss") + "_" + Enum.GetName(typeof(EGameState), (int)gameState) + ".txt";
-        string path = Path.Combine(Application.persistentDataPath, fname);
-
-        // Task data
-        string timeElapsed = $"Time elapsed: {endTime - startTime:F2} sec.";
-        string totalMoves = $"Total moves: {totalGrabsCount}";
-        string correctMoves = $"Correct moves: {totalCorrectMoves}";
-        string accuracy = "";
-        if (totalGrabsCount > 0)
-        {
-            accuracy = $"Accuracy: {100.0f * totalCorrectMoves / (totalGrabsCount * 1.0f):F2}%";
-        }
-
-        StringBuilder sb = new StringBuilder()
-            .AppendLine(timeElapsed)
-            .AppendLine(totalMoves)
-            .AppendLine(correctMoves)
-            .AppendLine(accuracy);
-
-        using (StreamWriter file = new(File.Open(path, FileMode.Append))) 
-        {
-            file.Write(sb.ToString());
-        }
-
-        Debug.Log(sb.ToString());
-    }
+    private void IncrementGrabCount() => OnMove?.Invoke();
+    private void IncrementCorrectMovesCount() => OnCorrectMove?.Invoke();
 }

@@ -9,12 +9,9 @@ public class ExternalPoseProvider : MonoBehaviour
     private NetworkPoseBridge networkPoseBridge;
 
     [Header("Bridge Transforms")]
-    [SerializeField] 
-    private Transform lhandBridge;
-    [SerializeField] 
-    private Transform rhandBridge;
-    [SerializeField]
-    private Transform headBridge;
+    public Transform lhandBridge;
+    public Transform rhandBridge;
+    public Transform headBridge;
 
     [Header("Fallback Transforms")]
     [SerializeField] 
@@ -111,11 +108,11 @@ public class ExternalPoseProvider : MonoBehaviour
         // Debug moves
         if (Keyboard.current.oKey.wasPressedThisFrame)
         {
-            _taskman.RPC_DebugMove(false); // regular move
+            _taskman.DebugMove(false); // regular move
         }
         if (Keyboard.current.pKey.wasPressedThisFrame)
         {
-            _taskman.RPC_DebugMove(true); // correct move
+            _taskman.DebugMove(true); // correct move
         }
         #endregion
     }

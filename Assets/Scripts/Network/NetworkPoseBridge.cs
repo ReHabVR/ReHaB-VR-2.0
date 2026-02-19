@@ -103,7 +103,12 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Render()
     {
-        PoseData renderedPose = HasInputAuthority ? _localPose : NetworkPose;
+        // _localPose = local motion for the player
+        // NetworkPose = pose replicated to other peers (what the server "sees")
+        // renderedPose = what the client sees in VR
+        // For local movement, use _localPose - for the other player, renderedPose is NetworkPose with compensation
+
+        PoseData renderedPose = HasInputAuthority ? _localPose : ApplyCompensation(NetworkPose);
         
         bridgeHead.SetPositionAndRotation(renderedPose.headPos, renderedPose.headRot);
         bridgeLeftHand.SetPositionAndRotation(renderedPose.lhandPos, renderedPose.lhandRot);
@@ -113,6 +118,12 @@ public class NetworkPoseBridge : NetworkBehaviour
     public PoseData GetLocalPose() => _localPose;
     public void SetLocalPose(PoseData pose) { _localPose = pose; }
     public void SetPlayerRef(PlayerRef player) { _playerRef = player; }
+
+    private PoseData ApplyCompensation(PoseData networkPose)
+    {
+        // TODO: Prediction model
+        return networkPose;
+    }
 
     private IEnumerator QueryXRState()
     {
