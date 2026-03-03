@@ -1605,7 +1605,6 @@ GameObject:
   - component: {fileID: 1247743860111985386}
   - component: {fileID: 7072487621954724273}
   - component: {fileID: 2416044460402105366}
-  - component: {fileID: 8168282258518950340}
   m_Layer: 0
   m_Name: Renderer Camera
   m_TagString: MainCamera
@@ -1722,21 +1721,6 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!114 &8168282258518950340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7795041217175930721}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1de2dc87b4956684d959b9f4763cea81, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  getFovFromHeadset: 0
-  mainCamera: {fileID: 27148098970488341}
-  secondaryCamera: {fileID: 1247743860111985386}
 --- !u!1 &7939974524546339047
 GameObject:
   m_ObjectHideFlags: 0

@@ -155,13 +155,17 @@ MonoBehaviour:
   hostAddress: 192.168.1.12
   mainSceneIndex: 1
   port: 27015
+  simulatedLatency: 0
+  simulatedJitter: 0
   startAsHost: 0
-  editorPlayerRole: 0
+  localPlayerRole: 0
   playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
     type: 3}
   trainerPrefab: {fileID: 4051770860812974642, guid: fba387262495c1e4da29fc005f433291,
     type: 3}
   playerState: {fileID: 5102999956502205173, guid: faa8d2fcbca07354e87216e688828779,
+    type: 3}
+  latencyControllerPrefab: {fileID: 6992223513944181068, guid: 88c1bfd5ed6cb324398915f1b110427a,
     type: 3}
 --- !u!4 &1167505159
 Transform:

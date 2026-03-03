@@ -4,6 +4,12 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using System.Collections;
+using System.IO;
+#if UNITY_SERVER
+using System.Collections.Concurrent;
+using System.Threading;
+using System.Threading.Tasks;
+#endif
 
 public enum PlayerRole
 {
@@ -14,20 +20,25 @@ public enum PlayerRole
 public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 {
     [Header("Initialization")]
-
-    [Tooltip("LAN host IP")]
     public string hostAddress = "192.168.1.12"; 
 
-    [Tooltip("Needs to match build index.")]
+    [HideInInspector]
     public int mainSceneIndex = 1;
 
     public ushort port = 27015;
 
-    [Header("Editor Only")]
+    [Header("Simulated Network Latency")]
+    [Range(0, 100)]
+    public uint simulatedLatency = 0;
+    [Range(0, 20)]
+    public uint simulatedJitter = 0;
+
+
+    [HideInInspector]
     public bool startAsHost = false;
-    public PlayerRole editorPlayerRole = PlayerRole.Player;
 
     [Header("Session Settings")]
+    public PlayerRole localPlayerRole = PlayerRole.Player;
 
     [SerializeField]
     private NetworkObject playerPrefab;
@@ -35,10 +46,18 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkObject trainerPrefab;
     [SerializeField]
     private NetworkObject playerState;
+    [SerializeField]
+    private NetworkObject latencyControllerPrefab;
 
     private NetworkRunner _sessionRunner;
     private NetworkSceneManagerDefault _sceneManager;
     private NetworkPoseBridge _localPlayerBridge;
+    private ServerLatencyController _latencyController;
+
+#if UNITY_SERVER
+    private readonly ConcurrentQueue<string> _consoleQueue = new();
+    private int _hasPendingCommands_Interlocked = 0; // 0 = false, 1 = true; atomic
+#endif
 
     private readonly List<PlayerRef> _activePlayers = new();
     private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
@@ -74,9 +93,12 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         _sessionRunner.ProvideInput = !_isHost;
         _sessionRunner.AddCallbacks(this);
 
-        Debug.LogWarning($"[Fusion] runner.ProvideInput: {_sessionRunner.ProvideInput}, runner.Mode={_sessionRunner.GameMode}");
+        if (!_isHost)
+        {
+            LoadConfig();
+        }
 
-        PlayerRole localRole = ResolvePlayerRole();
+        Debug.LogWarning($"[Fusion] runner.ProvideInput: {_sessionRunner.ProvideInput}, runner.Mode={_sessionRunner.GameMode}");
 
         StartGameArgs args = new()
         {
@@ -85,13 +107,17 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             Scene = SceneRef.FromIndex(mainSceneIndex),
             SceneManager = _sceneManager,
             DisableNATPunchthrough = true,
-            ConnectionToken = BitConverter.GetBytes((int)localRole) // convert into binary token
+            ConnectionToken = BitConverter.GetBytes((int)localPlayerRole) // convert into binary token
         };
         Debug.Log(args);
 
         StartGameResult result = await _sessionRunner.StartGame(args);
         if (result.Ok)
         {
+        #if UNITY_SERVER
+            StartConsoleHandler();
+        #endif
+
             if (_isHost) 
             {
                 Debug.Log($"[Fusion] Dedicated server started on {hostAddress}:{port}.");
@@ -100,8 +126,38 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         else
         {
             Debug.LogError("[Fusion] Connection failed: " + result.ShutdownReason);
-            // TODO: show a retry popup
         }
+    }
+#if UNITY_SERVER
+    private void Update()
+    {
+        // Only enter if signaled
+        if (Interlocked.Exchange(ref _hasPendingCommands_Interlocked, 0) == 1)
+        {
+            while (_consoleQueue.TryDequeue(out string command))
+            {
+                HandleCommand(command);
+            }
+        }
+    }
+#endif
+
+    private void StartConsoleHandler()
+    {
+    #if UNITY_SERVER
+        Task.Run(() =>
+        {
+            while (true)
+            {
+                string input = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(input))
+                {
+                    _consoleQueue.Enqueue(input.Trim());
+                    Interlocked.Exchange(ref _hasPendingCommands_Interlocked, 1);
+                }
+            }
+        });
+    #endif
     }
     
 #region INetworkRunnerCallbacks
@@ -245,6 +301,11 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
+        if (_sessionRunner.IsServer && _latencyController == null)
+        {
+            _latencyController = _sessionRunner.Spawn(latencyControllerPrefab).GetComponent<ServerLatencyController>();
+        }
+
         _sceneLoaded = true;
     }
 
@@ -298,15 +359,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 #endif
     }
 
-    private PlayerRole ResolvePlayerRole()
-    {
-    #if UNITY_EDITOR
-        return editorPlayerRole;
-    #else
-        return PlayerRole.Player; // VR build is always Player
-    #endif
-    }
-
     private IEnumerator SpawnDeferred(PlayerRef player, int playerIndex)
     {
         yield return new WaitUntil(() =>
@@ -354,4 +406,59 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
         Debug.LogWarning($"Spawned avatar for {player}; HasInputAuthority={playerAvatar.HasInputAuthority}, HasStateAuthority={playerAvatar.HasStateAuthority}");
     }
+
+    private void LoadConfig()
+    {
+    #if UNITY_STANDALONE_WIN
+        string path = Path.Combine(Application.dataPath, "../ConnectionConfig.json");
+        if (File.Exists(path))
+        {
+            string json = File.ReadAllText(path);
+            ConnectionConfig config = JsonUtility.FromJson<ConnectionConfig>(json);
+            hostAddress = config.serverIP;
+            port = (ushort)config.serverPort;
+            localPlayerRole = config.isTrainer ? PlayerRole.Trainer : PlayerRole.Player;
+        }
+        else
+        {
+            Debug.LogWarning("ConnectionConfig.json not found; using inspector values.");
+        }
+    #else
+        // HMD builds use whatever is set in Inspector
+        return;
+    #endif
+    }
+
+    private void HandleCommand(string command)
+    {
+    #if UNITY_SERVER
+        string[] parts = command.Split(' ');
+
+        if (parts.Length >= 2 && parts[0] == "lat")
+        {
+            if (int.TryParse(parts[1], out int latency))
+            {
+                int jitter = 0;
+                if (parts.Length >= 3)
+                {
+                    int.TryParse(parts[2], out jitter);
+                }
+
+                latency = Mathf.Clamp(latency, 0, 100);
+                jitter = Mathf.Clamp(jitter, 0, 100);
+
+                _latencyController.RPC_SetSimulatedLatency(latency, jitter);
+                Debug.Log($"[SERVER] Latency {latency} ms | Jitter {jitter} ms");
+            }
+        }
+    #endif
+    }
+}
+
+[Serializable]
+public class ConnectionConfig
+{
+    public string serverIP = "127.0.0.1";
+    public int serverPort = 27015;
+    public bool isTrainer = false;
 }
