@@ -417,7 +417,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             ConnectionConfig config = JsonUtility.FromJson<ConnectionConfig>(json);
             hostAddress = config.serverIP;
             port = (ushort)config.serverPort;
-            localPlayerRole = config.isTrainer ? PlayerRole.Trainer : PlayerRole.Player;
+            localPlayerRole = config.joinAsTrainer ? PlayerRole.Trainer : PlayerRole.Player;
         }
         else
         {
@@ -460,5 +460,5 @@ public class ConnectionConfig
 {
     public string serverIP = "127.0.0.1";
     public int serverPort = 27015;
-    public bool isTrainer = false;
+    public bool joinAsTrainer = false;
 }
