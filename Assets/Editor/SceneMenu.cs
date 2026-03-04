@@ -2,27 +2,27 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace EditorTools
+namespace Editor
 {
     [InitializeOnLoad]
     public static class SceneMenu
-    {                
+    {
         static SceneMenu() {}
 
-        [MenuItem("Scenes/Join Session")]
+        [MenuItem("ReHaB/Join Session")]
         private static void JoinSession()
         {
             EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
             EditorApplication.isPlaying = true;
         }
 
-        [MenuItem("Scenes/Go To/Init Scene")]
+        [MenuItem("ReHaB/Go To Scene/Init Scene")]
         private static void OpenInitScene()
         {
             EditorSceneManager.OpenScene("Assets/Scenes/Init.unity", OpenSceneMode.Single);
         }
 
-        [MenuItem("Scenes/Go To/Room Scene")]
+        [MenuItem("ReHaB/Go To Scene/Room Scene")]
         private static void OpenRoomScene()
         {
             EditorSceneManager.OpenScene("Assets/Scenes/Scena_Rehab.unity", OpenSceneMode.Single);
