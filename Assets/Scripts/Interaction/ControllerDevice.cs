@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Events;
 using System.Text;
 using Fusion;
+using System.Collections;
 
 public class ControllerDevice : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class ControllerDevice : MonoBehaviour
     public GameObject cameraOffset;
     public GameObject mainCamera;
     public Transform defaultPos;
-    public TrackingOriginModeFlags trackingMode = TrackingOriginModeFlags.Floor;
+    public TrackingOriginModeFlags trackingMode = TrackingOriginModeFlags.Device;
     
     [SerializeField]
     private float _pressDelay = 1.5f;
@@ -29,15 +30,25 @@ public class ControllerDevice : MonoBehaviour
     private float _lastPressed = 0.0f;
     
     
-    void Start()
+    IEnumerator Start()
     {
+        TryGetDevices();
+
+        yield return new WaitUntil(() =>
+            XRGeneralSettings.Instance != null &&
+            XRGeneralSettings.Instance.Manager != null &&
+            XRGeneralSettings.Instance.Manager.activeLoader != null
+        );
+
         XRInputSubsystem xrInput = XRGeneralSettings.Instance.Manager.activeLoader.GetLoadedSubsystem<XRInputSubsystem>();
         if (xrInput != null)
         {
             xrInput.TrySetTrackingOriginMode(trackingMode);
         }
-
-        TryGetDevices();
+        else
+        {
+            Debug.LogError("Failed to get XR Input Subsystem!");
+        }
     }
 
     public bool DevicesDetected => _targetDeviceDetectedL && _targetDeviceDetectedR;
