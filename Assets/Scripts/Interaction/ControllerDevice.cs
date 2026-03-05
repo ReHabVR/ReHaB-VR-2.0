@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using UnityEngine.XR.Management;
 using TMPro;
 using UnityEngine.Events;
 using System.Text;
@@ -13,6 +14,7 @@ public class ControllerDevice : MonoBehaviour
     public GameObject cameraOffset;
     public GameObject mainCamera;
     public Transform defaultPos;
+    public TrackingOriginModeFlags trackingMode = TrackingOriginModeFlags.Floor;
     
     [SerializeField]
     private float _pressDelay = 1.5f;
@@ -29,6 +31,12 @@ public class ControllerDevice : MonoBehaviour
     
     void Start()
     {
+        XRInputSubsystem xrInput = XRGeneralSettings.Instance.Manager.activeLoader.GetLoadedSubsystem<XRInputSubsystem>();
+        if (xrInput != null)
+        {
+            xrInput.TrySetTrackingOriginMode(trackingMode);
+        }
+
         TryGetDevices();
     }
 

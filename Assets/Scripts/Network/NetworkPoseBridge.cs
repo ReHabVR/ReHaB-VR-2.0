@@ -90,12 +90,17 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority || !IsReady)
+        if (!IsReady)
         { 
             return;
         }
 
-        if (Runner.TryGetInputForPlayer<PoseInput>(Object.InputAuthority, out var input))
+        if (HasInputAuthority)
+        {
+            _localPose = GetPose();
+        }
+
+        if (HasStateAuthority && Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
         {
             NetworkPose = input.pose;
         }
