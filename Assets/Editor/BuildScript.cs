@@ -15,6 +15,11 @@ namespace Editor
         [MenuItem("ReHaB/Build/Dedicated Server")]
         public static void BuildServer()
         {
+            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows)
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
+            }
+
             string path = "Build/DedicatedServer/Server.exe";
             if (Directory.Exists(Path.GetDirectoryName(path)))
             {
@@ -30,7 +35,18 @@ namespace Editor
                 subtarget = (int)StandaloneBuildSubtarget.Server,
                 //options = BuildOptions.Development
             };
-            BuildPipeline.BuildPlayer(buildPlayerOptions);
+
+            BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+            BuildSummary summary = report.summary;
+
+            if (summary.result == BuildResult.Succeeded)
+            {
+                Debug.Log($"Dedicated Server build succeeded: {summary.totalSize / 1024 / 1024} MB");
+            }
+            else
+            {
+                Debug.LogError("Dedicated Server build failed.");
+            }
         }
 
         [MenuItem("ReHaB/Build/Client (Android VR)")]
@@ -61,17 +77,22 @@ namespace Editor
 
             if (summary.result == BuildResult.Succeeded)
             {
-                Debug.Log($"Android build succeeded: {summary.totalSize / 1024 / 1024} MB");
+                Debug.Log($"Android VR build succeeded: {summary.totalSize / 1024 / 1024} MB");
             }
             else
             {
-                Debug.LogError("Android build failed.");
+                Debug.LogError("Android VR build failed.");
             }
         }
 
         [MenuItem("ReHaB/Build/Client (Windows)")]
         public static void BuildWindowsClient()
         {
+            if (EditorUserBuildSettings.activeBuildTarget != BuildTarget.StandaloneWindows)
+            {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows);
+            }
+
             string buildFolder = "Build/Client";
             if (!Directory.Exists(buildFolder))
             {
@@ -95,7 +116,17 @@ namespace Editor
                 options = BuildOptions.Development
             };
 
-            BuildPipeline.BuildPlayer(buildPlayerOptions);
+            BuildReport report = BuildPipeline.BuildPlayer(buildPlayerOptions);
+            BuildSummary summary = report.summary;
+
+            if (summary.result == BuildResult.Succeeded)
+            {
+                Debug.Log($"Windows Client build succeeded: {summary.totalSize / 1024 / 1024} MB");
+            }
+            else
+            {
+                Debug.LogError("Windows Client build failed.");
+            }
         }
     }
 }
