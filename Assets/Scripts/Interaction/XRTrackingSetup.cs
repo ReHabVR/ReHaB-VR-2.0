@@ -28,7 +28,6 @@ public class XRTrackingSetup : MonoBehaviour
             yield break;
         }
 
-        cameraOffset.localPosition = Vector3.zero;
         XRLoader loader = XRGeneralSettings.Instance.Manager.activeLoader;
         if (loader == null)
         {
@@ -44,5 +43,6 @@ public class XRTrackingSetup : MonoBehaviour
         }
 
         xrInput.TrySetTrackingOriginMode(trackingMode);
+        //cameraOffset.localPosition = Vector3.zero;
     }
 }
