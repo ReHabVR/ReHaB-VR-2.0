@@ -110,7 +110,7 @@ public class PoseLogger : MonoBehaviour
         _nextFlushTime = _startTime + _flushInterval;
         _taskStarted = true;
 
-        string playerID = _netObj.Runner.LocalPlayer.RawEncoded.ToString();
+        string playerID = _netObj.InputAuthority.RawEncoded.ToString();
         string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_PoseLog.txt";
 
         _path = Path.Combine(Application.persistentDataPath, fname);
