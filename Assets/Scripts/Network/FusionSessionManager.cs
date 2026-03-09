@@ -17,15 +17,25 @@ public enum PlayerRole
     Trainer
 }
 
+public enum PredictionMode
+{
+    Invalid = -1,
+    None = 0,
+    Fusion = 1,
+    Custom = 2
+}
+
 public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 {
+    public const int MAIN_SCENE_INDEX = 1;
+
     [Header("Initialization")]
     public string hostAddress = "192.168.1.12"; 
 
-    [HideInInspector]
-    public int mainSceneIndex = 1;
-
     public ushort port = 27015;
+
+    [HideInInspector]
+    public bool startAsHost = false;
 
     [Header("Simulated Network Latency")]
     [Range(0, 100)]
@@ -33,13 +43,12 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [Range(0, 20)]
     public uint simulatedJitter = 0;
 
-
-    [HideInInspector]
-    public bool startAsHost = false;
-
     [Header("Session Settings")]
     public PlayerRole localPlayerRole = PlayerRole.Player;
 
+    public PredictionMode predictionMode = PredictionMode.Fusion;
+
+    [Header("Object References")]
     [SerializeField]
     private NetworkObject playerPrefab;
     [SerializeField]
@@ -50,9 +59,13 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private NetworkObject latencyControllerPrefab;
 
     private NetworkRunner _sessionRunner;
+    
     private NetworkSceneManagerDefault _sceneManager;
     private NetworkPoseBridge _localPlayerBridge;
-    private ServerLatencyController _latencyController;
+
+    [HideInInspector]
+    public SessionExperimentController experimentController;
+
 
 #if UNITY_SERVER
     private readonly ConcurrentQueue<string> _consoleQueue = new();
@@ -67,6 +80,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private bool _sceneLoaded = false;
 
     public static FusionSessionManager Instance { get; private set; }
+
+    public PredictionMode CurrentPredictionMode => experimentController.CurrentPredictionMode;
 
     private void Awake()
     {
@@ -104,7 +119,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             GameMode = _isHost ? GameMode.Server : GameMode.Client,
             Address = _isHost ? NetAddress.Any(port) : NetAddress.CreateFromIpPort(hostAddress, port),
-            Scene = SceneRef.FromIndex(mainSceneIndex),
+            Scene = SceneRef.FromIndex(MAIN_SCENE_INDEX),
             SceneManager = _sceneManager,
             DisableNATPunchthrough = true,
             ConnectionToken = BitConverter.GetBytes((int)localPlayerRole) // convert into binary token
@@ -301,9 +316,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        if (_sessionRunner.IsServer && _latencyController == null)
+        if (_sessionRunner.IsServer && experimentController == null)
         {
-            _latencyController = _sessionRunner.Spawn(latencyControllerPrefab).GetComponent<ServerLatencyController>();
+            experimentController = _sessionRunner.Spawn(latencyControllerPrefab).GetComponent<SessionExperimentController>();
         }
 
         _sceneLoaded = true;
@@ -444,11 +459,18 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                     int.TryParse(parts[2], out jitter);
                 }
 
-                latency = Mathf.Clamp(latency, 0, 100);
-                jitter = Mathf.Clamp(jitter, 0, 100);
+                experimentController.Latency = Mathf.Clamp(latency, 0, 1000);
+                experimentController.Jitter = Mathf.Clamp(jitter, 0, 1000);
 
-                _latencyController.RPC_SetSimulatedLatency(latency, jitter);
-                Debug.Log($"[SERVER] Latency {latency} ms | Jitter {jitter} ms");
+                Debug.Log($"[SERVER] Latency: {experimentController.Latency} ms | Jitter: {experimentController.Jitter} ms");
+            }
+        }
+        else if (parts.Length >= 2 && parts[0] == "pred")
+        {
+            if (int.TryParse(parts[1], out int predMode))
+            {
+                experimentController.CurrentPredictionMode = (PredictionMode)Mathf.Clamp(predMode, 0, 2);
+                Debug.Log($"[SERVER] Prediction mode: {experimentController.CurrentPredictionMode}");
             }
         }
     #endif

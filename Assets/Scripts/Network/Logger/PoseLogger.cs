@@ -37,7 +37,9 @@ public class PoseLogger : MonoBehaviour
         }
 
         _netObj = GetComponentInParent<NetworkObject>();
-        _isLocal = _netObj != null && _netObj.HasInputAuthority;
+        //TODO: for testing purposes only, remove once confirming logging works everywhere
+        //_isLocal = _netObj != null && _netObj.HasInputAuthority;
+        _isLocal = true; 
 
         if (!_isLocal || poseProvider == null)
         {
@@ -69,7 +71,7 @@ public class PoseLogger : MonoBehaviour
                 FlushBuffer();
                 _nextFlushTime = Time.time + _flushInterval;
             }
-        }        
+        }
     }
 
     private void RecordPose()

@@ -153,12 +153,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hostAddress: 10.21.68.11
-  mainSceneIndex: 1
   port: 27015
+  startAsHost: 0
   simulatedLatency: 0
   simulatedJitter: 0
-  startAsHost: 0
   localPlayerRole: 0
+  predictionMode: 1
   playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
     type: 3}
   trainerPrefab: {fileID: 4051770860812974642, guid: fba387262495c1e4da29fc005f433291,
@@ -167,6 +167,7 @@ MonoBehaviour:
     type: 3}
   latencyControllerPrefab: {fileID: 6992223513944181068, guid: 88c1bfd5ed6cb324398915f1b110427a,
     type: 3}
+  experimentController: {fileID: 0}
 --- !u!4 &1167505159
 Transform:
   m_ObjectHideFlags: 0

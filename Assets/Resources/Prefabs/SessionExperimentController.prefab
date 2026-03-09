@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2163900484941560641}
   - component: {fileID: 6992223513944181068}
   m_Layer: 0
-  m_Name: LatencyController
+  m_Name: SessionExperimentController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,6 +45,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e23f27dda9b09143943a6295e57747d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _SimulatedLatency: 0
+  _SimulatedJitter: 0
+  _CurrentPredictionMode: 0
 --- !u!114 &6992223513944181068
 MonoBehaviour:
   m_ObjectHideFlags: 0
