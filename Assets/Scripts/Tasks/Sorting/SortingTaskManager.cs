@@ -68,7 +68,7 @@ public class SortingTaskManager : NetworkBehaviour, IMinigameManager
     public void OnCollision(GameObject go, int colliderId)
     {
         return; // Temporary solution
-
+        /*
         if (!go.CompareTag(TAG))
         {
             return;
@@ -78,5 +78,6 @@ public class SortingTaskManager : NetworkBehaviour, IMinigameManager
         {
             OnCorrectMove?.Invoke();
         }
+        */
     }
 }
