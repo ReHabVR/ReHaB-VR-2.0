@@ -57,10 +57,6 @@ public class NetworkPoseBridge : NetworkBehaviour
     private PoseData NetworkPose { get => default; set {} }
 
     public bool IsReady { get; private set; }
-
-    private bool IsXRTrackingValid => 
-        XRLeftHand.position.sqrMagnitude > 0.0001f &&
-        XRRightHand.position.sqrMagnitude > 0.0001f;
     
     private void Start()
     {
@@ -145,12 +141,15 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public PoseData GetPose()
     {
-        if (HasInputAuthority && _xrActive && IsXRTrackingValid)
+    #if UNITY_ANDROID
+        if (HasInputAuthority)
         {
             return CaptureXR();
         }
-
         return CaptureFallback();
+    #else
+        return CaptureFallback();
+    #endif
     }
 
     private PoseData CaptureXR() => new() {

@@ -10,7 +10,7 @@ public class PoseDriverToggle : MonoBehaviour
     [SerializeField]
     private TrackedPoseDriver _poseDriver;
 
-    private readonly WaitForSeconds _waitForThreeSeconds = new(3);
+    private readonly WaitForSeconds _waitASecond = new(1);
 
     private void Awake()
     {
@@ -29,14 +29,8 @@ public class PoseDriverToggle : MonoBehaviour
     {
         while (true)
         {
-            bool xrRunning = IsXRRunning();
-
-            if (_poseDriver.enabled != xrRunning)
-            {
-                _poseDriver.enabled = xrRunning;
-            }
-
-            yield return _waitForThreeSeconds;
+            _poseDriver.enabled = IsXRRunning();
+            yield return _waitASecond;
         }
     }
 
