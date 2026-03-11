@@ -11,11 +11,14 @@ public class XRTrackingSetup : MonoBehaviour
 
     [SerializeField]
     private Transform cameraOffset;
+    [SerializeField]
+    private Vector3 defaultCameraPos;
 
     private static readonly WaitForSeconds _waitHalfSecond = new(0.5f);
 
     IEnumerator Start()
     {
+        cameraOffset.localPosition = defaultCameraPos;
         yield return _waitHalfSecond;
 
         List<XRInputSubsystem> subsystems = new();
@@ -43,6 +46,5 @@ public class XRTrackingSetup : MonoBehaviour
         }
 
         xrInput.TrySetTrackingOriginMode(trackingMode);
-        //cameraOffset.localPosition = Vector3.zero;
     }
 }
