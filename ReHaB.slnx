@@ -5,7 +5,6 @@
   <Project Path="AsmDefNetwork.csproj" />
   <Project Path="Unity.XR.Interaction.Toolkit.Samples.StarterAssets.csproj" />
   <Project Path="AsmDefCore.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
   <Project Path="AsmDefAnimation.csproj" />
   <Project Path="Fusion.Unity.Editor.csproj" />
   <Project Path="Unity.Fusion.CodeGen.csproj" />
