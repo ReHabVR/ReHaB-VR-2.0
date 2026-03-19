@@ -91,11 +91,6 @@ public class NetworkPoseBridge : NetworkBehaviour
             return;
         }
 
-        if (HasInputAuthority)
-        {
-            _localPose = GetPose();
-        }
-
         if (HasStateAuthority && Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
         {
             NetworkPose = input.pose;
@@ -104,12 +99,22 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Render()
     {
+        PoseData renderedPose;
+
         // _localPose = local motion for the player
         // NetworkPose = pose replicated to other peers (what the server "sees")
         // renderedPose = what the client sees in VR
         // For local movement, use _localPose - for the other player, renderedPose is NetworkPose with compensation
 
-        PoseData renderedPose = HasInputAuthority ? _localPose : ApplyCompensation(NetworkPose);
+        if (HasInputAuthority)
+        {
+            _localPose = GetPose();
+            renderedPose = _localPose;
+        }
+        else
+        {
+            renderedPose = ApplyCompensation(NetworkPose);
+        }
         
         bridgeHead.SetPositionAndRotation(renderedPose.headPos, renderedPose.headRot);
         bridgeLeftHand.SetPositionAndRotation(renderedPose.lhandPos, renderedPose.lhandRot);
@@ -141,15 +146,13 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public PoseData GetPose()
     {
-    #if UNITY_ANDROID
+    #if CLIENT_VR
         if (HasInputAuthority)
         {
             return CaptureXR();
         }
-        return CaptureFallback();
-    #else
-        return CaptureFallback();
     #endif
+        return CaptureFallback();
     }
 
     private PoseData CaptureXR() => new() {

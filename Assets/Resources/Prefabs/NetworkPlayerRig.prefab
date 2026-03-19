@@ -131,6 +131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 27148098970488341}
   audioListener: {fileID: 27148098970488340}
+  xrOrigin: {fileID: 645527079615137578}
+  cameraOffset: {fileID: 27148098984329734}
 --- !u!1 &27148097521359861
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,7 +394,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27148098984329785}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.71, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1688,7 +1690,7 @@ GameObject:
   - component: {fileID: 7712169131502859326}
   - component: {fileID: 7758897312010626406}
   m_Layer: 6
-  m_Name: Grab
+  m_Name: GrabR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3990,8 +3992,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   networkPoseBridge: {fileID: 9191328999298589861}
-  lhandBridge: {fileID: 2884895935656823936}
-  rhandBridge: {fileID: 7704308143797382486}
+  lhandBridge: {fileID: 4742524779915934858}
+  rhandBridge: {fileID: 8605967195980569250}
   headBridge: {fileID: 3088935912229911169}
   lhandFallback: {fileID: 8043616477482336218}
   rhandFallback: {fileID: 7133112722376162200}
@@ -4464,8 +4466,8 @@ MonoBehaviour:
   m_Camera: {fileID: 27148098970488341}
   m_OriginBaseGameObject: {fileID: 7130624456751209007}
   m_CameraFloorOffsetObject: {fileID: 27148098984329785}
-  m_RequestedTrackingOriginMode: 2
-  m_CameraYOffset: 1.1176
+  m_RequestedTrackingOriginMode: 1
+  m_CameraYOffset: 1.71
 --- !u!1 &7139007294183980486
 GameObject:
   m_ObjectHideFlags: 0
@@ -4631,7 +4633,7 @@ GameObject:
   - component: {fileID: 390947530007266494}
   - component: {fileID: 1528734210816556319}
   m_Layer: 6
-  m_Name: Grab
+  m_Name: GrabL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

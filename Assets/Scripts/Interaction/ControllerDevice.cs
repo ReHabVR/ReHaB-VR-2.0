@@ -22,7 +22,7 @@ public class ControllerDevice : MonoBehaviour
     private bool _targetDeviceDetectedR;
     private InputDevice _targetDeviceL;
     private InputDevice _targetDeviceR;
-    private bool _isMenuVisible = false;
+    //private bool _isMenuVisible = false;
 
     private bool _canPressMenu = true;
     private float _lastPressed = 0.0f;

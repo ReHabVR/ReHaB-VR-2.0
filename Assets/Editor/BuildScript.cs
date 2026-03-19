@@ -41,11 +41,11 @@ namespace Editor
 
             if (summary.result == BuildResult.Succeeded)
             {
-                Debug.Log($"Dedicated Server build succeeded: {summary.totalSize / 1024 / 1024} MB");
+                Debug.Log($"Dedicated Server build ({summary.totalSize / 1024 / 1024} MB) succeeded in {summary.totalTime}.");
             }
             else
             {
-                Debug.LogError("Dedicated Server build failed.");
+                Debug.LogError($"Dedicated Server build failed! ({summary.result})");
             }
         }
 
@@ -77,11 +77,11 @@ namespace Editor
 
             if (summary.result == BuildResult.Succeeded)
             {
-                Debug.Log($"Android VR build succeeded: {summary.totalSize / 1024 / 1024} MB");
+                Debug.Log($"Android VR build ({summary.totalSize / 1024 / 1024} MB) succeeded in {summary.totalTime}.");
             }
             else
             {
-                Debug.LogError("Android VR build failed.");
+                Debug.LogError($"Android VR build failed! ({summary.result})");
             }
         }
 
@@ -121,11 +121,11 @@ namespace Editor
 
             if (summary.result == BuildResult.Succeeded)
             {
-                Debug.Log($"Windows Client build succeeded: {summary.totalSize / 1024 / 1024} MB");
+                Debug.Log($"Windows Client build ({summary.totalSize / 1024 / 1024} MB) succeeded in {summary.totalTime}.");
             }
             else
             {
-                Debug.LogError("Windows Client build failed.");
+                Debug.LogError($"Windows Client build failed! ({summary.result})");
             }
         }
     }

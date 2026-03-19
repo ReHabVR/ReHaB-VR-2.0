@@ -94,6 +94,11 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             Destroy(gameObject);
         }
+        
+    #if UNITY_EDITOR
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 90;
+    #endif
     }
 
     private async void Start()
