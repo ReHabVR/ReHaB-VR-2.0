@@ -1,11 +1,24 @@
+using System;
+using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 using Random = System.Random;
 
 public class SortingSetup : NetworkBehaviour
 {
-    public int blueCount = 5;
-    public int redCount = 5;
+    public event Action OnBallsSpawned;
+    
+    [SerializeField]
+    private NetworkObject ballPrefab;
+
+    [SerializeField]
+    private int blueCount = 5;
+    [SerializeField]
+    private int redCount = 5;
+
+    private readonly List<NetworkObject> spawnedBalls = new();
+
+    public List<NetworkObject> SpawnedBalls => spawnedBalls;
 
     public override void Spawned()
     {
@@ -15,23 +28,42 @@ public class SortingSetup : NetworkBehaviour
         }
 
         Random _rand = new();
-        foreach (Transform t in transform)
+        foreach (Transform spawn in transform)
         {
-            GameObject child = t.gameObject;
-            if (_rand.Next(2) == 1 && redCount > 0) 
+            NetworkObject ball = Runner.Spawn(
+                ballPrefab,
+                spawn.position,
+                spawn.rotation
+            );
+
+            Debug.Log("Spawn marker world: " + spawn.position);
+            Debug.Log("Ball world: " + ball.transform.position);
+
+            spawnedBalls.Add(ball);
+            BallColor color = ball.GetComponent<BallColor>();
+
+            if (_rand.Next(2) == 1 && redCount > 0)
             {
-                child.GetComponent<BallColor>().ColorID = (int)BallColor.Color.Red;
+                color.ColorID = (int)BallColor.Color.Red;
                 redCount--;
-                continue;
             }
-            else if (blueCount > 0) 
+            else if (blueCount > 0)
             {
-                child.GetComponent<BallColor>().ColorID = (int)BallColor.Color.Blue;
+                color.ColorID = (int)BallColor.Color.Blue;
                 blueCount--;
-                continue;
             }
-            // Fallback in case we ran out of blue balls but didn't get enoguh random red balls
-            child.GetComponent<BallColor>().ColorID = (int)BallColor.Color.Red;;
+            else
+            {
+                // Fallback in case we ran out of blue balls but didn't get enoguh random red balls
+                color.ColorID = (int)BallColor.Color.Red;
+            }
         }
+
+        foreach(NetworkObject no in SpawnedBalls)
+        {
+            no.transform.SetParent(gameObject.transform, true);
+        }
+
+        OnBallsSpawned?.Invoke();
     }
 }

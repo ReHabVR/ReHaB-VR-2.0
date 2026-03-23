@@ -1,26 +1,54 @@
+using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(Rigidbody))]
-public class GrabbableObject : XRGrabInteractable
+[RequireComponent(typeof(XRGrabInteractable))]
+public class GrabbableObject : NetworkBehaviour
 {
-    private Rigidbody rb;
+    [Networked, HideInInspector]
+    public PlayerRef HoldingPlayer { get; private set; } = PlayerRef.None;
 
-    protected override void Awake()
+    private Rigidbody rb;
+    private XRGrabInteractable grab;
+
+    void Awake()
     {
-        base.Awake();
         rb = GetComponent<Rigidbody>();
+        grab = GetComponent<XRGrabInteractable>();
+
+        grab.selectEntered.AddListener(OnGrab);
+        grab.selectExited.AddListener(OnRelease);
     }
 
-    protected override void OnSelectEntered(SelectEnterEventArgs args)
+    void OnDestroy()
     {
-        base.OnSelectEntered(args);
+        grab.selectEntered.RemoveListener(OnGrab);
+        grab.selectExited.RemoveListener(OnRelease);
+    }
+
+    void OnGrab(SelectEnterEventArgs args)
+    {
+        // Prevent grabs by other player if object is held
+        if (HoldingPlayer != PlayerRef.None && HoldingPlayer != Runner.LocalPlayer)
+        {
+            IXRSelectInteractable interactable = grab;
+            grab.interactionManager.CancelInteractableSelection(interactable);
+            return;
+        }
+
+        HoldingPlayer = Runner.LocalPlayer;
+        rb.isKinematic = true;
         rb.useGravity = false;
     }
 
-    protected override void OnSelectExited(SelectExitEventArgs args)
+    void OnRelease(SelectExitEventArgs args)
     {
-        base.OnSelectExited(args);
-        rb.useGravity = true;
+        if (HoldingPlayer == Runner.LocalPlayer)
+        {
+            HoldingPlayer = PlayerRef.None;
+            rb.isKinematic = false;
+            rb.useGravity = true;
+        }
     }
 }

@@ -23,7 +23,7 @@ public class BallColor : NetworkBehaviour
         _renderer = GetComponent<Renderer>();
     }
 
-    void Start()
+    public override void Spawned()
     {
         if (ColorID == (int)Color.Blue)
         {

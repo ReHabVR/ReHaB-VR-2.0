@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 using Unity.XR.CoreUtils;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class LocalPlayer : NetworkBehaviour
 {
@@ -18,6 +19,12 @@ public class LocalPlayer : NetworkBehaviour
     [SerializeField]
     private Transform cameraOffset;
 
+    [SerializeField]
+    private List<XRBaseInteractor> xrInteractors;
+
+    [SerializeField]
+    private List<XRBaseController> xrControllers;
+
     public override void Spawned()
     {
         bool isLocal = HasInputAuthority;
@@ -31,15 +38,25 @@ public class LocalPlayer : NetworkBehaviour
         {
             audioListener.enabled = isLocal;
         }
-    #if CLIENT_PC
+
         if (xrOrigin != null)
         {
-            xrOrigin.enabled = false;
-            if (cameraOffset != null && !isLocal)
-            {
-                cameraOffset.position = new(0, xrOrigin.CameraYOffset, 0);
-            }
+            xrOrigin.enabled = isLocal;
         }
-    #endif
-   }
+
+        if (cameraOffset != null && isLocal == false)
+        {
+            cameraOffset.position = new(0, xrOrigin.CameraYOffset, 0);
+        }
+
+        foreach (XRBaseInteractor interactor in xrInteractors)
+        {
+            interactor.enabled = isLocal;
+        } 
+
+        foreach (XRBaseController controller in xrControllers)
+        {
+            controller.enabled = isLocal;
+        }
+    }
 }

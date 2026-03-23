@@ -49,19 +49,10 @@ public class NetworkPoseBridge : NetworkBehaviour
     private PoseData _localPose;
     private PlayerRef _playerRef;
 
-    private bool _xrActive;
-
-    private readonly WaitForSeconds _waitForThreeSeconds = new(3);
-
     [Networked]
     private PoseData NetworkPose { get => default; set {} }
 
     public bool IsReady { get; private set; }
-    
-    private void Start()
-    {
-        StartCoroutine(QueryXRState());
-    }
 
     public override void Spawned()
     {
@@ -80,7 +71,8 @@ public class NetworkPoseBridge : NetworkBehaviour
         {
             provider.OnSpawned();
         }
-
+        
+        ApplyPose(GetPose());
         IsReady = true;
     }
 
@@ -116,12 +108,16 @@ public class NetworkPoseBridge : NetworkBehaviour
             renderedPose = ApplyCompensation(NetworkPose);
         }
         
-        bridgeHead.SetPositionAndRotation(renderedPose.headPos, renderedPose.headRot);
-        bridgeLeftHand.SetPositionAndRotation(renderedPose.lhandPos, renderedPose.lhandRot);
-        bridgeRightHand.SetPositionAndRotation(renderedPose.rhandPos, renderedPose.rhandRot);
+        ApplyPose(renderedPose);
     }
 
-    public PoseData GetLocalPose() => _localPose;
+    private void ApplyPose(PoseData finalPose)
+    {
+        bridgeHead.SetPositionAndRotation(finalPose.headPos, finalPose.headRot);
+        bridgeLeftHand.SetPositionAndRotation(finalPose.lhandPos, finalPose.lhandRot);
+        bridgeRightHand.SetPositionAndRotation(finalPose.rhandPos, finalPose.rhandRot);
+    }
+
     public void SetLocalPose(PoseData pose) { _localPose = pose; }
     public void SetPlayerRef(PlayerRef player) { _playerRef = player; }
 
@@ -129,19 +125,6 @@ public class NetworkPoseBridge : NetworkBehaviour
     {
         // TODO: Prediction model
         return networkPose;
-    }
-
-    private IEnumerator QueryXRState()
-    {
-        while(true)
-        {
-            List<XRInputSubsystem> subsystems = new();
-            SubsystemManager.GetSubsystems(subsystems);
-
-            _xrActive = subsystems.Exists(s => s.running);
-
-            yield return _waitForThreeSeconds;
-        }
     }
 
     public PoseData GetPose()

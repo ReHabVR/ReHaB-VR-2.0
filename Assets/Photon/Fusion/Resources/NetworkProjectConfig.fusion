@@ -17,7 +17,7 @@
     "Simulation": {
         "InputDataWordCount": 0,
         "ReplicationFeatures": 1,
-        "InputTransferMode": 0,
+        "InputTransferMode": 1,
         "SimulationUpdateTimeMode": 0,
         "PlayerCount": 2,
         "TickRateSelection": {

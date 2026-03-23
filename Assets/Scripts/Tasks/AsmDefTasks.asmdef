@@ -4,12 +4,6 @@
     "references": [
         "AsmDefCore",
         "AsmDefInteraction",
-        "Wave.Essence",
-        "Wave.Essence.Controller.Model",
-        "Wave.Essence.Editor",
-        "Wave.Essence.Hand.Model",
-        "Wave.Essence.InputModule",
-        "Wave.Essence.Interaction.Mode",
         "Unity.InputSystem",
         "Unity.TextMeshPro",
         "Unity.XR.Interaction.Toolkit",

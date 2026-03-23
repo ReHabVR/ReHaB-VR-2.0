@@ -14,10 +14,10 @@ GameObject:
   - component: {fileID: 8081912748959703418}
   - component: {fileID: 4565014872935634582}
   - component: {fileID: 2685267202478984915}
-  - component: {fileID: 107327835838212605}
+  - component: {fileID: 8893713185364288143}
   - component: {fileID: 5480650441408578178}
-  - component: {fileID: 5055665777584614836}
   - component: {fileID: 549928083251591709}
+  - component: {fileID: 5600019970531051661}
   m_Layer: 9
   m_Name: CubeR
   m_TagString: Shape
@@ -336,7 +336,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &107327835838212605
+--- !u!114 &8893713185364288143
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -345,7 +345,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 115935092673384688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71978441011ca24692e71b05212023a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -452,13 +452,13 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 1
-  m_SmoothPositionAmount: 5
-  m_TightenPosition: 0.5
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 1
-  m_SmoothRotationAmount: 5
-  m_TightenRotation: 0.5
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
@@ -501,18 +501,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
---- !u!114 &5055665777584614836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 115935092673384688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &549928083251591709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +511,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b8f5debfdf79b54186e3101717c0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5600019970531051661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 115935092673384688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &766359021903406763
@@ -698,10 +698,10 @@ GameObject:
   - component: {fileID: 495578428016871278}
   - component: {fileID: 6345944102663231299}
   - component: {fileID: 33457886339341074}
-  - component: {fileID: 8199471123659950926}
+  - component: {fileID: 2852236208321963593}
   - component: {fileID: 7495871108769162771}
-  - component: {fileID: 6854608619949722213}
   - component: {fileID: 8707911756562907791}
+  - component: {fileID: 5267872709700054496}
   m_Layer: 9
   m_Name: CylinderR
   m_TagString: Shape
@@ -2110,7 +2110,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &8199471123659950926
+--- !u!114 &2852236208321963593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2119,7 +2119,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1446081824551596830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71978441011ca24692e71b05212023a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -2226,13 +2226,13 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 1
-  m_SmoothPositionAmount: 5
-  m_TightenPosition: 0.5
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 1
-  m_SmoothRotationAmount: 5
-  m_TightenRotation: 0.5
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
@@ -2275,18 +2275,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 2
---- !u!114 &6854608619949722213
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1446081824551596830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8707911756562907791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2297,6 +2285,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b8f5debfdf79b54186e3101717c0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5267872709700054496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1446081824551596830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1500715374140454125
@@ -2437,10 +2437,10 @@ GameObject:
   - component: {fileID: 2579031735643490082}
   - component: {fileID: 2579031735643490086}
   - component: {fileID: 2579031735643490105}
-  - component: {fileID: 7557708337110084960}
+  - component: {fileID: 1747295749539622569}
   - component: {fileID: 550024629081103237}
-  - component: {fileID: 1419457790114980044}
   - component: {fileID: 8559576132439514634}
+  - component: {fileID: 7451056956807011905}
   m_Layer: 9
   m_Name: TriangleL
   m_TagString: Shape
@@ -2812,7 +2812,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &7557708337110084960
+--- !u!114 &1747295749539622569
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2821,7 +2821,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2579031735643490083}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71978441011ca24692e71b05212023a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -2929,12 +2929,12 @@ MonoBehaviour:
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
   m_SmoothPosition: 0
-  m_SmoothPositionAmount: 5
-  m_TightenPosition: 0.5
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
   m_TrackRotation: 1
   m_SmoothRotation: 0
-  m_SmoothRotationAmount: 5
-  m_TightenRotation: 0.5
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
@@ -2977,18 +2977,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 1
---- !u!114 &1419457790114980044
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2579031735643490083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8559576132439514634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2999,6 +2987,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b8f5debfdf79b54186e3101717c0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &7451056956807011905
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579031735643490083}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2579031736050852028
@@ -3015,11 +3015,11 @@ GameObject:
   - component: {fileID: 2579031736050852031}
   - component: {fileID: 2579031736050852018}
   - component: {fileID: 2579031736050852021}
-  - component: {fileID: 9098327025386564593}
+  - component: {fileID: 4815527754443337903}
   - component: {fileID: 2963237722564200797}
-  - component: {fileID: 1050808175075641464}
   - component: {fileID: 566783970292644439}
   - component: {fileID: 1085607889786778259}
+  - component: {fileID: 5034006957604495620}
   m_Layer: 9
   m_Name: CylinderL
   m_TagString: Shape
@@ -4428,7 +4428,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &9098327025386564593
+--- !u!114 &4815527754443337903
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4437,7 +4437,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2579031736050852028}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71978441011ca24692e71b05212023a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -4532,7 +4532,7 @@ MonoBehaviour:
       m_Calls: []
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
-  m_UseDynamicAttach: 1
+  m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
   m_SnapToColliderVolume: 1
@@ -4544,13 +4544,13 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 1
-  m_SmoothPositionAmount: 5
-  m_TightenPosition: 0.5
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 1
-  m_SmoothRotationAmount: 5
-  m_TightenRotation: 0.5
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
@@ -4593,18 +4593,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
---- !u!114 &1050808175075641464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2579031736050852028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &566783970292644439
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4630,6 +4618,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b8f5debfdf79b54186e3101717c0311, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5034006957604495620
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579031736050852028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2579031736787785354
 GameObject:
   m_ObjectHideFlags: 0
@@ -4644,10 +4644,10 @@ GameObject:
   - component: {fileID: 2579031736787785357}
   - component: {fileID: 2579031736787785356}
   - component: {fileID: 2579031736787785344}
-  - component: {fileID: 3889663233146545709}
+  - component: {fileID: 824207102539303349}
   - component: {fileID: 4066474770345061466}
-  - component: {fileID: 1445199547776425216}
   - component: {fileID: 6480935853882122430}
+  - component: {fileID: 6275353935991165516}
   m_Layer: 9
   m_Name: CubeL
   m_TagString: Shape
@@ -4966,7 +4966,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &3889663233146545709
+--- !u!114 &824207102539303349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4975,7 +4975,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2579031736787785354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71978441011ca24692e71b05212023a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -5070,7 +5070,7 @@ MonoBehaviour:
       m_Calls: []
   m_AttachTransform: {fileID: 0}
   m_SecondaryAttachTransform: {fileID: 0}
-  m_UseDynamicAttach: 1
+  m_UseDynamicAttach: 0
   m_MatchAttachPosition: 1
   m_MatchAttachRotation: 1
   m_SnapToColliderVolume: 1
@@ -5082,13 +5082,13 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 1
-  m_SmoothPositionAmount: 5
-  m_TightenPosition: 0.5
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 1
-  m_SmoothRotationAmount: 5
-  m_TightenRotation: 0.5
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
@@ -5131,18 +5131,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 0
---- !u!114 &1445199547776425216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2579031736787785354}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6480935853882122430
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5153,6 +5141,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b8f5debfdf79b54186e3101717c0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6275353935991165516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2579031736787785354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &2724497613966585001
@@ -5817,10 +5817,10 @@ GameObject:
   - component: {fileID: 3619681784787525560}
   - component: {fileID: 7672407538945659959}
   - component: {fileID: 5025375641407775765}
-  - component: {fileID: 2528338234977579176}
+  - component: {fileID: 3162041106221486219}
   - component: {fileID: 9118472525441632201}
-  - component: {fileID: 4609003501369709005}
   - component: {fileID: 2266733824917776816}
+  - component: {fileID: 8241852238151844496}
   m_Layer: 9
   m_Name: TriangleR
   m_TagString: Shape
@@ -6192,7 +6192,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 2
---- !u!114 &2528338234977579176
+--- !u!114 &3162041106221486219
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -6201,7 +6201,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7726086015526038313}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b71978441011ca24692e71b05212023a, type: 3}
+  m_Script: {fileID: 11500000, guid: 0ad34abafad169848a38072baa96cdb2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_InteractionManager: {fileID: 0}
@@ -6308,13 +6308,13 @@ MonoBehaviour:
   m_AngularVelocityDamping: 1
   m_AngularVelocityScale: 1
   m_TrackPosition: 1
-  m_SmoothPosition: 1
-  m_SmoothPositionAmount: 5
-  m_TightenPosition: 0.5
+  m_SmoothPosition: 0
+  m_SmoothPositionAmount: 8
+  m_TightenPosition: 0.1
   m_TrackRotation: 1
-  m_SmoothRotation: 1
-  m_SmoothRotationAmount: 5
-  m_TightenRotation: 0.5
+  m_SmoothRotation: 0
+  m_SmoothRotationAmount: 8
+  m_TightenRotation: 0.1
   m_TrackScale: 1
   m_SmoothScale: 0
   m_SmoothScaleAmount: 8
@@ -6357,18 +6357,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shapeType: 1
---- !u!114 &4609003501369709005
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7726086015526038313}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2266733824917776816
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6379,6 +6367,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8b8f5debfdf79b54186e3101717c0311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8241852238151844496
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7726086015526038313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 297207fab757cf342bbafc4254626acd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &7772048053740676125

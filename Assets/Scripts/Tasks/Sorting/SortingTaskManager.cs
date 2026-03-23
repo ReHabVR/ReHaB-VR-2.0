@@ -7,45 +7,58 @@ public class SortingTaskManager : NetworkBehaviour, IMinigameManager
 {
     public event Action OnMove;
     public event Action OnCorrectMove;
+    
+    private const string TAG = "Ball";
 
-    [SerializeField]
-    private GameObject ballManager;
+    [SerializeField] 
+    private SortingSetup sortingSetup;
     
     [SerializeField]
     private BoxCollider detectorBlue;
     [SerializeField]
     private BoxCollider detectorRed;
-    
-    private const string TAG = "Ball";
-
 
     private void Start()
     {
-        AssignProperties();
-        //ConnectNotifiers();
+        sortingSetup.OnBallsSpawned += ConnectNotifiers;
     }
-    
-    public void AssignProperties() 
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        foreach (Transform t in ballManager.transform)
+        foreach (NetworkObject no in sortingSetup.SpawnedBalls)
         {
-            GameObject go = t.gameObject;
-            go.GetComponent<GrabNotifier>().OnRelease += OnObjectPlaced;
+            if (no.TryGetComponent(out GrabNotifier grab))
+            {
+                grab.OnRelease -= OnObjectPlaced;
+            }
         }
+    }
+
+    public void AssignProperties()
+    {
+        return;
     }
 
     public void ConnectNotifiers() 
     {
-        detectorBlue.GetComponent<CollisionNotifier>().collisionDetected.AddListener(OnCollision);
-        detectorRed.GetComponent<CollisionNotifier>().collisionDetected.AddListener(OnCollision);
+        foreach (NetworkObject no in sortingSetup.SpawnedBalls)
+        {
+            if (no.TryGetComponent(out GrabNotifier grab))
+            {
+                grab.OnRelease += OnObjectPlaced;
+            }
+        }
+
+        //detectorBlue.GetComponent<CollisionNotifier>().collisionDetected.AddListener(OnCollision);
+        //detectorRed.GetComponent<CollisionNotifier>().collisionDetected.AddListener(OnCollision);
     }
 
-    public void OnObjectPlaced(IXRSelectInteractor _interactor)
+    public void OnObjectPlaced(IXRSelectInteractor interactor)
     {
         OnMove?.Invoke();
 
         // HACK: Physics are server sided, so we cannot use OnCollision on clients
-        if (_interactor.transform.TryGetComponent(out BallColor ball))
+        if (interactor.firstInteractableSelected.transform.TryGetComponent(out BallColor ball))
         {
             Vector3 ballPos = ball.transform.position;
             int zoneID = -1;
@@ -65,7 +78,7 @@ public class SortingTaskManager : NetworkBehaviour, IMinigameManager
     }
 
     // This fires only on server.
-    public void OnCollision(GameObject go, int colliderId)
+    public void OnCollision(GameObject _go, int _colliderId)
     {
         return; // Temporary solution
         /*

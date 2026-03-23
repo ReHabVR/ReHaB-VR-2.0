@@ -38,15 +38,17 @@ public class ExternalPoseProvider : MonoBehaviour
 
     private void Awake()
     {
+        _taskman = CurrentTaskManager.Instance;
+
+        /*
         _leftHandStart = lhandFallback.localPosition;
         _rightHandStart = rhandFallback.localPosition;
         _headStart = headFallback.localPosition;
         
         lhandBridge.localPosition = _leftHandStart;
         rhandBridge.localPosition = _rightHandStart;
-        headBridge.localPosition = headFallback.localPosition;        
-
-        _taskman = CurrentTaskManager.Instance;
+        headBridge.localPosition = _headStart;
+        */
     }
 
     public void OnSpawned()
@@ -57,6 +59,9 @@ public class ExternalPoseProvider : MonoBehaviour
 
     private void LateUpdate()
     {
+    #if CLIENT_VR
+        return;
+    #endif
         if (networkPoseBridge == null || 
             !networkPoseBridge.IsReady || 
             !networkPoseBridge.HasInputAuthority || 
@@ -76,7 +81,10 @@ public class ExternalPoseProvider : MonoBehaviour
 
         Vector3 lhandOffset = _lhandRaise * raiseHeight * Vector3.up;
         lhandFallback.localPosition = _leftHandStart + lhandOffset;
+
+    #if CLIENT_PC
         lhandBridge.localPosition = lhandFallback.localPosition;
+    #endif
 
         // Right hand
         bool raiseRight = Keyboard.current.eKey.isPressed;
@@ -89,11 +97,15 @@ public class ExternalPoseProvider : MonoBehaviour
         
         Vector3 rhandOffset = _rhandRaise * raiseHeight * Vector3.up;
         rhandFallback.localPosition = _rightHandStart + rhandOffset;
+    #if CLIENT_PC
         rhandBridge.localPosition = rhandFallback.localPosition;
+    #endif
 
         // Fix head position
         headFallback.localPosition = _headStart;
+    #if CLIENT_PC
         headBridge.localPosition = headFallback.localPosition;
+    #endif
 
         #region DEBUG
         if (_taskman == null)
