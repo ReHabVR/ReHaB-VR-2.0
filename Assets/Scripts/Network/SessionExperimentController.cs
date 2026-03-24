@@ -20,18 +20,29 @@ public class SessionExperimentController : NetworkBehaviour
     private int _prevJitter = -1;
     private PredictionMode _prevPredMode = (PredictionMode)(-1);
 
+    private bool IsReady { get; set; }
+
+    public override void Spawned()
+    {
+        IsReady = true;
+    }
+
     public override void Render()
     {
-        if (Runner.IsServer)
+        if (!IsReady || Runner == null || Runner.IsServer)
         {
             return;
         }
 
-        if (Latency != _prevLatency || Jitter != _prevJitter)
+        int latency = Latency;
+        int jitter = Jitter;
+        PredictionMode predMode = CurrentPredictionMode;
+
+        if (latency != _prevLatency || jitter != _prevJitter)
         {
-            ApplyLatency();
-            _prevLatency = Latency;
-            _prevJitter = Jitter;
+            ApplyLatency(latency, jitter);
+            _prevLatency = latency;
+            _prevJitter = jitter;
         }
 
         if (CurrentPredictionMode != _prevPredMode)
@@ -41,17 +52,17 @@ public class SessionExperimentController : NetworkBehaviour
         }
     }
 
-    private void ApplyLatency()
+    private void ApplyLatency(int latency, int jitter)
     {
         if (Runner.Config == null || Runner.Config.NetworkConditions == null)
         {
             return;
         }
 
-        Runner.Config.NetworkConditions.Enabled = Latency > 0;
-        Runner.Config.NetworkConditions.DelayMin = Latency;
-        Runner.Config.NetworkConditions.DelayMax = Latency;
-        Runner.Config.NetworkConditions.AdditionalJitter = Jitter;
+        Runner.Config.NetworkConditions.Enabled = latency > 0;
+        Runner.Config.NetworkConditions.DelayMin = latency;
+        Runner.Config.NetworkConditions.DelayMax = latency;
+        Runner.Config.NetworkConditions.AdditionalJitter = jitter;
 
         Debug.Log($"Applied latency {Latency} ms | jitter {Jitter} ms");
     }

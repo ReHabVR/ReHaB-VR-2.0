@@ -40,11 +40,11 @@ public class ExternalPoseProvider : MonoBehaviour
     {
         _taskman = CurrentTaskManager.Instance;
 
-        /*
         _leftHandStart = lhandFallback.localPosition;
         _rightHandStart = rhandFallback.localPosition;
         _headStart = headFallback.localPosition;
         
+        /*
         lhandBridge.localPosition = _leftHandStart;
         rhandBridge.localPosition = _rightHandStart;
         headBridge.localPosition = _headStart;

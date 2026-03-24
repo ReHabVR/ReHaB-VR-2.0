@@ -41,22 +41,33 @@ public class LocalPlayer : NetworkBehaviour
 
         if (xrOrigin != null)
         {
+        #if CLIENT_PC
+            xrOrigin.enabled = false;
+            if (cameraOffset != null)
+            {
+                cameraOffset.localPosition = new(0, xrOrigin.CameraYOffset, 0);
+            }
+        #else
             xrOrigin.enabled = isLocal;
-        }
-
-        if (cameraOffset != null && isLocal == false)
-        {
-            cameraOffset.position = new(0, xrOrigin.CameraYOffset, 0);
+        #endif
         }
 
         foreach (XRBaseInteractor interactor in xrInteractors)
         {
+        #if CLIENT_PC
+            interactor.enabled = false;
+        #else
             interactor.enabled = isLocal;
+        #endif
         } 
 
         foreach (XRBaseController controller in xrControllers)
         {
+        #if CLIENT_PC
+            controller.enabled = false;
+        #else
             controller.enabled = isLocal;
+        #endif
         }
     }
 }

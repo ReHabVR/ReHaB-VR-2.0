@@ -1908,7 +1908,7 @@ GameObject:
   - component: {fileID: 5721376578369302526}
   - component: {fileID: 1852830170818121514}
   m_Layer: 0
-  m_Name: BallManager
+  m_Name: BallSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1922,7 +1922,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6805287887828920544}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.127, y: -0.0241, z: -0.067}
+  m_LocalPosition: {x: 0.127, y: 0, z: -0.067}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2220,6 +2220,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8293847289941964349}
+  - component: {fileID: 210948262098779451}
   m_Layer: 0
   m_Name: BoxStart
   m_TagString: Untagged
@@ -2248,6 +2249,19 @@ Transform:
   m_Father: {fileID: 4411749381100886345}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &210948262098779451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8434492424902699384}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480b634f6ee625444976cc2f4ae4245e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!1 &9074788904661143810
 GameObject:
   m_ObjectHideFlags: 0

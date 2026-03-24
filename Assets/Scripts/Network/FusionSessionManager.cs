@@ -81,7 +81,18 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public static FusionSessionManager Instance { get; private set; }
 
-    public PredictionMode CurrentPredictionMode => experimentController.CurrentPredictionMode;
+    public PredictionMode CurrentPredictionMode
+    {
+        get 
+        {
+            if (experimentController == null || experimentController.Object == null || !experimentController.Object.IsValid)
+            {
+                return PredictionMode.Fusion;
+            }
+
+            return experimentController.CurrentPredictionMode;
+        }
+    }
 
     private void Awake()
     {
@@ -273,7 +284,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         PlayerRole role = PlayerRole.Player;
-
         if (_pendingRoles.Count > 0)
         {
             role = _pendingRoles.Dequeue();
@@ -304,7 +314,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                 }
             }
 
-            _playerObjects.Remove(player);
+            _activePlayers.Remove(player);
+            _playerRoles.Remove(player);
+
             Debug.Log($"[SessionManager] Player {player} left.");
         }
     }
@@ -323,7 +335,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (_sessionRunner.IsServer && experimentController == null)
         {
-            experimentController = _sessionRunner.Spawn(latencyControllerPrefab).GetComponent<SessionExperimentController>();
+            NetworkObject obj = _sessionRunner.Spawn(latencyControllerPrefab);
+            experimentController = obj.GetComponent<SessionExperimentController>();
         }
 
         _sceneLoaded = true;
@@ -387,7 +400,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             PlayerSpawnManager.Instance.IsReady
         );
 
-        // Wait a while longer to avoid race conditions
+        // Wait a little longer to avoid race conditions
         yield return new WaitForSeconds(0.1f);
 
         Transform spawn = PlayerSpawnManager.Instance.GetSpawnPointForPlayer(playerIndex % 2);
@@ -415,11 +428,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             Debug.LogError("Failed to spawn player for " + player);
             yield break;
-        }
-
-        if (role == PlayerRole.Player && playerAvatar.TryGetComponent<NetworkPoseBridge>(out var poseBridge))
-        {
-            poseBridge.SetPlayerRef(player);
         }
 
         _playerObjects[player].Add(playerAvatar);
@@ -452,30 +460,56 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private void HandleCommand(string command)
     {
     #if UNITY_SERVER
-        string[] parts = command.Split(' ');
-
-        if (parts.Length >= 2 && parts[0] == "lat")
+        if (string.IsNullOrWhiteSpace(command))
         {
-            if (int.TryParse(parts[1], out int latency))
+            return;
+        }
+
+        string[] parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        string cmd = parts[0].ToLower();
+        switch (cmd)
+        {
+            case "lat":
             {
-                int jitter = 0;
-                if (parts.Length >= 3)
+                if (parts.Length > 1)
                 {
-                    int.TryParse(parts[2], out jitter);
+                    if (int.TryParse(parts[1], out int latency))
+                    {
+                        int jitter = experimentController.Jitter;
+                        if (parts.Length >= 3)
+                        {
+                            int.TryParse(parts[2], out jitter);
+                        }
+
+                        experimentController.Latency = Mathf.Clamp(latency, 0, 1000);
+                        experimentController.Jitter  = Mathf.Clamp(jitter, 0, 1000);
+
+                        Debug.Log($"[SERVER] Latency: {experimentController.Latency} ms | Jitter: {experimentController.Jitter} ms");
+                    }
                 }
 
-                experimentController.Latency = Mathf.Clamp(latency, 0, 1000);
-                experimentController.Jitter = Mathf.Clamp(jitter, 0, 1000);
-
                 Debug.Log($"[SERVER] Latency: {experimentController.Latency} ms | Jitter: {experimentController.Jitter} ms");
+                break;
             }
-        }
-        else if (parts.Length >= 2 && parts[0] == "pred")
-        {
-            if (int.TryParse(parts[1], out int predMode))
+
+            case "pred":
             {
-                experimentController.CurrentPredictionMode = (PredictionMode)Mathf.Clamp(predMode, 0, 2);
+                if (parts.Length > 1)
+                {
+                    if (int.TryParse(parts[1], out int predMode))
+                    {
+                        experimentController.CurrentPredictionMode = (PredictionMode)Mathf.Clamp(predMode, 0, 2);
+                    }
+                }
+
                 Debug.Log($"[SERVER] Prediction mode: {experimentController.CurrentPredictionMode}");
+                break;
+            }
+
+            default:
+            {
+                Debug.Log($"[SERVER] Unknown command: {cmd}");
+                break;
             }
         }
     #endif
