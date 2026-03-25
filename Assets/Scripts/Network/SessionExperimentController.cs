@@ -11,14 +11,14 @@ public class SessionExperimentController : NetworkBehaviour
     public int Jitter { get; set; }
 
     [Networked] 
-    public PredictionMode CurrentPredictionMode { get; set; } = PredictionMode.Fusion;
+    public CompensationMode CurrentCompensationMode { get; set; } = CompensationMode.None;
 
     [Networked] 
     public int ExperimentID { get; set; }
 
     private int _prevLatency = -1;
     private int _prevJitter = -1;
-    private PredictionMode _prevPredMode = (PredictionMode)(-1);
+    private CompensationMode _prevPredMode = (CompensationMode)(-1);
 
     private bool IsReady { get; set; }
 
@@ -36,7 +36,7 @@ public class SessionExperimentController : NetworkBehaviour
 
         int latency = Latency;
         int jitter = Jitter;
-        PredictionMode predMode = CurrentPredictionMode;
+        CompensationMode predMode = CurrentCompensationMode;
 
         if (latency != _prevLatency || jitter != _prevJitter)
         {
@@ -45,10 +45,10 @@ public class SessionExperimentController : NetworkBehaviour
             _prevJitter = jitter;
         }
 
-        if (CurrentPredictionMode != _prevPredMode)
+        if (CurrentCompensationMode != _prevPredMode)
         {
-            Debug.Log($"Updated prediction mode to {CurrentPredictionMode}");
-            _prevPredMode = CurrentPredictionMode;
+            Debug.Log($"Updated prediction mode to {CurrentCompensationMode}");
+            _prevPredMode = CurrentCompensationMode;
         }
     }
 

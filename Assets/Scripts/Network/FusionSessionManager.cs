@@ -17,12 +17,12 @@ public enum PlayerRole
     Trainer
 }
 
-public enum PredictionMode
+public enum CompensationMode
 {
     Invalid = -1,
     None = 0,
-    Fusion = 1,
-    Custom = 2
+    Interpolation = 1,
+    KalmanFilter = 2
 }
 
 public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
@@ -46,7 +46,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [Header("Session Settings")]
     public PlayerRole localPlayerRole = PlayerRole.Player;
 
-    public PredictionMode predictionMode = PredictionMode.Fusion;
+    public CompensationMode compensationMode = CompensationMode.None;
 
     [Header("Object References")]
     [SerializeField]
@@ -81,16 +81,16 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public static FusionSessionManager Instance { get; private set; }
 
-    public PredictionMode CurrentPredictionMode
+    public CompensationMode CurrentCompensationMode
     {
         get 
         {
             if (experimentController == null || experimentController.Object == null || !experimentController.Object.IsValid)
             {
-                return PredictionMode.Fusion;
+                return CompensationMode.None;
             }
 
-            return experimentController.CurrentPredictionMode;
+            return experimentController.CurrentCompensationMode;
         }
     }
 
@@ -498,11 +498,11 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                 {
                     if (int.TryParse(parts[1], out int predMode))
                     {
-                        experimentController.CurrentPredictionMode = (PredictionMode)Mathf.Clamp(predMode, 0, 2);
+                        experimentController.CurrentCompensationMode = (CompensationMode)Mathf.Clamp(predMode, 0, 2);
                     }
                 }
 
-                Debug.Log($"[SERVER] Prediction mode: {experimentController.CurrentPredictionMode}");
+                Debug.Log($"[SERVER] Prediction mode: {experimentController.CurrentCompensationMode}");
                 break;
             }
 
