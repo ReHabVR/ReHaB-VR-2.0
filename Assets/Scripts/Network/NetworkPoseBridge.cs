@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Fusion;
-using ReHaB.Core;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -33,8 +32,11 @@ public struct PoseSample
     public float timestamp;
 }
 
-public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
+public class NetworkPoseBridge : NetworkBehaviour
 {
+    [SerializeField] 
+    private Animator handAnimator;
+
     [Header("Interpolation Settings")]
     [SerializeField]
     private int interpolationBufferSize = 8;
@@ -77,7 +79,7 @@ public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
     private bool _targetDeviceDetected;
 
 
-    [Networked]
+    [Networked, HideInInspector]
     public PoseData NetworkPose { get; set; }
 
     public bool IsReady { get; private set; }
@@ -110,13 +112,17 @@ public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
         }
 
     #if CLIENT_VR
-        if (!_targetDeviceDetected)
+        if (HasInputAuthority)
         {
-            TryGetDevices();
+            _localPose = CaptureXR();
+            if (Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
+            {
+                input.pose = _localPose;
+            }
         }
     #endif
 
-        if (HasStateAuthority && Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
+        else if (HasStateAuthority && Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
         {
             NetworkPose = input.pose;
         }
@@ -129,8 +135,6 @@ public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
             return;
         }
 
-        PoseData renderedPose;
-
         // _localPose = local motion for the player
         // NetworkPose = pose replicated to other peers (what the server "sees")
         // renderedPose = what the client sees in VR
@@ -138,15 +142,14 @@ public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
 
         if (HasInputAuthority)
         {
-            _localPose = GetPose();
-            renderedPose = _localPose;
+            ApplyPose(_localPose);
         }
         else
         {
-            renderedPose = ApplyCompensation(NetworkPose);
+            PoseData renderedPose = ApplyCompensation(NetworkPose);
+            ApplyPose(renderedPose);
         }
         
-        ApplyPose(renderedPose);
     }
 
     private void TryGetDevices()
@@ -180,6 +183,17 @@ public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
         bridgeHead.SetPositionAndRotation(finalPose.headPos, finalPose.headRot);
         bridgeLeftHand.SetPositionAndRotation(finalPose.lhandPos, finalPose.lhandRot);
         bridgeRightHand.SetPositionAndRotation(finalPose.rhandPos, finalPose.rhandRot);
+
+        UpdateHandAnimation(finalPose);
+    }
+
+    private void UpdateHandAnimation(PoseData pose)
+    {
+        if (handAnimator)
+        {
+            handAnimator.SetFloat("GripL", pose.gripL);
+            handAnimator.SetFloat("GripR", pose.gripR);
+        }
     }
 
     public void SetLocalPose(PoseData pose) { _localPose = pose; }
@@ -273,14 +287,25 @@ public class NetworkPoseBridge : NetworkBehaviour, IHandPoseSource
     }
 
     private PoseData CaptureXR() 
-    { 
+    {
+        if (!_targetDeviceL.isValid || !_targetDeviceR.isValid)
+        {
+            _targetDeviceDetected = false;
+        }
+        
+        if (!_targetDeviceDetected)
+        {
+            TryGetDevices();
+        }
+
         float gripLeft = 0f;
-        if (_targetDeviceL.TryGetFeatureValue(CommonUsages.trigger, out float valueL)){
+        if (_targetDeviceL != null && _targetDeviceL.TryGetFeatureValue(CommonUsages.trigger, out float valueL))
+        {
             gripLeft = valueL;
         }
 
         float gripRight = 0f;
-        if (_targetDeviceR.TryGetFeatureValue(CommonUsages.trigger, out float valueR))
+        if (_targetDeviceR != null && _targetDeviceR.TryGetFeatureValue(CommonUsages.trigger, out float valueR))
         {
             gripRight = valueR;
         }
