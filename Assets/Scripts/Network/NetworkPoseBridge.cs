@@ -104,25 +104,26 @@ public class NetworkPoseBridge : NetworkBehaviour
         IsReady = true;
     }
 
-    public override void FixedUpdateNetwork()
+    private void Update()
     {
-        if (!IsReady)
-        { 
-            return;
-        }
-
     #if CLIENT_VR
         if (HasInputAuthority)
         {
             _localPose = CaptureXR();
-            if (Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
-            {
-                input.pose = _localPose;
-            }
         }
     #endif
+    }
 
-        else if (HasStateAuthority && Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
+    public PoseData GetLocalPose() => _localPose;
+
+    public override void FixedUpdateNetwork()
+    {
+        if (!IsReady || !HasStateAuthority)
+        { 
+            return;
+        }
+
+        if (Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
         {
             NetworkPose = input.pose;
         }
@@ -288,6 +289,13 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     private PoseData CaptureXR() 
     {
+        // Return default pose if rig doesn't have input authority
+        // This should not happen normally, but it prevents rare edge cases
+        if (!HasInputAuthority)
+        {
+            return default;
+        }
+
         if (!_targetDeviceL.isValid || !_targetDeviceR.isValid)
         {
             _targetDeviceDetected = false;

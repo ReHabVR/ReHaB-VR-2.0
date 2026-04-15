@@ -27,6 +27,17 @@ public class GrabbableObject : NetworkBehaviour
         grab.selectExited.RemoveListener(OnRelease);
     }
 
+    public override void FixedUpdateNetwork()
+    {
+        if (Object.HasStateAuthority)
+        {
+            // Apply correct physics state based on current network state
+            bool isHeld = HoldingPlayer != PlayerRef.None;
+            rb.isKinematic = isHeld;
+            rb.useGravity = !isHeld;
+        }
+    }
+
     void OnGrab(SelectEnterEventArgs args)
     {
         // Prevent grabs by other player if object is held
@@ -37,18 +48,35 @@ public class GrabbableObject : NetworkBehaviour
             return;
         }
 
-        HoldingPlayer = Runner.LocalPlayer;
-        rb.isKinematic = true;
-        rb.useGravity = false;
+        if (!Object.HasStateAuthority)
+        {
+            Object.RequestStateAuthority();
+        }
+
+        RPC_RequestGrab(Runner.LocalPlayer);
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
         if (HoldingPlayer == Runner.LocalPlayer)
         {
-            HoldingPlayer = PlayerRef.None;
-            rb.isKinematic = false;
-            rb.useGravity = true;
+            RPC_RequestRelease();
         }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RPC_RequestGrab(PlayerRef player)
+    {
+        if (HoldingPlayer == PlayerRef.None || HoldingPlayer == player)
+        {
+            HoldingPlayer = player;
+        }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    void RPC_RequestRelease()
+    {
+        HoldingPlayer = PlayerRef.None;
+        Object.ReleaseStateAuthority();
     }
 }

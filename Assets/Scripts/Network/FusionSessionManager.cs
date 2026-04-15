@@ -241,11 +241,10 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
         }
 
-        PoseData _pose = _localPlayerBridge.GetPose();
-        _localPlayerBridge.SetLocalPose(_pose);
+        //_localPlayerBridge.SetLocalPose(_pose);
         input.Set(
             new PoseInput {
-                pose = _pose
+                pose = _localPlayerBridge.GetLocalPose()
             }
         );
     }

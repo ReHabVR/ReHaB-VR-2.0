@@ -2,18 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
-using UnityEngine.XR.Management;
-using TMPro;
-using UnityEngine.Events;
-using System.Text;
+using Fusion;
 
-public class ControllerDevice : MonoBehaviour
+public class ControllerDevice : NetworkBehaviour
 {
     public InputDeviceCharacteristics controllerCharacteristicL;
     public InputDeviceCharacteristics controllerCharacteristicR;
     public GameObject cameraOffset;
     public GameObject mainCamera;
-    public Transform defaultPos;
+    
+    //public Transform defaultPos;
     
     [SerializeField]
     private float _pressDelay = 1.5f;
@@ -31,11 +29,19 @@ public class ControllerDevice : MonoBehaviour
     
     void Start()
     {
-        TryGetDevices();
+        if (Object.HasInputAuthority)
+        {
+            TryGetDevices();
+        }
     }
 
     void Update()
     {
+        if (!Object.HasInputAuthority)
+        {
+            return;
+        }
+
         if (!DevicesDetected) 
         {
             TryGetDevices();
