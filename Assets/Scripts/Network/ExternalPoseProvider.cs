@@ -36,6 +36,9 @@ public class ExternalPoseProvider : MonoBehaviour
 
     private CurrentTaskManager _taskman;
 
+    public float GripL => networkPoseBridge.GetGripL();
+    public float GripR => networkPoseBridge.GetGripR();
+
     private void Awake()
     {
         _taskman = CurrentTaskManager.Instance;

@@ -36,9 +36,6 @@ public class SortingSetup : NetworkBehaviour
                 spawn.rotation
             );
 
-            Debug.Log("Spawn marker world: " + spawn.position);
-            Debug.Log("Ball world: " + ball.transform.position);
-
             spawnedBalls.Add(ball);
             BallColor color = ball.GetComponent<BallColor>();
 

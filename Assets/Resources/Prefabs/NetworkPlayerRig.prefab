@@ -101,6 +101,8 @@ MonoBehaviour:
   fallbackHead: {fileID: 5457188049990475093}
   fallbackLeftHand: {fileID: 8043616477482336218}
   fallbackRightHand: {fileID: 7133112722376162200}
+  controllerL: 320
+  controllerR: 576
   _NetworkPose:
     headPos: {x: 0, y: 0, z: 0}
     headRot: {x: 0, y: 0, z: 0, w: 0}
@@ -195,7 +197,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.064
-  m_Center: {x: -0.32, y: 0.98, z: 0.12}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3056337234104247009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,7 +385,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.064
-  m_Center: {x: 0.32, y: 0.98, z: 0.12}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1087375273555143260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -534,7 +536,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27148098970488343}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.73, z: 0.1}
+  m_LocalPosition: {x: 0, y: 1.73, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

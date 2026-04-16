@@ -41,12 +41,12 @@ public class GrabbableObject : NetworkBehaviour
     void OnGrab(SelectEnterEventArgs args)
     {
         // Prevent grabs by other player if object is held
-        if (HoldingPlayer != PlayerRef.None && HoldingPlayer != Runner.LocalPlayer)
-        {
-            IXRSelectInteractable interactable = grab;
-            grab.interactionManager.CancelInteractableSelection(interactable);
-            return;
-        }
+        //if (HoldingPlayer != PlayerRef.None && HoldingPlayer != Runner.LocalPlayer)
+        //{
+        //    IXRSelectInteractable interactable = grab;
+        //    grab.interactionManager.CancelInteractableSelection(interactable);
+        //    return;
+        // }
 
         if (!Object.HasStateAuthority)
         {
@@ -64,18 +64,20 @@ public class GrabbableObject : NetworkBehaviour
         }
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     void RPC_RequestGrab(PlayerRef player)
     {
+        Debug.Log($"Grab requested by {player}");
         if (HoldingPlayer == PlayerRef.None || HoldingPlayer == player)
         {
             HoldingPlayer = player;
         }
     }
 
-    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     void RPC_RequestRelease()
     {
+        Debug.Log($"Release requested by {HoldingPlayer}");
         HoldingPlayer = PlayerRef.None;
         Object.ReleaseStateAuthority();
     }

@@ -71,7 +71,10 @@ public class NetworkPoseBridge : NetworkBehaviour
     private PoseData _lastNetworkPose = default;
     private readonly List<PoseSample> _poseBuffer = new();
 
+    [Space(5), Header("XR Devices")]
+    [SerializeField]
     private InputDeviceCharacteristics controllerL;
+    [SerializeField]
     private InputDeviceCharacteristics controllerR;
     private static readonly List<InputDevice> _devices = new();
     private InputDevice _targetDeviceL;
@@ -296,28 +299,30 @@ public class NetworkPoseBridge : NetworkBehaviour
             return default;
         }
 
+        float gripLeft = 0f;
+        float gripRight = 0f;
+
         if (!_targetDeviceL.isValid || !_targetDeviceR.isValid)
         {
             _targetDeviceDetected = false;
         }
         
-        if (!_targetDeviceDetected)
+        if (_targetDeviceDetected)
+        {
+            if (_targetDeviceL.TryGetFeatureValue(CommonUsages.trigger, out float valueL))
+            {
+                gripLeft = valueL;
+            }
+            if (_targetDeviceR.TryGetFeatureValue(CommonUsages.trigger, out float valueR))
+            {
+                gripRight = valueR;
+            }
+        }
+        else
         {
             TryGetDevices();
         }
 
-        float gripLeft = 0f;
-        if (_targetDeviceL != null && _targetDeviceL.TryGetFeatureValue(CommonUsages.trigger, out float valueL))
-        {
-            gripLeft = valueL;
-        }
-
-        float gripRight = 0f;
-        if (_targetDeviceR != null && _targetDeviceR.TryGetFeatureValue(CommonUsages.trigger, out float valueR))
-        {
-            gripRight = valueR;
-        }
-        
         return new()
         {
             headPos = XRHead.position,

@@ -80,13 +80,17 @@ public class PoseLogger : MonoBehaviour
         poseProvider.lhandBridge.GetLocalPositionAndRotation(out Vector3 lhand, out Quaternion lhandRot);
         poseProvider.rhandBridge.GetLocalPositionAndRotation(out Vector3 rhand, out Quaternion rhandRot);
         
+        float gripL = poseProvider.GripL;
+        float gripR = poseProvider.GripR;
+
         float timestamp = Time.time - _startTime;
 
         string row = string.Join(",",
             FormatFloat(timestamp),
             FormatVector3(head), FormatQuaternion(headRot),
             FormatVector3(lhand), FormatQuaternion(lhandRot),
-            FormatVector3(rhand), FormatQuaternion(rhandRot)
+            FormatVector3(rhand), FormatQuaternion(rhandRot),
+            FormatFloat(gripL), FormatFloat(gripR)
         );
 
         _buffer.Add(row);
@@ -116,7 +120,8 @@ public class PoseLogger : MonoBehaviour
         _path = Path.Combine(Application.persistentDataPath, fname);
         _header = "time,head_x,head_y,head_z,head_qx,head_qy,head_qz,head_qw," +
                   "lhand_x,lhand_y,lhand_z,lhand_qx,lhand_qy,lhand_qz,lhand_qw," +
-                  "rhand_x,rhand_y,rhand_z,rhand_qx,rhand_qy,rhand_qz,rhand_qw";
+                  "rhand_x,rhand_y,rhand_z,rhand_qx,rhand_qy,rhand_qz,rhand_qw" +
+                  "grip_l, grip_r";
 
         // Write header immediately
         File.WriteAllText(_path, _header + Environment.NewLine);
