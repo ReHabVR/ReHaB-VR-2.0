@@ -153,7 +153,6 @@ public class NetworkPoseBridge : NetworkBehaviour
             PoseData renderedPose = ApplyCompensation(NetworkPose);
             ApplyPose(renderedPose);
         }
-        
     }
 
     private void TryGetDevices()

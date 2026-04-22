@@ -67,6 +67,7 @@
   <Project Path="Unity.SysrootPackage.Editor.csproj" />
   <Project Path="Unity.XR.Management.Editor.csproj" />
   <Project Path="Unity.XR.OpenXR.Features.OculusQuestSupport.Editor.csproj" />
+  <Project Path="AssetUsageDetector.Editor.csproj" />
   <Project Path="Unity.VSCode.Editor.csproj" />
   <Project Path="Unity.Toolchain.Win-x86_64-Linux-x86_64.csproj" />
   <Project Path="Unity.ProBuilder.AssetIdRemapUtility.csproj" />
