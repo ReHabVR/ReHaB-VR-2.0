@@ -26,5 +26,9 @@ public class ResetTransform : MonoBehaviour
                 gameObject.transform.SetPositionAndRotation(target.position, target.rotation);
             }
         }
+        else
+        {
+            transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        }
     }
 }
