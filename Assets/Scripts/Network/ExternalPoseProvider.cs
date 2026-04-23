@@ -65,16 +65,15 @@ public class ExternalPoseProvider : MonoBehaviour
     #if CLIENT_VR
         return;
     #endif
+
         if (networkPoseBridge == null || 
-            !networkPoseBridge.IsReady || 
-            !networkPoseBridge.HasInputAuthority || 
-            Keyboard.current == null)
+            !networkPoseBridge.IsReady)
         {
             return;
         }
 
         // Left hand
-        bool raiseLeft = Keyboard.current.qKey.isPressed;
+        bool raiseLeft = Keyboard.current != null && Keyboard.current.qKey.isPressed;
 
         _lhandRaise = Mathf.MoveTowards(
             _lhandRaise,
@@ -90,7 +89,7 @@ public class ExternalPoseProvider : MonoBehaviour
     #endif
 
         // Right hand
-        bool raiseRight = Keyboard.current.eKey.isPressed;
+        bool raiseRight = Keyboard.current != null && Keyboard.current.eKey.isPressed;
 
         _rhandRaise = Mathf.MoveTowards(
             _rhandRaise,
@@ -109,6 +108,20 @@ public class ExternalPoseProvider : MonoBehaviour
     #if CLIENT_PC
         headBridge.localPosition = headFallback.localPosition;
     #endif
+
+        networkPoseBridge.SetExternalPose(new PoseData
+            {
+                headPos = headFallback.position,
+                headRot = headFallback.rotation,
+                lhandPos = lhandFallback.position,
+                lhandRot = lhandFallback.rotation,
+                rhandPos = rhandFallback.position,
+                rhandRot = rhandFallback.rotation,
+                gripL = 0.0f,
+                gripR = 0.0f,
+                isValid = true
+            }
+        );
 
         #region DEBUG
         if (_taskman == null)

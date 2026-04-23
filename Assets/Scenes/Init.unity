@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0497779960ec51642870ab61936fde07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hostAddress: 192.168.50.146
+  hostAddress: 192.168.1.12
   port: 27015
   startAsHost: 0
   simulatedLatency: 0

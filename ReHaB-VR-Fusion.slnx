@@ -6,11 +6,9 @@
   <Project Path="UnityEngine.TestRunner.csproj" />
   <Project Path="UnityEngine.UI.csproj" />
   <Project Path="Unity.Mathematics.csproj" />
-  <Project Path="glTFast.csproj" />
   <Project Path="Unity.InputSystem.csproj" />
   <Project Path="AsmDefInteraction.csproj" />
   <Project Path="Unity.RenderPipelines.Universal.Runtime.csproj" />
-  <Project Path="glTFast.Export.csproj" />
   <Project Path="Unity.Postprocessing.Runtime.csproj" />
   <Project Path="UnityEngine.XR.LegacyInputHelpers.csproj" />
   <Project Path="Unity.Animation.Rigging.csproj" />
@@ -24,7 +22,6 @@
   <Project Path="Unity.Burst.csproj" />
   <Project Path="AsmDefTasks.csproj" />
   <Project Path="Unity.ProBuilder.Csg.csproj" />
-  <Project Path="glTFast.Newtonsoft.csproj" />
   <Project Path="Fusion.Unity.csproj" />
   <Project Path="AsmDefNetwork.csproj" />
   <Project Path="Unity.XR.Management.csproj" />
@@ -37,7 +34,6 @@
   <Project Path="Unity.XR.MockHMD.csproj" />
   <Project Path="AsmDefAnimation.csproj" />
   <Project Path="UnityEngine.SpatialTracking.csproj" />
-  <Project Path="glTFast.dots.csproj" />
   <Project Path="Unity.XR.OpenXR.Features.ConformanceAutomation.csproj" />
   <Project Path="Unity.ProBuilder.Stl.csproj" />
   <Project Path="Unity.XR.OpenXR.Features.MockRuntime.csproj" />
@@ -62,7 +58,6 @@
   <Project Path="Unity.XR.CoreUtils.Editor.csproj" />
   <Project Path="Unity.Animation.Rigging.Editor.csproj" />
   <Project Path="Fusion.Unity.Editor.csproj" />
-  <Project Path="glTFast.Editor.csproj" />
   <Project Path="Unity.Searcher.Editor.csproj" />
   <Project Path="Unity.SysrootPackage.Editor.csproj" />
   <Project Path="Unity.XR.Management.Editor.csproj" />

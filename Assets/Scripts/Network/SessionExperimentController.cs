@@ -20,50 +20,44 @@ public class SessionExperimentController : NetworkBehaviour
     private int _prevJitter = -1;
     private CompensationMode _prevPredMode = (CompensationMode)(-1);
 
-    private bool IsReady { get; set; }
-
     public override void Spawned()
     {
-        IsReady = true;
+        // Ensure initial state
+        if (Object.HasStateAuthority)
+        {
+            ApplyNetworkConditions(Latency, Jitter);
+        }
     }
 
-    public override void Render()
+    public override void FixedUpdateNetwork()
     {
-        if (!IsReady || Runner == null || Runner.IsServer)
+        if (Object.HasStateAuthority)
+        {
+            // Apply only when values change
+            if (Latency == _prevLatency && Jitter == _prevJitter)
+            {
+                return;
+            }
+
+            ApplyNetworkConditions(Latency, Jitter);
+            _prevLatency = Latency;
+            _prevJitter = Jitter;
+        }
+    }
+
+    private void ApplyNetworkConditions(int latency, int jitter)
+    {
+        if (Runner == null || Runner.Config == null || Runner.Config.NetworkConditions == null)
         {
             return;
         }
 
-        int latency = Latency;
-        int jitter = Jitter;
-        CompensationMode predMode = CurrentCompensationMode;
+        NetworkSimulationConfiguration nc = Runner.Config.NetworkConditions;
+        nc.Enabled = latency > 0;
+        nc.DelayMin = latency;
+        nc.DelayMax = latency;
+        nc.AdditionalJitter = jitter;
 
-        if (latency != _prevLatency || jitter != _prevJitter)
-        {
-            ApplyLatency(latency, jitter);
-            _prevLatency = latency;
-            _prevJitter = jitter;
-        }
-
-        if (CurrentCompensationMode != _prevPredMode)
-        {
-            Debug.Log($"Updated prediction mode to {CurrentCompensationMode}");
-            _prevPredMode = CurrentCompensationMode;
-        }
-    }
-
-    private void ApplyLatency(int latency, int jitter)
-    {
-        if (Runner.Config == null || Runner.Config.NetworkConditions == null)
-        {
-            return;
-        }
-
-        Runner.Config.NetworkConditions.Enabled = latency > 0;
-        Runner.Config.NetworkConditions.DelayMin = latency;
-        Runner.Config.NetworkConditions.DelayMax = latency;
-        Runner.Config.NetworkConditions.AdditionalJitter = jitter;
-
-        Debug.Log($"Applied latency {Latency} ms | jitter {Jitter} ms");
+        Debug.Log($"Applied latency {latency} ms | jitter {jitter} ms");
     }
 }

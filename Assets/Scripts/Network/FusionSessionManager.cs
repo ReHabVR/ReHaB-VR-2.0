@@ -236,17 +236,20 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        if (_localPlayerBridge == null || !_localPlayerBridge.IsReady || !_localPlayerBridge.HasInputAuthority) 
+        if (_localPlayerBridge == null || !_localPlayerBridge.IsReady) 
         {
             return;
         }
 
-        //_localPlayerBridge.SetLocalPose(_pose);
-        input.Set(
-            new PoseInput {
-                pose = _localPlayerBridge.GetLocalPose()
-            }
-        );
+        PoseData newPose = _localPlayerBridge.GetLocalPose();
+        if (newPose.isValid)
+        {
+            input.Set(
+                new PoseInput {
+                    pose = newPose
+                }
+            );
+        }
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)
@@ -466,6 +469,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
         string[] parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         string cmd = parts[0].ToLower();
+
+        var _taskman = CurrentTaskManager.Instance;
         switch (cmd)
         {
             case "lat":
@@ -502,6 +507,20 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                 }
 
                 Debug.Log($"[SERVER] Prediction mode: {experimentController.CurrentCompensationMode}");
+                break;
+            }
+
+            case "task":
+            {
+                if (parts.Length > 1)
+                {
+                    if (int.TryParse(parts[1], out int taskType))
+                    {
+                        _taskman.RPC_ToggleTestTask();
+                    }
+                }
+
+                Debug.Log($"[SERVER] Current task: {_taskman.GetGameState().ToString()}");
                 break;
             }
 

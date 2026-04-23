@@ -9,10 +9,10 @@ public class CurrentTaskManager : NetworkBehaviour
 {
     public enum EGameState
     {
-        None,
-        Shapes,
-        Dice,
-        Sorting
+        None = 0,
+        Shapes = 1,
+        Dice = 2,
+        Sorting = 3
     }
 
     public event Action OnTaskStarted;
@@ -58,6 +58,8 @@ public class CurrentTaskManager : NetworkBehaviour
         }
     }
 
+    public EGameState GetGameState() => gameState;
+    
 #region DEBUG
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_ToggleTestTask()
@@ -172,7 +174,6 @@ public class CurrentTaskManager : NetworkBehaviour
         gameState = EGameState.None;
     }
 
-    public EGameState GetGameState() => gameState;
 
     private void IncrementGrabCount() => OnMove?.Invoke();
     private void IncrementCorrectMovesCount() => OnCorrectMove?.Invoke();

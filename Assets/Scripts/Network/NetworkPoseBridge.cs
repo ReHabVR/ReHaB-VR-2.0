@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using Fusion;
 using UnityEngine;
 using UnityEngine.XR;
@@ -19,6 +20,8 @@ public struct PoseData : INetworkStruct
 
     public FloatCompressed gripL;
     public FloatCompressed gripR;
+
+    public bool isValid;
 }
 
 public struct PoseInput : INetworkInput
@@ -67,9 +70,15 @@ public class NetworkPoseBridge : NetworkBehaviour
     private Transform fallbackRightHand;
 
 
-    private PoseData _localPose;
+    private PoseData _localPose = new()
+    {
+        isValid = false
+    };
+    
     private PoseData _lastNetworkPose = default;
     private readonly List<PoseSample> _poseBuffer = new();
+
+    float _lastTimestamp = 0.0f;
 
     [Space(5), Header("XR Devices")]
     [SerializeField]
@@ -89,10 +98,10 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Spawned()
     {
-
         if (HasInputAuthority && Object.InputAuthority == Runner.LocalPlayer)
         {
             FusionSessionManager.Instance.SetLocalBridge(this);
+            _localPose = GetPose();
         }
 
         foreach (ExternalPoseProvider provider in GetComponentsInChildren<ExternalPoseProvider>(true))
@@ -103,32 +112,44 @@ public class NetworkPoseBridge : NetworkBehaviour
     #if CLIENT_VR
         TryGetDevices();
     #endif
-
         IsReady = true;
     }
 
     private void Update()
     {
-    #if CLIENT_VR
         if (HasInputAuthority)
         {
-            _localPose = CaptureXR();
+            _localPose = GetPose();
         }
-    #endif
     }
 
     public PoseData GetLocalPose() => _localPose;
 
+    public void SetExternalPose(PoseData pose)
+    {
+        _localPose = pose;
+    }
+
     public override void FixedUpdateNetwork()
     {
-        if (!IsReady || !HasStateAuthority)
-        { 
+        if (Object == null || !Object.IsValid)
+        {
             return;
         }
+        
+        _lastTimestamp = Runner.SimulationTime;
 
-        if (Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
+        if (HasStateAuthority)
         {
-            NetworkPose = input.pose;
+            if (Runner.TryGetInputForPlayer(Object.InputAuthority, out PoseInput input))
+            {
+                NetworkPose = input.pose;
+            }
+        }
+
+        if (!HasInputAuthority)
+        {
+            _lastNetworkPose = NetworkPose;
         }
     }
 
@@ -150,7 +171,7 @@ public class NetworkPoseBridge : NetworkBehaviour
         }
         else
         {
-            PoseData renderedPose = ApplyCompensation(NetworkPose);
+            PoseData renderedPose = ApplyCompensation(_lastNetworkPose);
             ApplyPose(renderedPose);
         }
     }
@@ -215,10 +236,11 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     private void AddPoseSample(PoseData pose)
     {
-        _poseBuffer.Add(new()
+        _poseBuffer.Add(
+            new()
             {
                 pose = pose,
-                timestamp = Runner.SimulationTime
+                timestamp = _lastTimestamp
             }
         );
 
@@ -233,7 +255,7 @@ public class NetworkPoseBridge : NetworkBehaviour
         if (_poseBuffer.Count == 0 || !PoseEqualsApprox(_lastNetworkPose, networkPose))
         {
             AddPoseSample(networkPose);
-            _lastNetworkPose = networkPose;
+            //_lastNetworkPose = networkPose;
         }
 
         if (_poseBuffer.Count < 2)
@@ -241,7 +263,7 @@ public class NetworkPoseBridge : NetworkBehaviour
             return networkPose;
         }
 
-        float renderTime = Runner.SimulationTime - interpolationDelay;
+        float renderTime = _lastTimestamp - interpolationDelay;
         for (int i = _poseBuffer.Count - 2; i >= 0; i--) // reverse search
         {
             PoseSample sampleA = _poseBuffer[i];
@@ -331,7 +353,8 @@ public class NetworkPoseBridge : NetworkBehaviour
             rhandPos = XRRightHand.position,
             rhandRot = XRRightHand.rotation,
             gripL = gripLeft,
-            gripR = gripRight
+            gripR = gripRight,
+            isValid = true
         };
     }
 
@@ -344,7 +367,8 @@ public class NetworkPoseBridge : NetworkBehaviour
         rhandPos = fallbackRightHand.position,
         rhandRot = fallbackRightHand.rotation,
         gripL = 0.0f,
-        gripR = 0.0f
+        gripR = 0.0f,
+        isValid = true
     };
 
     public float GetGripL()
