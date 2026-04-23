@@ -7,6 +7,7 @@
   <Project Path="AsmDefCore.csproj" />
   <Project Path="AsmDefAnimation.csproj" />
   <Project Path="Fusion.Unity.Editor.csproj" />
+  <Project Path="AssetUsageDetector.Editor.csproj" />
   <Project Path="Unity.Fusion.CodeGen.csproj" />
   <Project Path="Assembly-CSharp-Editor.csproj" />
 </Solution>

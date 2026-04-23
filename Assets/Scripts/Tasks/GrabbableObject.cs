@@ -48,10 +48,10 @@ public class GrabbableObject : NetworkBehaviour
         //    return;
         // }
 
-        if (!Object.HasStateAuthority)
-        {
-            Object.RequestStateAuthority();
-        }
+        //if (!Object.HasStateAuthority)
+        //{
+        //    Object.RequestStateAuthority();
+        //}
 
         RPC_RequestGrab(Runner.LocalPlayer);
     }

@@ -158,7 +158,7 @@ MonoBehaviour:
   simulatedLatency: 0
   simulatedJitter: 0
   localPlayerRole: 0
-  predictionMode: 1
+  compensationMode: 0
   playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
     type: 3}
   trainerPrefab: {fileID: 4051770860812974642, guid: fba387262495c1e4da29fc005f433291,
