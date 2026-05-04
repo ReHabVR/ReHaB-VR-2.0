@@ -116,9 +116,12 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         bool _isHost = ResolveHost();
         Debug.Log($"Starting as: {(_isHost ? "SERVER" : "CLIENT")}");
+        
+        GameObject runnerObject = new("FusionRunner");
+        _sessionRunner = runnerObject.AddComponent<NetworkRunner>();
+        _sceneManager = runnerObject.AddComponent<NetworkSceneManagerDefault>();
+        DontDestroyOnLoad(runnerObject);
 
-        _sessionRunner = gameObject.AddComponent<NetworkRunner>();
-        _sceneManager = _sessionRunner.gameObject.AddComponent<NetworkSceneManagerDefault>();
         Debug.Log($"[Fusion] SceneManager: {_sceneManager}");
 
         _sessionRunner.ProvideInput = !_isHost;
