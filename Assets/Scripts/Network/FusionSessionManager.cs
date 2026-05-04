@@ -159,6 +159,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             Debug.LogError("[Fusion] Connection failed: " + result.ShutdownReason);
         }
     }
+    
 #if UNITY_SERVER
     private void Update()
     {

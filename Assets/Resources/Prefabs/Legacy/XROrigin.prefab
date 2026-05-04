@@ -56,7 +56,6 @@ MonoBehaviour:
   controllerCharacteristicR: 576
   cameraOffset: {fileID: 27148098984329785}
   mainCamera: {fileID: 27148098970488343}
-  defaultPos: {fileID: 6591396815898507054}
   _pressDelay: 1
 --- !u!114 &4051770860812974642
 MonoBehaviour:
@@ -74,7 +73,8 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects: []
-  NetworkedBehaviours: []
+  NetworkedBehaviours:
+  - {fileID: 2463617215872041955}
   ForceRemoteRenderTimeframe: 0
 --- !u!1 &27148097521359861
 GameObject:
@@ -2121,7 +2121,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3687714344804422039}
   - component: {fileID: 2458463743472901110}
-  - component: {fileID: 4613060460004776577}
   - component: {fileID: 3933743999145312356}
   m_Layer: 0
   m_Name: Armature
@@ -2168,21 +2167,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &4613060460004776577
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3004656291153533917}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a56c9d3051bf06f4ea4f47fdf791965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllerR: 576
-  controllerL: 320
-  handAnimator: {fileID: 2458463743472901110}
 --- !u!114 &3933743999145312356
 MonoBehaviour:
   m_ObjectHideFlags: 0

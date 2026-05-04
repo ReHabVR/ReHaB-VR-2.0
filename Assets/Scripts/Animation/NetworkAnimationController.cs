@@ -11,6 +11,8 @@ public struct AnimationCommand
 }
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PythonAdapter))]
+[RequireComponent(typeof(PythonSocket))]
 public class NetworkAnimationController : NetworkBehaviour
 {
     [SerializeField]
@@ -20,16 +22,18 @@ public class NetworkAnimationController : NetworkBehaviour
     private AnimationCommandSource currentAdapter;
 
     [Networked] 
-    private int ClipHash { get; set; }
+    public int ClipHash { get; set; }
+
     [Networked] 
-    private int PlayId { get; set; }
+    public int PlayId { get; set; }
 
     private int _lastPlayedId;
+    private int _cachedClipHash;
+    private int _cachedPlayId;
 
     void Awake()
     {
-        PythonAdapter adapter = GetComponent<PythonAdapter>();
-        if (adapter == null)
+        if (!TryGetComponent(out PythonAdapter adapter))
         {
             return;
         }
@@ -44,28 +48,51 @@ public class NetworkAnimationController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (currentAdapter && currentAdapter.TryGetCommand(out var cmd))
-        {
-            Debug.LogError($"Command from adapter: {cmd.ClipKey}");
-            RequestPlay(cmd.ClipKey);
-        }
-    }
-
-    public void LateUpdate()
-    {
-        if (PlayId == _lastPlayedId || ClipHash == 0)
+        if (!Object || !Object.IsValid || Runner == null || !Object.HasStateAuthority)
         {
             return;
+        }
+
+        if (currentAdapter && currentAdapter.TryGetCommand(out var cmd))
+        {
+            Debug.Log($"Command from adapter: {cmd.ClipKey}");
+            RequestPlay(cmd.ClipKey);
         }
 
         if (!animator.HasState(0, ClipHash))
         {
-            Debug.LogWarning($"Animator missing state for hash {ClipHash}");
+            //Debug.LogWarning($"Animator missing state for hash {ClipHash}");
             return;
         }
 
-        animator.Play(ClipHash, 0, 0f);
-        _lastPlayedId = PlayId;
+        if (ClipHash == 0 || PlayId == _lastPlayedId)
+        {
+            return;
+        }
+
+        _cachedPlayId = PlayId;
+        _cachedClipHash = ClipHash;
+    }
+
+    public override void Render()
+    {
+        if (!Object || !Object.IsValid || Runner == null)
+           return;
+
+        if (!animator || !animator.isActiveAndEnabled)
+            return;
+
+        if (_cachedClipHash == 0)
+            return;
+
+        if (_cachedPlayId == _lastPlayedId)
+            return;
+
+        if (!animator.HasState(0, _cachedClipHash))
+            return;
+
+        animator.Play(_cachedClipHash, 0, 0f);
+        _lastPlayedId = _cachedPlayId;
     }
 
     public void RequestPlay(string clipName)
@@ -85,7 +112,10 @@ public class NetworkAnimationController : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_RequestPlay(int hash)
     {
-        ClipHash = hash;
-        PlayId++;
+        if (Object && Object.IsValid)
+        {
+            ClipHash = hash;
+            PlayId++;
+        }
     }
 }

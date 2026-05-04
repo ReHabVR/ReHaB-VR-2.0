@@ -46,16 +46,21 @@ public class ExternalPoseProvider : MonoBehaviour
         _leftHandStart = lhandFallback.localPosition;
         _rightHandStart = rhandFallback.localPosition;
         _headStart = headFallback.localPosition;
-        
-        /*
-        lhandBridge.localPosition = _leftHandStart;
-        rhandBridge.localPosition = _rightHandStart;
-        headBridge.localPosition = _headStart;
-        */
+
+    #if CLIENT_PC
+        lhandBridge.position = lhandFallback.position;
+        rhandBridge.position = rhandFallback.position;
+        headBridge.position = headFallback.position;
+    #endif
     }
 
     public void OnSpawned()
     {
+    #if CLIENT_VR
+        enabled = false;
+        return;
+    #endif
+
         // Disable PoseProvider for non-local players
         enabled = networkPoseBridge.HasInputAuthority;
     }

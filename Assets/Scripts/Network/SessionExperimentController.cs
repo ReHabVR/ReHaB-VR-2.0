@@ -18,7 +18,7 @@ public class SessionExperimentController : NetworkBehaviour
 
     private int _prevLatency = -1;
     private int _prevJitter = -1;
-    private CompensationMode _prevPredMode = (CompensationMode)(-1);
+    //private CompensationMode _prevPredMode = (CompensationMode)(-1);
 
     public override void Spawned()
     {

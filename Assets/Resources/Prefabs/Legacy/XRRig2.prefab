@@ -91,7 +91,6 @@ MonoBehaviour:
   controllerCharacteristicR: 576
   cameraOffset: {fileID: 6985230134055411368}
   mainCamera: {fileID: 2927460174108476748}
-  defaultPos: {fileID: 6591396815898507054}
   _pressDelay: 1
 --- !u!1 &27148097596870249
 GameObject:
@@ -4082,7 +4081,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8888451048142000733}
   - component: {fileID: 27148099119005958}
-  - component: {fileID: 27148099119005959}
   - component: {fileID: 27148099119006009}
   m_Layer: 0
   m_Name: Armature
@@ -4129,21 +4127,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &27148099119005959
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7045271869750286359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a56c9d3051bf06f4ea4f47fdf791965b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  controllerR: 576
-  controllerL: 320
-  handAnimator: {fileID: 27148099119005958}
 --- !u!114 &27148099119006009
 MonoBehaviour:
   m_ObjectHideFlags: 0
