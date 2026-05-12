@@ -9,6 +9,9 @@ public class GrabbableObject : NetworkBehaviour
     [Networked, HideInInspector]
     public PlayerRef HoldingPlayer { get; private set; } = PlayerRef.None;
 
+    [Networked, HideInInspector]
+    public EHandType HoldingHand { get; private set; }
+
     private Rigidbody rb;
     private XRGrabInteractable grab;
 
@@ -35,42 +38,43 @@ public class GrabbableObject : NetworkBehaviour
             bool isHeld = HoldingPlayer != PlayerRef.None;
             rb.isKinematic = isHeld;
             rb.useGravity = !isHeld;
+
+            if (!isHeld)
+            {
+                return;
+            }
+
+            if (HandPoseResolver.Instance.TryGetHandPose(HoldingPlayer, HoldingHand, out Vector3 pos, out Quaternion rot))
+            {
+                Debug.Log($"[SERVER] Resolved hand pos: {pos}");
+                rb.MovePosition(pos);
+                rb.MoveRotation(rot);
+            }
         }
     }
 
     void OnGrab(SelectEnterEventArgs args)
     {
-        // Prevent grabs by other player if object is held
-        //if (HoldingPlayer != PlayerRef.None && HoldingPlayer != Runner.LocalPlayer)
-        //{
-        //    IXRSelectInteractable interactable = grab;
-        //    grab.interactionManager.CancelInteractableSelection(interactable);
-        //    return;
-        // }
-
-        //if (!Object.HasStateAuthority)
-        //{
-        //    Object.RequestStateAuthority();
-        //}
-
-        RPC_RequestGrab(Runner.LocalPlayer);
+        NetworkHand hand = args.interactorObject.transform.GetComponentInParent<NetworkHand>();
+        if (hand)
+        {
+            RPC_RequestGrab(hand.Owner, hand.handType);
+        }
     }
 
     void OnRelease(SelectExitEventArgs args)
     {
-        if (HoldingPlayer == Runner.LocalPlayer)
-        {
-            RPC_RequestRelease();
-        }
+        RPC_RequestRelease();
     }
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    void RPC_RequestGrab(PlayerRef player)
+    void RPC_RequestGrab(PlayerRef player, EHandType hand)
     {
         Debug.Log($"Grab requested by {player}");
         if (HoldingPlayer == PlayerRef.None || HoldingPlayer == player)
         {
             HoldingPlayer = player;
+            HoldingHand = hand;
         }
     }
 
@@ -79,6 +83,5 @@ public class GrabbableObject : NetworkBehaviour
     {
         Debug.Log($"Release requested by {HoldingPlayer}");
         HoldingPlayer = PlayerRef.None;
-        Object.ReleaseStateAuthority();
     }
 }

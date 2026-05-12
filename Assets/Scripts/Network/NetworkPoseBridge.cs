@@ -46,6 +46,10 @@ public class NetworkPoseBridge : NetworkBehaviour
     [SerializeField, Min(0f)]
     private float interpolationDelay = 0.1f;
 
+    [Header("Hands")]
+    [SerializeField] 
+    private List<NetworkHand> networkHands;
+
     [Header("XR Controllers")]
     [SerializeField] 
     private Transform XRHead;
@@ -98,10 +102,20 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Spawned()
     {
+        if (Object.HasStateAuthority)
+        {
+            (NetworkHandResolver.Instance as NetworkHandResolver).RegisterBridge(Object.InputAuthority, this);
+        }
+
         if (HasInputAuthority && Object.InputAuthority == Runner.LocalPlayer)
         {
             FusionSessionManager.Instance.SetLocalBridge(this);
             _localPose = GetPose();
+
+            foreach (NetworkHand hand in networkHands)
+            {
+                hand.Owner = Runner.LocalPlayer;
+            }
         }
 
         foreach (ExternalPoseProvider provider in GetComponentsInChildren<ExternalPoseProvider>(true))
@@ -112,7 +126,16 @@ public class NetworkPoseBridge : NetworkBehaviour
     #if CLIENT_VR
         TryGetDevices();
     #endif
+
         IsReady = true;
+    }
+
+    public override void Despawned(NetworkRunner runner, bool hasState)
+    {
+        if (Object.HasStateAuthority)
+        {
+            (NetworkHandResolver.Instance as NetworkHandResolver).UnregisterBridge(Object.InputAuthority);
+        }
     }
 
     private void Update()
@@ -300,7 +323,7 @@ public class NetworkPoseBridge : NetworkBehaviour
         return pose;
     }
 
-    public PoseData GetPose()
+    private PoseData GetPose()
     {
     #if CLIENT_VR
         if (HasInputAuthority && _targetDeviceDetected)

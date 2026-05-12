@@ -92,6 +92,7 @@ MonoBehaviour:
   handAnimator: {fileID: 1234631036693041730}
   interpolationBufferSize: 8
   interpolationDelay: 0.1
+  networkHands: []
   XRHead: {fileID: 27148098970488338}
   XRLeftHand: {fileID: 27148097521359858}
   XRRightHand: {fileID: 27148098549569796}
@@ -144,6 +145,7 @@ GameObject:
   - component: {fileID: 27148097521359858}
   - component: {fileID: 27148097521359859}
   - component: {fileID: 6498871855528494296}
+  - component: {fileID: 6937444924585814943}
   - component: {fileID: 3056337234104247009}
   - component: {fileID: 8578839201559278279}
   m_Layer: 0
@@ -199,6 +201,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.064
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6937444924585814943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27148097521359861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97fc4e49d8777342bdcbb6c023a8b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 0
 --- !u!114 &3056337234104247009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,6 +347,7 @@ GameObject:
   - component: {fileID: 27148098549569796}
   - component: {fileID: 27148098549569797}
   - component: {fileID: 5723735346159130501}
+  - component: {fileID: 3853846031411576095}
   - component: {fileID: 1087375273555143260}
   - component: {fileID: 5764525662990266767}
   m_Layer: 0
@@ -387,6 +403,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.064
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3853846031411576095
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27148098549569799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97fc4e49d8777342bdcbb6c023a8b1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  handType: 1
 --- !u!114 &1087375273555143260
 MonoBehaviour:
   m_ObjectHideFlags: 0
