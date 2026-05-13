@@ -105,17 +105,16 @@ public class NetworkPoseBridge : NetworkBehaviour
         if (Object.HasStateAuthority)
         {
             (NetworkHandResolver.Instance as NetworkHandResolver).RegisterBridge(Object.InputAuthority, this);
+            foreach (NetworkHand hand in networkHands)
+            {
+                hand.Owner = Runner.LocalPlayer;
+            }
         }
 
         if (HasInputAuthority && Object.InputAuthority == Runner.LocalPlayer)
         {
             FusionSessionManager.Instance.SetLocalBridge(this);
             _localPose = GetPose();
-
-            foreach (NetworkHand hand in networkHands)
-            {
-                hand.Owner = Runner.LocalPlayer;
-            }
         }
 
         foreach (ExternalPoseProvider provider in GetComponentsInChildren<ExternalPoseProvider>(true))

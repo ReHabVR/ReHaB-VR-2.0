@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class NetworkHand : MonoBehaviour
 {
-    [HideInInspector]
-    public PlayerRef Owner {get; set;}
+    [Networked]
+    public PlayerRef Owner { get; set; }
 
-    public EHandType handType = EHandType.Left;
+    [SerializeField]
+    private EHandType handType;
+
+    public EHandType HandType => handType;
 }

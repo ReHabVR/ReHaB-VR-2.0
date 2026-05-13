@@ -59,6 +59,8 @@ MonoBehaviour:
   - {fileID: 6811728238161990035}
   - {fileID: 9191328999298589861}
   - {fileID: 279778593813399080}
+  - {fileID: 6937444924585814943}
+  - {fileID: 3853846031411576095}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &6811728238161990035
 MonoBehaviour:
@@ -92,7 +94,9 @@ MonoBehaviour:
   handAnimator: {fileID: 1234631036693041730}
   interpolationBufferSize: 8
   interpolationDelay: 0.1
-  networkHands: []
+  networkHands:
+  - {fileID: 6937444924585814943}
+  - {fileID: 3853846031411576095}
   XRHead: {fileID: 27148098970488338}
   XRLeftHand: {fileID: 27148097521359858}
   XRRightHand: {fileID: 27148098549569796}
