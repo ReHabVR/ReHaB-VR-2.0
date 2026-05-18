@@ -246,14 +246,11 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         }
 
         PoseData newPose = _localPlayerBridge.GetLocalPose();
-        if (newPose.isValid)
-        {
-            input.Set(
-                new PoseInput {
-                    pose = newPose
-                }
-            );
-        }
+        input.Set(
+            new PoseInput {
+                pose = newPose
+            }
+        );
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input)

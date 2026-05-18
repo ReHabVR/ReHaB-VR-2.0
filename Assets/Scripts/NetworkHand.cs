@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class NetworkHand : MonoBehaviour
 {
-    [Networked]
-    public PlayerRef Owner { get; set; }
-
     [SerializeField]
     private EHandType handType;
 

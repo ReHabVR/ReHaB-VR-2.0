@@ -89,10 +89,6 @@ public class ExternalPoseProvider : MonoBehaviour
         Vector3 lhandOffset = _lhandRaise * raiseHeight * Vector3.up;
         lhandFallback.localPosition = _leftHandStart + lhandOffset;
 
-    #if CLIENT_PC
-        lhandBridge.localPosition = lhandFallback.localPosition;
-    #endif
-
         // Right hand
         bool raiseRight = Keyboard.current != null && Keyboard.current.eKey.isPressed;
 
@@ -104,16 +100,17 @@ public class ExternalPoseProvider : MonoBehaviour
         
         Vector3 rhandOffset = _rhandRaise * raiseHeight * Vector3.up;
         rhandFallback.localPosition = _rightHandStart + rhandOffset;
-    #if CLIENT_PC
-        rhandBridge.localPosition = rhandFallback.localPosition;
-    #endif
 
         // Fix head position
         headFallback.localPosition = _headStart;
+
     #if CLIENT_PC
-        headBridge.localPosition = headFallback.localPosition;
+        lhandBridge.position = lhandFallback.position;
+        rhandBridge.position = rhandFallback.position;
+        headBridge.position = headFallback.position;
     #endif
 
+        /*
         networkPoseBridge.SetExternalPose(new PoseData
             {
                 headPos = headFallback.position,
@@ -123,10 +120,10 @@ public class ExternalPoseProvider : MonoBehaviour
                 rhandPos = rhandFallback.position,
                 rhandRot = rhandFallback.rotation,
                 gripL = 0.0f,
-                gripR = 0.0f,
-                isValid = true
+                gripR = 0.0f
             }
         );
+        */
 
         #region DEBUG
         if (_taskman == null)

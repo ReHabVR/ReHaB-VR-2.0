@@ -58,7 +58,7 @@ public class GrabbableObject : NetworkBehaviour
         NetworkHand hand = args.interactorObject.transform.GetComponentInParent<NetworkHand>();
         if (hand)
         {
-            RPC_RequestGrab(hand.Owner, hand.HandType);
+            RPC_RequestGrab(hand.GetComponentInParent<NetworkObject>().InputAuthority, hand.HandType);
         }
     }
 

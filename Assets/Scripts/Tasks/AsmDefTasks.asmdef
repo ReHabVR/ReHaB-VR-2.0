@@ -8,7 +8,9 @@
         "Unity.TextMeshPro",
         "Unity.XR.Interaction.Toolkit",
         "Unity.XR.OpenXR",
-        "UnityEditor.SpatialTracking"
+        "UnityEditor.SpatialTracking",
+        "Unity.Fusion.CodeGen",
+        "Fusion.Unity"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
