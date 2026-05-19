@@ -12,19 +12,25 @@ public class GrabbableObject : NetworkBehaviour
     [Networked, HideInInspector]
     public EHandType HoldingHand { get; private set; }
 
+    [SerializeField]
     private Rigidbody rb;
+    
+    [SerializeField]
     private XRGrabInteractable grab;
 
     void Awake()
     {
-        rb = GetComponent<Rigidbody>();
-        grab = GetComponent<XRGrabInteractable>();
+        if (rb == null)
+            rb = GetComponent<Rigidbody>();
+
+        if (grab == null)
+            grab = GetComponent<XRGrabInteractable>();
 
         grab.selectEntered.AddListener(OnGrab);
         grab.selectExited.AddListener(OnRelease);
     }
 
-    void OnDestroy()
+    public override void Despawned(NetworkRunner runner, bool hasState)
     {
         grab.selectEntered.RemoveListener(OnGrab);
         grab.selectExited.RemoveListener(OnRelease);
@@ -43,6 +49,8 @@ public class GrabbableObject : NetworkBehaviour
             {
                 return;
             }
+
+            Debug.Log(HandPoseResolver.Instance);
 
             if (HandPoseResolver.Instance.TryGetHandPose(HoldingPlayer, HoldingHand, out Vector3 pos, out Quaternion rot))
             {

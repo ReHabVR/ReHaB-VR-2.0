@@ -172,8 +172,6 @@ public class NetworkPoseBridge : NetworkBehaviour
         {
             PoseData renderedPose = ApplyCompensation(NetworkPose);
             ApplyPose(renderedPose);
-            
-            Debug.Log($"NetPose: {NetworkPose.headPos} | rendered: {renderedPose.headPos}");
         }
     }
 
