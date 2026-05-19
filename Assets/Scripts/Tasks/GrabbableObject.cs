@@ -50,8 +50,6 @@ public class GrabbableObject : NetworkBehaviour
                 return;
             }
 
-            Debug.Log(HandPoseResolver.Instance);
-
             if (HandPoseResolver.Instance.TryGetHandPose(HoldingPlayer, HoldingHand, out Vector3 pos, out Quaternion rot))
             {
                 Debug.Log($"[SERVER] Resolved hand pos: {pos}");
