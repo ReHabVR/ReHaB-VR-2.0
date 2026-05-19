@@ -347,11 +347,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadStart(NetworkRunner runner)
     {
-        Application.logMessageReceived += (log, stack, type) =>
-        {
-            if (type == UnityEngine.LogType.Exception)
-                Debug.LogError("Exception detected: " + log + "\n" + stack);
-        };
+        //throw new NotImplementedException();
     }
 
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList)

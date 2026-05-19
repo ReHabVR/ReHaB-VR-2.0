@@ -92,9 +92,6 @@ MonoBehaviour:
   handAnimator: {fileID: 1234631036693041730}
   interpolationBufferSize: 8
   interpolationDelay: 0.1
-  networkHands:
-  - {fileID: 6937444924585814943}
-  - {fileID: 3853846031411576095}
   XRHead: {fileID: 27148098970488338}
   XRLeftHand: {fileID: 27148097521359858}
   XRRightHand: {fileID: 27148098549569796}
@@ -148,7 +145,7 @@ GameObject:
   - component: {fileID: 27148097521359858}
   - component: {fileID: 27148097521359859}
   - component: {fileID: 6498871855528494296}
-  - component: {fileID: 6937444924585814943}
+  - component: {fileID: 2719914722030232977}
   - component: {fileID: 3056337234104247009}
   - component: {fileID: 8578839201559278279}
   m_Layer: 0
@@ -204,7 +201,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.064
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6937444924585814943
+--- !u!114 &2719914722030232977
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -217,6 +214,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handType: 0
+  attachPoint: {fileID: 1601280502643443616}
 --- !u!114 &3056337234104247009
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,6 +417,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   handType: 1
+  attachPoint: {fileID: 8313901003711991394}
 --- !u!114 &1087375273555143260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3621,6 +3620,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2756825660811334207}
   - component: {fileID: 116082068721429891}
+  - component: {fileID: 2729603189886810827}
   m_Layer: 0
   m_Name: ExternalPoseProvider
   m_TagString: Untagged
@@ -3670,6 +3670,19 @@ MonoBehaviour:
   headFallback: {fileID: 5457188049990475093}
   raiseHeight: 0.35
   raiseSpeed: 4
+--- !u!114 &2729603189886810827
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5960338887091423040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 480b634f6ee625444976cc2f4ae4245e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 27148097519863012}
 --- !u!1 &5995358219416382739
 GameObject:
   m_ObjectHideFlags: 0

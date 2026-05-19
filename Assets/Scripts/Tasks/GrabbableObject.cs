@@ -55,10 +55,16 @@ public class GrabbableObject : NetworkBehaviour
 
     void OnGrab(SelectEnterEventArgs args)
     {
-        NetworkHand hand = args.interactorObject.transform.GetComponentInParent<NetworkHand>();
-        if (hand)
+        XRHand hand = args.interactorObject.transform.GetComponentInParent<XRHand>();
+        if (!hand)
         {
-            RPC_RequestGrab(hand.GetComponentInParent<NetworkObject>().InputAuthority, hand.HandType);
+            return;
+        }
+
+        NetworkObject playerNO = hand.GetComponentInParent<NetworkObject>();
+        if (playerNO)
+        {
+            RPC_RequestGrab(playerNO.InputAuthority, hand.HandType);
         }
     }
 
