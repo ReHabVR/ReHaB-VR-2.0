@@ -35,7 +35,7 @@ public class PythonSocket : NetworkBehaviour
     {
         try
         {
-            _listener = new TcpListener(IPAddress.Loopback, port);
+            _listener = new TcpListener(IPAddress.Any, port);
             _listener.Start();
             Debug.Log($"[PythonSocket] Listening on port {port}");
 
