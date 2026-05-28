@@ -77,7 +77,9 @@ public class PythonAdapter : AnimationCommandSource
     {
         return mode switch
         {
-            _ => "TestAnimation",
+            1 => "Movement",
+            2 => "Rest", 
+            _ => "Idle", 
         };
     }
 }

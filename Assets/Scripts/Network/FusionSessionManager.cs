@@ -484,8 +484,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
                         experimentController.Latency = Mathf.Clamp(latency, 0, 1000);
                         experimentController.Jitter  = Mathf.Clamp(jitter, 0, 1000);
-
-                        Debug.Log($"[SERVER] Latency: {experimentController.Latency} ms | Jitter: {experimentController.Jitter} ms");
                     }
                 }
 

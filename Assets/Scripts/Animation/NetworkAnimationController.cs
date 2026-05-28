@@ -10,11 +10,12 @@ public struct AnimationCommand
     public float Intensity;
 }
 
-[RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PythonAdapter))]
 [RequireComponent(typeof(PythonSocket))]
 public class NetworkAnimationController : NetworkBehaviour
 {
+    const int DEFAULT_LAYER = 0;
+
     [SerializeField]
     private Animator animator;
 
@@ -22,14 +23,12 @@ public class NetworkAnimationController : NetworkBehaviour
     private AnimationCommandSource currentAdapter;
 
     [Networked] 
-    public int ClipHash { get; set; }
+    public string ClipName { get; set; }
 
     [Networked] 
     public int PlayId { get; set; }
 
-    private int _lastPlayedId;
-    private int _cachedClipHash;
-    private int _cachedPlayId;
+    private int _lastPlayedId = -1;
 
     void Awake()
     {
@@ -48,30 +47,19 @@ public class NetworkAnimationController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object || !Object.IsValid || Runner == null || !Object.HasStateAuthority)
+        if (!Object || !Object.IsValid || Runner == null)
         {
             return;
         }
 
-        if (currentAdapter && currentAdapter.TryGetCommand(out var cmd))
+        if (Object.HasStateAuthority)
         {
-            Debug.Log($"Command from adapter: {cmd.ClipKey}");
-            RequestPlay(cmd.ClipKey);
+            if (currentAdapter && currentAdapter.TryGetCommand(out var cmd))
+            {
+                Debug.Log($"Command from adapter: {cmd.ClipKey}");
+                RequestPlay(cmd.ClipKey);
+            }
         }
-
-        if (!animator.HasState(0, ClipHash))
-        {
-            //Debug.LogWarning($"Animator missing state for hash {ClipHash}");
-            return;
-        }
-
-        if (ClipHash == 0 || PlayId == _lastPlayedId)
-        {
-            return;
-        }
-
-        _cachedPlayId = PlayId;
-        _cachedClipHash = ClipHash;
     }
 
     public override void Render()
@@ -82,39 +70,22 @@ public class NetworkAnimationController : NetworkBehaviour
         if (!animator || !animator.isActiveAndEnabled)
             return;
 
-        if (_cachedClipHash == 0)
+        if (PlayId == _lastPlayedId)
             return;
 
-        if (_cachedPlayId == _lastPlayedId)
+        if (string.IsNullOrEmpty(ClipName))
             return;
 
-        if (!animator.HasState(0, _cachedClipHash))
-            return;
-
-        animator.Play(_cachedClipHash, 0, 0f);
-        _lastPlayedId = _cachedPlayId;
+        //animator.Play(_cachedClipHash, DEFAULT_LAYER, 0.0f);
+        animator.Play(ClipName, DEFAULT_LAYER, 0.0f);
+        _lastPlayedId = PlayId;
     }
 
     public void RequestPlay(string clipName)
     {
-        int hash = Animator.StringToHash(clipName);
         if (Object.HasStateAuthority)
         {
-            ClipHash = hash;
-            PlayId++;
-        }
-        else
-        {
-            RPC_RequestPlay(hash);
-        }
-    }
-
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    private void RPC_RequestPlay(int hash)
-    {
-        if (Object && Object.IsValid)
-        {
-            ClipHash = hash;
+            ClipName = clipName;
             PlayId++;
         }
     }
