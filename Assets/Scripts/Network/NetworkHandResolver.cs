@@ -60,4 +60,32 @@ public class NetworkHandResolver : MonoBehaviour, IHandPoseResolver
 
         return false;
     }
+
+    public bool TryGetLocalHandPose(PlayerRef player, EHandType hand, out Vector3 position, out Quaternion rotation)
+    {
+        position = default;
+        rotation = default;
+
+        if (!_bridges.TryGetValue(player, out NetworkPoseBridge bridge))
+        {
+            return false;
+        }
+
+        PoseData pose = bridge.GetLocalPose();
+
+        switch (hand)
+        {
+            case EHandType.Left:
+                position = pose.lhandPos;
+                rotation = pose.lhandRot;
+                return true;
+
+            case EHandType.Right:
+                position = pose.rhandPos;
+                rotation = pose.rhandRot;
+                return true;
+        }
+
+        return false;
+    }
 }

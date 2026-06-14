@@ -59,6 +59,18 @@ public class GrabbableObject : NetworkBehaviour
         }
     }
 
+    public override void Render()
+    {
+        if (HoldingPlayer == Runner.LocalPlayer)
+        {
+            if (HandPoseResolver.Instance.TryGetLocalHandPose(HoldingPlayer, HoldingHand, out Vector3 pos, out Quaternion rot))
+            {
+                Debug.Log($"[CLIENT] Local hand pos: {pos}");
+                transform.SetPositionAndRotation(pos, rot);
+            }
+        }
+    }
+
     void OnGrab(SelectEnterEventArgs args)
     {
         XRHand hand = args.interactorObject.transform.GetComponentInParent<XRHand>();
