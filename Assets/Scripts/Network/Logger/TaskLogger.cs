@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class TaskLogger : MonoBehaviour
 {
-    private CurrentTaskManager _taskman;
+    private NetworkTaskManager _taskman;
 
     private float _startTime;
     private float _endTime;
@@ -19,7 +19,7 @@ public class TaskLogger : MonoBehaviour
 
     void Start()
     {
-        _taskman = CurrentTaskManager.Instance;
+        _taskman = NetworkTaskManager.Instance;
         
         if (_taskman == null)
         {
@@ -78,7 +78,7 @@ public class TaskLogger : MonoBehaviour
     private void SaveResults() 
     {
         int playerID = GetComponentInParent<NetworkObject>().Runner.LocalPlayer.RawEncoded;
-        string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_{Enum.GetName(typeof(CurrentTaskManager.EGameState), (int)_taskman.GetGameState())}.txt";
+        string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_{Enum.GetName(typeof(NetworkTaskManager.ECurrentTask), (int)_taskman.GetCurrentTask())}.txt";
         string path = Path.Combine(Application.persistentDataPath, fname);
 
         string header = "time_elapsed,total_moves,correct_moves,accuracy";

@@ -1,180 +1,180 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using Fusion;
 using UnityEngine;
 
-public class CurrentTaskManager : NetworkBehaviour
+namespace ReHaB.Legacy
 {
-    public enum EGameState
+    public class CurrentTaskManager : NetworkBehaviour
     {
-        None = 0,
-        Shapes = 1,
-        Dice = 2,
-        Sorting = 3
-    }
-
-    public event Action OnTaskStarted;
-    public event Action OnMove;
-    public event Action OnCorrectMove;
-    public event Action OnTaskStopped;
-
-    public List<GameObject> taskButtons = new();
-    public GameObject stopButton;
-
-    private EGameState gameState = EGameState.None;
-    private NetworkObject spawnedObjectReference;
-
-    public static CurrentTaskManager Instance { get; private set; }
-
-    private void Awake()
-    {
-        if (Instance == null) 
+        public enum EGameState
         {
-            Instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
-        else 
-        {
-            Destroy(gameObject);
-        }
-    }
-
-    private void Start()
-    {
-        foreach (GameObject go in taskButtons)
-        {
-            TaskButton taskButton = go.GetComponentInChildren<TaskButton>();
-            taskButton.onRelease.AddListener(delegate {
-                if (Runner.IsServer) {
-                    OnTaskButtonPressed(
-                        taskButton.objectToSpawn, 
-                        taskButton.spawnPoint, 
-                        (EGameState)taskButton.taskId
-                    );
-                }
-            });
-        }
-    }
-
-    public EGameState GetGameState() => gameState;
-    
-#region DEBUG
-    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
-    public void RPC_ToggleTestTask()
-    {
-        if (!Object.HasStateAuthority) 
-        {
-            return;
+            None = 0,
+            Sorting = 1,
+            //Shapes = 2,
+            Dice = 3,
         }
 
-        if (gameState == EGameState.None)
+        public event Action OnTaskStarted;
+        public event Action OnMove;
+        public event Action OnCorrectMove;
+        public event Action OnTaskStopped;
+
+        public List<GameObject> taskButtons = new();
+        public GameObject stopButton;
+
+        private EGameState gameState = EGameState.None;
+        private NetworkObject spawnedObjectReference;
+
+        public static CurrentTaskManager Instance { get; private set; }
+
+        private void Awake()
         {
-            TaskButton sortingTask = taskButtons[0].GetComponentInChildren<TaskButton>();
-            OnTaskButtonPressed(
-                sortingTask.objectToSpawn,
-                sortingTask.spawnPoint,
-                EGameState.Sorting
+            if (Instance == null) 
+            {
+                Instance = this;
+                //DontDestroyOnLoad(gameObject);
+            }
+            else 
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        private void Start()
+        {
+            foreach (GameObject go in taskButtons)
+            {
+                TaskButton taskButton = go.GetComponentInChildren<TaskButton>();
+                taskButton.onRelease.AddListener(delegate {
+                    if (Runner.IsServer) {
+                        OnTaskButtonPressed(
+                            taskButton.objectToSpawn, 
+                            taskButton.spawnPoint, 
+                            (EGameState)taskButton.taskId
+                        );
+                    }
+                });
+            }
+        }
+
+        public EGameState GetGameState() => gameState;
+        
+    #region DEBUG
+        [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+        public void RPC_ToggleTestTask()
+        {
+            if (!Object.HasStateAuthority) 
+            {
+                return;
+            }
+
+            if (gameState == EGameState.None)
+            {
+                TaskButton sortingTask = taskButtons[0].GetComponentInChildren<TaskButton>();
+                OnTaskButtonPressed(
+                    sortingTask.objectToSpawn,
+                    sortingTask.spawnPoint,
+                    EGameState.Sorting
+                );
+            }
+            else if (gameState == EGameState.Sorting)
+            {
+                OnStopButtonPressed();
+            }
+        }
+
+        public void DebugMove(bool correctMove)
+        {
+            IncrementGrabCount();
+            if (correctMove)
+            {
+                IncrementCorrectMovesCount();
+            }
+        }
+    #endregion
+
+        private void SpawnTask(NetworkObject objectToSpawn, Transform spawnPoint)
+        {
+            // Only server spawns network objects
+            if (!Runner.IsServer) 
+            {
+                return;
+            }
+
+            if (objectToSpawn == null)  
+            {
+                Debug.LogWarning("No object to spawn defined.");
+                return;
+            }
+
+            // Disable all task buttons during game
+            foreach (GameObject button in taskButtons) 
+            {
+                button.SetActive(false);
+            }
+
+            spawnedObjectReference = Runner.Spawn(
+                objectToSpawn, 
+                spawnPoint.position,
+                spawnPoint.rotation
             );
+
+            stopButton.SetActive(true);
         }
-        else if (gameState == EGameState.Sorting)
+
+        private void DeleteAllTasks()
         {
-            OnStopButtonPressed();
-        }
-    }
+            stopButton.SetActive(false);
+            foreach (GameObject button in taskButtons) 
+            {
+                button.SetActive(true);
+            }
 
-    public void DebugMove(bool correctMove)
-    {
-        IncrementGrabCount();
-        if (correctMove)
-        {
-            IncrementCorrectMovesCount();
-        }
-    }
-#endregion
+            if (spawnedObjectReference != null) 
+            {
+                if (Runner.IsServer)
+                {
+                    Runner.Despawn(spawnedObjectReference);
+                }
 
-    private void SpawnTask(NetworkObject objectToSpawn, Transform spawnPoint)
-    {
-        // Only server spawns network objects
-        if (!Runner.IsServer) 
-        {
-            return;
+                spawnedObjectReference = null;
+            }
         }
 
-        if (objectToSpawn == null)  
-        {
-            Debug.LogWarning("No object to spawn defined.");
-            return;
-        }
-
-        // Disable all task buttons during game
-        foreach (GameObject button in taskButtons) 
-        {
-            button.SetActive(false);
-        }
-
-        spawnedObjectReference = Runner.Spawn(
-            objectToSpawn, 
-            spawnPoint.position,
-            spawnPoint.rotation
-        );
-
-        stopButton.SetActive(true);
-    }
-
-    private void DeleteAllTasks()
-    {
-        stopButton.SetActive(false);
-        foreach (GameObject button in taskButtons) 
-        {
-            button.SetActive(true);
-        }
-
-        if (spawnedObjectReference != null) 
+        public void OnTaskButtonPressed(NetworkObject objectToSpawn, Transform spawnPoint, EGameState newState)
         {
             if (Runner.IsServer)
             {
-                Runner.Despawn(spawnedObjectReference);
+                SpawnTask(objectToSpawn, spawnPoint);
+                RPC_TaskStarted(newState);
             }
-
-            spawnedObjectReference = null;
         }
-    }
-
-    public void OnTaskButtonPressed(NetworkObject objectToSpawn, Transform spawnPoint, EGameState newState)
-    {
-        if (Runner.IsServer)
+        
+        public void OnStopButtonPressed()
         {
-            SpawnTask(objectToSpawn, spawnPoint);
-            RPC_TaskStarted(newState);
+            if (Runner.IsServer)
+            {
+                DeleteAllTasks();
+                RPC_TaskStopped();
+            }
         }
-    }
-    
-    public void OnStopButtonPressed()
-    {
-        if (Runner.IsServer)
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_TaskStarted(EGameState newState)
         {
-            DeleteAllTasks();
-            RPC_TaskStopped();
+            gameState = newState;
+            OnTaskStarted?.Invoke();
         }
+
+        [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
+        private void RPC_TaskStopped()
+        {
+            OnTaskStopped?.Invoke();
+            gameState = EGameState.None;
+        }
+
+        private void IncrementGrabCount() => OnMove?.Invoke();
+        private void IncrementCorrectMovesCount() => OnCorrectMove?.Invoke();
     }
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_TaskStarted(EGameState newState)
-    {
-        gameState = newState;
-        OnTaskStarted?.Invoke();
-    }
-
-    [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
-    private void RPC_TaskStopped()
-    {
-        OnTaskStopped?.Invoke();
-        gameState = EGameState.None;
-    }
-
-
-    private void IncrementGrabCount() => OnMove?.Invoke();
-    private void IncrementCorrectMovesCount() => OnCorrectMove?.Invoke();
 }

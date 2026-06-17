@@ -10,7 +10,7 @@ public class PoseLogger : MonoBehaviour
     [SerializeField] 
     private ExternalPoseProvider poseProvider;
 
-    private CurrentTaskManager _taskman;
+    private NetworkTaskManager _taskman;
     private NetworkObject _netObj;
 
     private readonly List<string> _buffer = new();
@@ -29,10 +29,10 @@ public class PoseLogger : MonoBehaviour
 
     private void Start()
     {
-        _taskman = CurrentTaskManager.Instance;
+        _taskman = NetworkTaskManager.Instance;
         if (_taskman == null)
         {
-            Debug.LogError("CurrentTaskManager not found!");
+            Debug.LogError("NetworkTaskManager not found!");
             return;
         }
 
@@ -115,7 +115,7 @@ public class PoseLogger : MonoBehaviour
         _taskStarted = true;
 
         string playerID = _netObj.InputAuthority.RawEncoded.ToString();
-        string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_PoseLog.txt";
+        string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_PoseLog.csv";
 
         _path = Path.Combine(Application.persistentDataPath, fname);
         _header = "time,head_x,head_y,head_z,head_qx,head_qy,head_qz,head_qw," +
@@ -133,9 +133,9 @@ public class PoseLogger : MonoBehaviour
         FlushBuffer();
     }
 
-    private string FormatFloat(float value) => value.ToString("F4", CultureInfo.InvariantCulture);
+    private static string FormatFloat(float value) => value.ToString("F4", CultureInfo.InvariantCulture);
 
-    private string FormatVector3(Vector3 v) => $"{FormatFloat(v.x)},{FormatFloat(v.y)},{FormatFloat(v.z)}";
+    private static string FormatVector3(Vector3 v) => $"{FormatFloat(v.x)},{FormatFloat(v.y)},{FormatFloat(v.z)}";
 
-    private string FormatQuaternion(Quaternion q) => $"{FormatFloat(q.x)},{FormatFloat(q.y)},{FormatFloat(q.z)},{FormatFloat(q.w)}";
+    private static string FormatQuaternion(Quaternion q) => $"{FormatFloat(q.x)},{FormatFloat(q.y)},{FormatFloat(q.z)},{FormatFloat(q.w)}";
 }

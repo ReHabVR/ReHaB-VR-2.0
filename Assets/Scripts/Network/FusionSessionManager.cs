@@ -467,7 +467,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         string[] parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
         string cmd = parts[0].ToLower();
 
-        var _taskman = CurrentTaskManager.Instance;
+        NetworkTaskManager _taskman = NetworkTaskManager.Instance;
         switch (cmd)
         {
             case "lat":
@@ -511,11 +511,11 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                 {
                     if (int.TryParse(parts[1], out int taskType))
                     {
-                        _taskman.RPC_ToggleTestTask();
+                        _taskman.RPC_ToggleTask(taskType);
                     }
                 }
 
-                Debug.Log($"[SERVER] Current task: {_taskman.GetGameState().ToString()}");
+                Debug.Log($"[SERVER] Current task: {_taskman.GetCurrentTask()}");
                 break;
             }
 

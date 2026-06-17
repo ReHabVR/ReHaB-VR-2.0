@@ -34,14 +34,14 @@ public class ExternalPoseProvider : MonoBehaviour
     private float _lhandRaise;
     private float _rhandRaise;
 
-    private CurrentTaskManager _taskman;
+    private NetworkTaskManager _taskman;
 
     public float GripL => networkPoseBridge.GetGripL();
     public float GripR => networkPoseBridge.GetGripR();
 
     private void Awake()
     {
-        _taskman = CurrentTaskManager.Instance;
+        _taskman = NetworkTaskManager.Instance;
 
         _leftHandStart = lhandFallback.localPosition;
         _rightHandStart = rhandFallback.localPosition;
@@ -131,10 +131,6 @@ public class ExternalPoseProvider : MonoBehaviour
             return;
         }
         
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-        {
-            _taskman.RPC_ToggleTestTask();
-        }
         // Debug moves
         if (Keyboard.current.oKey.wasPressedThisFrame)
         {
