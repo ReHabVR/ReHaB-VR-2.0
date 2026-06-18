@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class NetworkTaskManager : NetworkBehaviour
 {
-public enum ECurrentTask
+
+    public enum ECurrentTask
     {
         None = 0,
         Sorting = 1,

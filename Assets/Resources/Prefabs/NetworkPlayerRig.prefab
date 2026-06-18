@@ -734,15 +734,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 142267402907772385}
-  m_LocalRotation: {x: -0.66162074, y: 0.18759133, z: -0.045747682, w: 0.7245514}
-  m_LocalPosition: {x: 0.0000046918676, y: 0.45827705, z: 0.0000070631313}
+  m_LocalRotation: {x: -0.6705029, y: 0.15283482, z: -0.08346837, w: 0.72117996}
+  m_LocalPosition: {x: 0.000004734707, y: 0.4582829, z: 0.0000075697694}
   m_LocalScale: {x: 1.0000004, y: 1, z: 0.9999999}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7323873358311575120}
   m_Father: {fileID: 5269343063910523135}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -70.321, y: 80.749, z: -69.064}
+  m_LocalEulerAnglesHint: {x: -70.321, y: 80.749, z: -75.042}
 --- !u!1 &184758561478394564
 GameObject:
   m_ObjectHideFlags: 0
@@ -3141,7 +3141,10 @@ MonoBehaviour:
   followObject: {fileID: 1601280502643443616}
   positionOffset: {x: 0, y: 0, z: -0.14}
   rotationOffset: {x: -90, y: 180, z: 0}
-  bodyOffset: {x: 0, y: 0, z: 0}
+  leanInfluence: 0.45
+  maxLeanDistance: 0.4
+  maxRotationAngle: 50
+  bodyRotationSpeed: 5
 --- !u!1 &5070553648309464669
 GameObject:
   m_ObjectHideFlags: 0
@@ -3790,11 +3793,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76728dd5517ff9b4483329e7c48194c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rootObject: {fileID: 0}
+  rootObject: {fileID: 3407957152950471274}
   followObject: {fileID: 6296282748903346205}
   positionOffset: {x: 0, y: -0.14, z: 0.06}
   rotationOffset: {x: 20, y: 0, z: 0}
-  bodyOffset: {x: 0, y: 0, z: 0}
+  leanInfluence: 0.45
+  maxLeanDistance: 0.4
+  maxRotationAngle: 50
+  bodyRotationSpeed: 5
 --- !u!1 &6088199952372721301
 GameObject:
   m_ObjectHideFlags: 0
@@ -4725,7 +4731,10 @@ MonoBehaviour:
   followObject: {fileID: 8313901003711991394}
   positionOffset: {x: 0, y: 0, z: -0.14}
   rotationOffset: {x: -90, y: -180, z: 0}
-  bodyOffset: {x: 0, y: 0, z: 0}
+  leanInfluence: 0.45
+  maxLeanDistance: 0.4
+  maxRotationAngle: 50
+  bodyRotationSpeed: 5
 --- !u!1 &7661364225575438862
 GameObject:
   m_ObjectHideFlags: 0
