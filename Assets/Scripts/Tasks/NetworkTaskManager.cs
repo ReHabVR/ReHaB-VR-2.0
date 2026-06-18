@@ -56,23 +56,26 @@ public enum ECurrentTask
 
         DeleteCurrentTask();
         RPC_TaskStopped();
-
-        NetworkObject objectToSpawn = taskPrefabs[id - 1];
-        if (objectToSpawn == null)
+        
+        if (id != 0)
         {
-            Debug.LogWarning($"[SERVER] No task prefab assigned for ID {id}!");
-            return;
-        }
+            NetworkObject objectToSpawn = taskPrefabs[id - 1];
+            if (objectToSpawn == null)
+            {
+                Debug.LogWarning($"[SERVER] No task prefab assigned for ID {id}!");
+                return;
+            }
 
-        Transform spawnPoint = taskSpawnPositions[id - 1];
-        if (spawnPoint == null)
-        {     
-            Debug.LogWarning($"[SERVER] Spawn point for task ID {id} not found!");
-            return;
-        }
+            Transform spawnPoint = taskSpawnPositions[id - 1];
+            if (spawnPoint == null)
+            {     
+                Debug.LogWarning($"[SERVER] Spawn point for task ID {id} not found!");
+                return;
+            }
 
-        SpawnTask(objectToSpawn, spawnPoint);
-        RPC_TaskStarted((ECurrentTask)id);
+            SpawnTask(objectToSpawn, spawnPoint);
+            RPC_TaskStarted((ECurrentTask)id);
+        }        
     }
 
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
