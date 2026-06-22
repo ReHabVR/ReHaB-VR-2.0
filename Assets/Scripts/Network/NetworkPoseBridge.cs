@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
@@ -26,25 +25,17 @@ public struct PoseInput : INetworkInput
     public PoseData pose;
 }
 
-public struct PoseSample
-{
-    public PoseData pose;
-    public float timestamp;
-}
-
 public class NetworkPoseBridge : NetworkBehaviour
 {
     [SerializeField] 
     private Animator handAnimator;
-
-    [Header("Interpolation Settings")]
     [SerializeField]
-    private int interpolationBufferSize = 8;
-    [SerializeField, Min(0f)]
-    private float interpolationDelay = 0.1f;
+    private CompensationManager compensationManager;
+    [SerializeField]
+    private PlayerPoseBuffer poseBuffer;
 
     [Header("XR Controllers")]
-    [SerializeField] 
+    [SerializeField]
     private Transform XRHead;
     [SerializeField] 
     private Transform XRLeftHand;
@@ -66,13 +57,13 @@ public class NetworkPoseBridge : NetworkBehaviour
     [SerializeField] 
     private Transform fallbackRightHand;
 
+    [Header("Hand Sockets")]
+    [SerializeField]
+    private Transform leftHandSocket;
+    [SerializeField]
+    private Transform rightHandSocket;
 
-    private PoseData _localPose = new();
-    private readonly List<PoseSample> _poseBuffer = new();
-
-    float _lastTimestamp = 0.0f;
-
-    [Space(5), Header("XR Devices")]
+    [Header("XR Devices")]
     [SerializeField]
     private InputDeviceCharacteristics controllerL;
     [SerializeField]
@@ -82,6 +73,7 @@ public class NetworkPoseBridge : NetworkBehaviour
     private InputDevice _targetDeviceR;
     private bool _targetDeviceDetected;
 
+    private PoseData _localPose = new();
 
     [Networked, HideInInspector]
     public PoseData NetworkPose { get; set; }
@@ -132,8 +124,6 @@ public class NetworkPoseBridge : NetworkBehaviour
         }
     }
 
-    public PoseData GetLocalPose() => _localPose;
-
     public override void FixedUpdateNetwork()
     {
         if (Object == null || !Object.IsValid || !Runner.IsRunning)
@@ -141,7 +131,10 @@ public class NetworkPoseBridge : NetworkBehaviour
             return;
         }
         
-        _lastTimestamp = Runner.SimulationTime;
+        if (!HasInputAuthority)
+        {
+            poseBuffer.AddSample(NetworkPose, Runner.SimulationTime);
+        }
         
         if (HasStateAuthority)
         {
@@ -170,9 +163,27 @@ public class NetworkPoseBridge : NetworkBehaviour
         }
         else // Remote client
         {
-            PoseData renderedPose = ApplyCompensation(NetworkPose);
+            PoseData renderedPose = compensationManager.ApplyCompensation(NetworkPose);
             ApplyPose(renderedPose);
         }
+    }
+
+    public bool TryGetHandSocket(EHandType handType, out Transform socketTransform)
+    {
+        if (handType == EHandType.Right)
+        {
+            socketTransform = rightHandSocket.transform;
+            return true;
+        }
+        if (handType == EHandType.Left)
+        {
+            socketTransform = leftHandSocket.transform;
+            return true;
+        }
+        
+        Debug.LogError("Invalid hand type!");
+        socketTransform = default;
+        return false;
     }
 
     private void TryGetDevices()
@@ -219,84 +230,8 @@ public class NetworkPoseBridge : NetworkBehaviour
         }
     }
 
+    public PoseData GetLocalPose() => _localPose;
     public void SetLocalPose(PoseData pose) { _localPose = pose; }
-
-    private PoseData ApplyCompensation(PoseData networkPose)
-    {
-        CompensationMode compensationMode = FusionSessionManager.Instance.CurrentCompensationMode;
-        
-        return compensationMode switch
-        {
-            CompensationMode.Interpolation => InterpolatePose(networkPose),
-            CompensationMode.KalmanFilter => KalmanPose(networkPose),
-            _ => networkPose,
-        };
-    }
-
-    private void AddPoseSample(PoseData pose)
-    {
-        _poseBuffer.Add(
-            new()
-            {
-                pose = pose,
-                timestamp = _lastTimestamp
-            }
-        );
-
-        if (_poseBuffer.Count > interpolationBufferSize)
-        {
-            _poseBuffer.RemoveAt(0);
-        }
-    }
-
-    private PoseData InterpolatePose(PoseData networkPose)
-    {
-        if (_poseBuffer.Count == 0 || !PoseEqualsApprox(_poseBuffer[^1].pose, networkPose))
-        {
-            AddPoseSample(networkPose);
-        }
-
-        if (_poseBuffer.Count < 2)
-        {
-            return networkPose;
-        }
-
-        float renderTime = _lastTimestamp - interpolationDelay;
-        for (int i = _poseBuffer.Count - 2; i >= 0; i--) // reverse search
-        {
-            PoseSample sampleA = _poseBuffer[i];
-            PoseSample sampleB = _poseBuffer[i + 1];
-            if (sampleA.timestamp <= renderTime && sampleB.timestamp >= renderTime)
-            {
-                float t = Mathf.Clamp01(Mathf.InverseLerp(sampleA.timestamp, sampleB.timestamp, renderTime));
-                PoseData posA = sampleA.pose;
-                PoseData posB = sampleB.pose;
-                return new()
-                {
-                    headPos = Vector3.Lerp(posA.headPos, posB.headPos, t),
-                    headRot = Quaternion.Slerp(posA.headRot, posB.headRot, t),
-
-                    lhandPos = Vector3.Lerp(posA.lhandPos, posB.lhandPos, t),
-                    lhandRot = Quaternion.Slerp(posA.lhandRot, posB.lhandRot, t),
-
-                    rhandPos = Vector3.Lerp(posA.rhandPos, posB.rhandPos, t),
-                    rhandRot = Quaternion.Slerp(posA.rhandRot, posB.rhandRot, t),
-
-                    gripL = Mathf.Lerp((float)posA.gripL, (float)posB.gripL, t),
-                    gripR = Mathf.Lerp((float)posA.gripR, (float)posB.gripR, t)
-                };
-            }
-        }
-
-        return _poseBuffer[^1].pose;
-    }
-
-    private PoseData KalmanPose(PoseData networkPose)
-    {
-        PoseData pose = networkPose;
-        //TODO: kalman filter
-        return pose;
-    }
 
     private PoseData GetPose()
     {
@@ -386,10 +321,4 @@ public class NetworkPoseBridge : NetworkBehaviour
 
         return HasInputAuthority ? (float)_localPose.gripR : (float)NetworkPose.gripR;
     }
-
-    private bool PoseEqualsApprox(in PoseData a, in PoseData b, float posEps = 0.0001f, float rotEps = 0.001f) =>
-            Vector3.SqrMagnitude(a.lhandPos - b.lhandPos) < posEps * posEps && 
-            Quaternion.Dot(a.lhandRot, b.lhandRot) > 1f - rotEps && 
-            Vector3.SqrMagnitude(a.rhandPos - b.rhandPos) < posEps * posEps && 
-            Quaternion.Dot(a.rhandRot, b.rhandRot) > 1f - rotEps;
 }

@@ -11,7 +11,7 @@ public class SessionExperimentController : NetworkBehaviour
     public int Jitter { get; set; }
 
     [Networked] 
-    public CompensationMode CurrentCompensationMode { get; set; } = CompensationMode.None;
+    public ECompensationMode CurrentCompensationMode { get; set; } = ECompensationMode.None;
 
     [Networked] 
     public int ExperimentID { get; set; }

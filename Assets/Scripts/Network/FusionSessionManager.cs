@@ -11,18 +11,26 @@ using System.Threading;
 using System.Threading.Tasks;
 #endif
 
-public enum PlayerRole
+public enum EPlayerRole
 {
     Player,
     Trainer
 }
 
-public enum CompensationMode
+public enum ECompensationMode
 {
+    /// Invalid compensation mode
     Invalid = -1,
+    /// Raw network pose without any prediction applied
     None = 0,
+    /// Base smoothing; technically not a prediction method
     Interpolation = 1,
-    KalmanFilter = 2
+    /// Simple prediction based on extrapolation
+    Extrapolation = 2,
+    /// Predictive model-based motion prediction
+    DeadReckoning = 3,
+    /// Filter-based prediction
+    KalmanFilter = 4
 }
 
 public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
@@ -44,9 +52,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     public uint simulatedJitter = 0;
 
     [Header("Session Settings")]
-    public PlayerRole localPlayerRole = PlayerRole.Player;
+    public EPlayerRole localPlayerRole = EPlayerRole.Player;
 
-    public CompensationMode compensationMode = CompensationMode.None;
+    public ECompensationMode compensationMode = ECompensationMode.None;
 
     [Header("Object References")]
     [SerializeField]
@@ -74,20 +82,20 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
     private readonly List<PlayerRef> _activePlayers = new();
     private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
-    private readonly Dictionary<PlayerRef, PlayerRole> _playerRoles = new();
-    private readonly Queue<PlayerRole> _pendingRoles = new();
+    private readonly Dictionary<PlayerRef, EPlayerRole> _playerRoles = new();
+    private readonly Queue<EPlayerRole> _pendingRoles = new();
 
     private bool _sceneLoaded = false;
 
     public static FusionSessionManager Instance { get; private set; }
 
-    public CompensationMode CurrentCompensationMode
+    public ECompensationMode CurrentCompensationMode
     {
         get 
         {
             if (experimentController == null || experimentController.Object == null || !experimentController.Object.IsValid)
             {
-                return CompensationMode.None;
+                return ECompensationMode.None;
             }
 
             return experimentController.CurrentCompensationMode;
@@ -213,10 +221,10 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             return;
         }
 
-        PlayerRole role = PlayerRole.Player; // fallback
+        EPlayerRole role = EPlayerRole.Player; // fallback
         if (token != null && token.Length >= 4)
         {
-            role = (PlayerRole)BitConverter.ToInt32(token, 0);
+            role = (EPlayerRole)BitConverter.ToInt32(token, 0);
         }
 
         _pendingRoles.Enqueue(role);
@@ -286,7 +294,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             _playerObjects[player] = new();
         }
 
-        PlayerRole role = PlayerRole.Player;
+        EPlayerRole role = EPlayerRole.Player;
         if (_pendingRoles.Count > 0)
         {
             role = _pendingRoles.Dequeue();
@@ -409,8 +417,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             yield break;
         }
 
-        PlayerRole role = _playerRoles[player];
-        NetworkObject prefab = role == PlayerRole.Trainer ? trainerPrefab : playerPrefab;
+        EPlayerRole role = _playerRoles[player];
+        NetworkObject prefab = role == EPlayerRole.Trainer ? trainerPrefab : playerPrefab;
 
         NetworkObject playerAvatar = _sessionRunner.Spawn(
             prefab,
@@ -444,7 +452,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             ConnectionConfig config = JsonUtility.FromJson<ConnectionConfig>(json);
             hostAddress = config.serverIP;
             port = (ushort)config.serverPort;
-            localPlayerRole = config.joinAsTrainer ? PlayerRole.Trainer : PlayerRole.Player;
+            localPlayerRole = config.joinAsTrainer ? EPlayerRole.Trainer : EPlayerRole.Player;
         }
         else
         {

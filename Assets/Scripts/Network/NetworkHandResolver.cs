@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using Fusion;
 using UnityEngine;
 
@@ -43,22 +44,14 @@ public class NetworkHandResolver : MonoBehaviour, IHandPoseResolver
             return false;
         }
 
-        PoseData pose = bridge.NetworkPose;
-
-        switch (hand)
+        if (!bridge.TryGetHandSocket(hand, out Transform socket))
         {
-            case EHandType.Left:
-                position = pose.lhandPos;
-                rotation = pose.lhandRot;
-                return true;
-
-            case EHandType.Right:
-                position = pose.rhandPos;
-                rotation = pose.rhandRot;
-                return true;
+            return false;
         }
 
-        return false;
+        position = socket.position;
+        rotation = socket.rotation;
+        return true;
     }
 
     public bool TryGetLocalHandPose(PlayerRef player, EHandType hand, out Vector3 position, out Quaternion rotation)
