@@ -131,17 +131,17 @@ public class NetworkPoseBridge : NetworkBehaviour
             return;
         }
         
-        if (!HasInputAuthority)
-        {
-            poseBuffer.AddSample(NetworkPose, Runner.SimulationTime);
-        }
-        
         if (HasStateAuthority)
         {
             if (GetInput(out PoseInput input))
             {
                 NetworkPose = input.pose;
             }
+        }
+        
+        if (!HasInputAuthority)
+        {
+            poseBuffer.AddSample(NetworkPose, Runner.SimulationTime);
         }
     }
 
