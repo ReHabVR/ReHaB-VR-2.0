@@ -505,7 +505,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
                 {
                     if (int.TryParse(parts[1], out int predMode))
                     {
-                        experimentController.CurrentCompensationMode = (CompensationMode)Mathf.Clamp(predMode, 0, 2);
+                        experimentController.CurrentCompensationMode = (ECompensationMode)Mathf.Clamp(predMode, 0, 2);
                     }
                 }
 
