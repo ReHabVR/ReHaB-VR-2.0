@@ -464,7 +464,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     #endif
     }
 
-    private void HandleCommand(string command)
+    private static void HandleCommand(string command)
     {
     #if UNITY_SERVER
         if (string.IsNullOrWhiteSpace(command))

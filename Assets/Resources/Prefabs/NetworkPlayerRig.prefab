@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 6811728238161990035}
   - component: {fileID: 9191328999298589861}
   - component: {fileID: 279778593813399080}
-  - component: {fileID: 3688803735217105646}
   - component: {fileID: 5411393470500104065}
+  - component: {fileID: 3688803735217105646}
   m_Layer: 0
   m_Name: NetworkPlayerRig
   m_TagString: Untagged
@@ -138,6 +138,19 @@ MonoBehaviour:
   xrControllers:
   - {fileID: 3056337234104247009}
   - {fileID: 1087375273555143260}
+--- !u!114 &5411393470500104065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27148097519863014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39c30caacbe66a843a59acdb9606a48d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poseBuffer: {fileID: 3688803735217105646}
 --- !u!114 &3688803735217105646
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,19 +165,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bufferSize: 8
   compensationStep: 0.1
---- !u!114 &5411393470500104065
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 27148097519863014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39c30caacbe66a843a59acdb9606a48d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poseBuffer: {fileID: 3688803735217105646}
 --- !u!1 &27148097521359861
 GameObject:
   m_ObjectHideFlags: 0
