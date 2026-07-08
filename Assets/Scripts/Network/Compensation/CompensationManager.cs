@@ -27,7 +27,7 @@ public class CompensationManager : MonoBehaviour
         _interp = new(poseBuffer);
         _extrap = new(poseBuffer);
         _deadreckon = new(poseBuffer);
-        _kalman = new(poseBuffer);
+        _kalman = new();
     }
 
     public PoseData ApplyCompensation(PoseData networkPose, float renderTime)

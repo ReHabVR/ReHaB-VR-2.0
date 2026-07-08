@@ -5,8 +5,6 @@ using UnityEngine;
 
 public class KalmanCompensationMethod : ICompensationMethod
 {
-    private readonly PlayerPoseBuffer poseBuffer;
-
     private readonly PoseKalmanFilter _headPosFilter = new();
     private readonly PoseKalmanFilter _lhandPosFilter = new();
     private readonly PoseKalmanFilter _rhandPosFilter = new();
@@ -16,11 +14,6 @@ public class KalmanCompensationMethod : ICompensationMethod
     private readonly PoseKalmanFilter _rhandRotFilter = new();
 
     private float _lastRenderTime = -1f;
-
-    public KalmanCompensationMethod(PlayerPoseBuffer poseBuffer)
-    {
-        this.poseBuffer = poseBuffer;
-    }
 
     public PoseData Compensate(PoseData networkPose, float renderTime)
     {
