@@ -18,7 +18,6 @@ public class SessionExperimentController : NetworkBehaviour
 
     private int _prevLatency = -1;
     private int _prevJitter = -1;
-    //private CompensationMode _prevPredMode = (CompensationMode)(-1);
 
     public override void Spawned()
     {
@@ -45,6 +44,7 @@ public class SessionExperimentController : NetworkBehaviour
         }
     }
 
+    /// TODO: Verify if this works at runtime or only at start (I have a gut feeling it's the latter...)
     private void ApplyNetworkConditions(int latency, int jitter)
     {
         if (Runner == null || Runner.Config == null || Runner.Config.NetworkConditions == null)

@@ -163,8 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50377ec70d907b24399dc2f0d1a3e7c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bufferSize: 8
-  compensationStep: 0.1
+  bufferSize: 120
 --- !u!1 &27148097521359861
 GameObject:
   m_ObjectHideFlags: 0

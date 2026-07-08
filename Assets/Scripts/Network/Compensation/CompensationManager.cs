@@ -26,14 +26,14 @@ public class CompensationManager : MonoBehaviour
         _kalman = new(poseBuffer);
     }
 
-    public PoseData ApplyCompensation(PoseData networkPose)
+    public PoseData ApplyCompensation(PoseData networkPose, float renderTime)
     {
         ECompensationMode compensationMode = FusionSessionManager.Instance.CurrentCompensationMode;
 
         return compensationMode switch
         {
-            ECompensationMode.Interpolation => _interpolation.Compensate(networkPose),
-            ECompensationMode.KalmanFilter => _kalman.Compensate(networkPose),
+            ECompensationMode.Interpolation => _interpolation.Compensate(networkPose, renderTime),
+            ECompensationMode.KalmanFilter => _kalman.Compensate(networkPose, renderTime),
             _ => networkPose,
         };
     }

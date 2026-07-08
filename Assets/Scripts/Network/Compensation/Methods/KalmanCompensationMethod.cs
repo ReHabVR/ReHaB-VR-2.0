@@ -7,26 +7,43 @@ public class KalmanCompensationMethod : ICompensationMethod
 {
     private readonly PlayerPoseBuffer poseBuffer;
 
-    private readonly PoseKalmanFilter _headFilter = new();
-    private readonly PoseKalmanFilter _lhandFilter = new();
-    private readonly PoseKalmanFilter _rhandFilter = new();
+    private readonly PoseKalmanFilter _headPosFilter = new();
+    private readonly PoseKalmanFilter _lhandPosFilter = new();
+    private readonly PoseKalmanFilter _rhandPosFilter = new();
+
+    private readonly PoseKalmanFilter _headRotFilter = new();
+    private readonly PoseKalmanFilter _lhandRotFilter = new();
+    private readonly PoseKalmanFilter _rhandRotFilter = new();
+
+    private float _lastRenderTime = -1f;
 
     public KalmanCompensationMethod(PlayerPoseBuffer poseBuffer)
     {
         this.poseBuffer = poseBuffer;
     }
 
-    public PoseData Compensate(PoseData networkPose)
+    public PoseData Compensate(PoseData networkPose, float renderTime)
     {
-        float dt = poseBuffer.GetLastSample().timestamp - poseBuffer.GetPreviousSample().timestamp;
+        if (_lastRenderTime < 0f)
+        {
+            _lastRenderTime = renderTime;
+            return networkPose;
+        }
+
+        float dt = Mathf.Max(renderTime - _lastRenderTime, 0.001f);
+        _lastRenderTime = renderTime;
+
         return new()
         {
-            headPos = _headFilter.Update(networkPose.headPos, dt), 
-            headRot = networkPose.headRot,
-            lhandPos = _lhandFilter.Update(networkPose.lhandPos, dt), 
-            lhandRot = networkPose.lhandRot,
-            rhandPos = _rhandFilter.Update(networkPose.rhandPos, dt), 
-            rhandRot = networkPose.rhandRot,
+            headPos = _headPosFilter.Update(networkPose.headPos, dt), 
+            headRot = Quaternion.Euler(
+                _headRotFilter.Update(networkPose.headRot.eulerAngles, dt)),
+            lhandPos = _lhandPosFilter.Update(networkPose.lhandPos, dt), 
+            lhandRot = Quaternion.Euler(
+                _lhandRotFilter.Update(networkPose.lhandRot.eulerAngles, dt)),
+            rhandPos = _rhandPosFilter.Update(networkPose.rhandPos, dt), 
+            rhandRot = Quaternion.Euler(
+                _rhandRotFilter.Update(networkPose.rhandRot.eulerAngles, dt)),
             gripL = networkPose.gripL,
             gripR = networkPose.gripR
         };

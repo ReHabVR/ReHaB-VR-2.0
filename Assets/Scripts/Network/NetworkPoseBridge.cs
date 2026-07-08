@@ -163,7 +163,7 @@ public class NetworkPoseBridge : NetworkBehaviour
         }
         else // Remote client
         {
-            PoseData renderedPose = compensationManager.ApplyCompensation(NetworkPose);
+            PoseData renderedPose = compensationManager.ApplyCompensation(NetworkPose, Runner.LocalRenderTime);
             ApplyPose(renderedPose);
         }
     }

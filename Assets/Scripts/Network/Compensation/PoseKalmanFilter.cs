@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class KalmanFilter1D
@@ -75,6 +73,10 @@ public class KalmanFilter1D
     }
 }
 
+/// <summary>
+/// PoseKalmanFilter uses three independent KalmanFilter1D - one for each axis.
+/// It assumes X, Y and Z are independent from one another.
+/// </summary>
 public class PoseKalmanFilter
 {
     private readonly KalmanFilter1D X = new();

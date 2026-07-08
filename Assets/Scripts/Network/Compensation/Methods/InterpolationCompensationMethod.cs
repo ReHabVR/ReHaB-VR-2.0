@@ -11,21 +11,26 @@ public class InterpolationCompensationMethod : ICompensationMethod
         this.poseBuffer = poseBuffer;
     }
 
-    public PoseData Compensate(PoseData networkPose)
+    public PoseData Compensate(PoseData networkPose, float renderTime)
     {
-        float lastTimestamp = poseBuffer.GetLastTimestamp();
-        
-        if (poseBuffer.IsBufferEmpty() || !PlayerPoseBuffer.PoseEqualsApprox(poseBuffer.GetLastSample().pose, networkPose))
-        {
-            poseBuffer.AddSample(networkPose, lastTimestamp);
-        }
-
         if (poseBuffer.Samples.Count < 2)
         {
             return networkPose;
         }
 
-        float renderTime = lastTimestamp - poseBuffer.GetCompensationStep();
+        float oldestTimestamp = poseBuffer.Samples[0].timestamp;
+        float latestTimestamp = poseBuffer.GetLastSample().timestamp;
+
+        if (renderTime <= oldestTimestamp)
+        {
+            return poseBuffer.Samples[0].pose;
+        }
+
+        if (renderTime >= latestTimestamp)
+        {
+            return poseBuffer.GetLastSample().pose;
+        }
+
         for (int i = poseBuffer.GetBufferSize() - 2; i >= 0; i--) // reverse search
         {
             PoseSample sampleA = poseBuffer.Samples[i];
@@ -46,12 +51,13 @@ public class InterpolationCompensationMethod : ICompensationMethod
                     rhandPos = Vector3.Lerp(posA.rhandPos, posB.rhandPos, t),
                     rhandRot = Quaternion.Slerp(posA.rhandRot, posB.rhandRot, t),
 
-                    gripL = Mathf.Lerp((float)posA.gripL, (float)posB.gripL, t),
-                    gripR = Mathf.Lerp((float)posA.gripR, (float)posB.gripR, t)
+                    gripL = Mathf.Lerp(posA.gripL, posB.gripL, t),
+                    gripR = Mathf.Lerp(posA.gripR, posB.gripR, t)
                 };
             }
         }
 
+        // Fallback for unexpected edge cases
         return poseBuffer.GetLastSample().pose;
     }
 }

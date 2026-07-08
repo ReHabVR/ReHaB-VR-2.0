@@ -5,27 +5,20 @@ using UnityEngine;
 public class PlayerPoseBuffer : MonoBehaviour
 {
     [SerializeField, Min(0)]
-    private int bufferSize = 8;
+    private int bufferSize = 60;
 
-    [SerializeField, Min(0f)]
-    private float compensationStep = 0.1f; // Time offset between samples for prediction methods
-
-    private float _lastTimestamp;
     private readonly List<PoseSample> _poseBuffer = new();
 
     public IReadOnlyList<PoseSample> Samples { get => _poseBuffer; }
 
     public void AddSample(PoseData pose, float timestamp)
     {
-        _poseBuffer.Add(
-            new()
-            {
-                pose = pose,
-                timestamp = timestamp
-            }
-        );
+        if (Samples.Count > 0 && GetLastSample().timestamp >= timestamp)
+        {
+            return; 
+        }
 
-        _lastTimestamp = timestamp;
+        _poseBuffer.Add(new(pose, timestamp));
 
         if (_poseBuffer.Count > bufferSize)
         {
@@ -33,20 +26,19 @@ public class PlayerPoseBuffer : MonoBehaviour
         }
     }
 
-    public PoseSample GetLastSample() => _poseBuffer[^1];
-    public PoseSample GetPreviousSample() => _poseBuffer[^2];
+    public PoseSample GetLastSample() => _poseBuffer.Count > 0 ? _poseBuffer[^1] : default;
+    public PoseSample GetPreviousSample() => _poseBuffer.Count > 0 ? _poseBuffer[^2] : default;
 
     public int GetBufferSize() => _poseBuffer.Count;
     public int GetMaxBufferSize() => bufferSize;
     public bool IsBufferEmpty() => _poseBuffer.Count == 0;
 
-    public float GetLastTimestamp() => _lastTimestamp;
-
-    public float GetCompensationStep() => compensationStep;
     
     public static bool PoseEqualsApprox(in PoseData a, in PoseData b, float posEps = 0.0001f, float rotEps = 0.001f) =>
             Vector3.SqrMagnitude(a.lhandPos - b.lhandPos) < posEps * posEps && 
             Quaternion.Dot(a.lhandRot, b.lhandRot) > 1f - rotEps && 
             Vector3.SqrMagnitude(a.rhandPos - b.rhandPos) < posEps * posEps && 
-            Quaternion.Dot(a.rhandRot, b.rhandRot) > 1f - rotEps;
+            Quaternion.Dot(a.rhandRot, b.rhandRot) > 1f - rotEps &&
+            Vector3.SqrMagnitude(a.headPos - b.headPos) < posEps * posEps && 
+            Quaternion.Dot(a.headRot, b.headRot) > 1f - rotEps;
 }
