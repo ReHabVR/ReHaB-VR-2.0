@@ -41,4 +41,11 @@ public class PlayerPoseBuffer : MonoBehaviour
             Quaternion.Dot(a.rhandRot, b.rhandRot) > 1f - rotEps &&
             Vector3.SqrMagnitude(a.headPos - b.headPos) < posEps * posEps && 
             Quaternion.Dot(a.headRot, b.headRot) > 1f - rotEps;
+
+    public static Vector3 CalculateVelocity(Vector3 currentPos, Vector3 previousPos, 
+            float currentTimestamp, float previousTimestamp)
+    {
+        float dt = currentTimestamp - previousTimestamp;
+        return dt > 0f ? (currentPos - previousPos) / dt : Vector3.zero;
+    }
 }

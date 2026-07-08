@@ -9,7 +9,9 @@ public class CompensationManager : MonoBehaviour
     [SerializeField]
     private PlayerPoseBuffer poseBuffer;
 
-    private InterpolationCompensationMethod _interpolation;
+    private InterpolationCompensationMethod _interp;
+    private ExtrapolationCompensationMethod _extrap;
+    private DeadReckoningCompensationMethod _deadreckon;
     private KalmanCompensationMethod _kalman;
 
     private void Awake()
@@ -22,7 +24,9 @@ public class CompensationManager : MonoBehaviour
 
     private void Start()
     {
-        _interpolation = new(poseBuffer);
+        _interp = new(poseBuffer);
+        _extrap = new(poseBuffer);
+        _deadreckon = new(poseBuffer);
         _kalman = new(poseBuffer);
     }
 
@@ -32,7 +36,9 @@ public class CompensationManager : MonoBehaviour
 
         return compensationMode switch
         {
-            ECompensationMode.Interpolation => _interpolation.Compensate(networkPose, renderTime),
+            ECompensationMode.Interpolation => _interp.Compensate(networkPose, renderTime),
+            ECompensationMode.Extrapolation => _extrap.Compensate(networkPose, renderTime),
+            ECompensationMode.DeadReckoning => _deadreckon.Compensate(networkPose, renderTime),
             ECompensationMode.KalmanFilter => _kalman.Compensate(networkPose, renderTime),
             _ => networkPose,
         };

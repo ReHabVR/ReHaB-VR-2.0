@@ -19,17 +19,17 @@ public enum EPlayerRole
 
 public enum ECompensationMode
 {
-    /// Invalid compensation mode
+    // Invalid compensation mode
     Invalid = -1,
-    /// Raw network pose without any prediction applied
+    // Raw network pose without any prediction applied
     None = 0,
-    /// Base smoothing; technically not a prediction method
+    // Base smoothing; technically not a prediction method
     Interpolation = 1,
-    /// Simple prediction based on extrapolation
+    // Simple prediction based on extrapolation
     Extrapolation = 2,
-    /// Predictive model-based motion prediction
+    // Model-based motion prediction
     DeadReckoning = 3,
-    /// Filter-based prediction
+    // Filter-based prediction
     KalmanFilter = 4
 }
 
