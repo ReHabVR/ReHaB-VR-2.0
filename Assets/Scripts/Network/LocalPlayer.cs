@@ -25,9 +25,17 @@ public class LocalPlayer : NetworkBehaviour
     [SerializeField]
     private List<XRBaseController> xrControllers;
 
+    [SerializeField, Tooltip("Objects added to \"Owner No See\" are rendered only for remote peers and not on local client.")]
+    private List<Renderer> ownerNoSee;
+
     public override void Spawned()
     {
         bool isLocal = HasInputAuthority;
+
+        foreach (Renderer renderer in ownerNoSee)
+        {
+            renderer.enabled = !isLocal;
+        }
 
         if (playerCamera != null)
         {

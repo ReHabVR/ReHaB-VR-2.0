@@ -26,17 +26,22 @@ public class KalmanCompensationMethod : ICompensationMethod
         float dt = Mathf.Max(renderTime - _lastRenderTime, 0.001f);
         _lastRenderTime = renderTime;
 
+        // Convert rotation quaternion to rotation vector
+        Vector3 headRotVector = PoseMathHelpers.QuaternionToRotationVector(networkPose.headRot);
+        Vector3 lHandRotVector = PoseMathHelpers.QuaternionToRotationVector(networkPose.lhandRot);
+        Vector3 rHandRotVector = PoseMathHelpers.QuaternionToRotationVector(networkPose.rhandRot);
+
         return new()
         {
             headPos = _headPosFilter.Update(networkPose.headPos, dt), 
-            headRot = Quaternion.Euler(
-                _headRotFilter.Update(networkPose.headRot.eulerAngles, dt)),
+            headRot = PoseMathHelpers.RotationVectorToQuaternion(_headRotFilter.Update(headRotVector, dt)),
+
             lhandPos = _lhandPosFilter.Update(networkPose.lhandPos, dt), 
-            lhandRot = Quaternion.Euler(
-                _lhandRotFilter.Update(networkPose.lhandRot.eulerAngles, dt)),
+            lhandRot = PoseMathHelpers.RotationVectorToQuaternion(_lhandRotFilter.Update(lHandRotVector, dt)),
+
             rhandPos = _rhandPosFilter.Update(networkPose.rhandPos, dt), 
-            rhandRot = Quaternion.Euler(
-                _rhandRotFilter.Update(networkPose.rhandRot.eulerAngles, dt)),
+            rhandRot = PoseMathHelpers.RotationVectorToQuaternion(_rhandRotFilter.Update(rHandRotVector, dt)),
+
             gripL = networkPose.gripL,
             gripR = networkPose.gripR
         };

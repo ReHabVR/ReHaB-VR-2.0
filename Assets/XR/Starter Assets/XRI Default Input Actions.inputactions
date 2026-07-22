@@ -2104,6 +2104,34 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "XRI ReHaB",
+            "id": "d874b275-469e-453b-bebc-5ba3929d1567",
+            "actions": [
+                {
+                    "name": "RecenterCamera",
+                    "type": "Button",
+                    "id": "c393c081-e499-487d-a8a6-9df27902f368",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "4a972555-4c9a-480d-a545-0d5c2b5b6a82",
+                    "path": "<XRController>{LeftHand}/{PrimaryButton}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RecenterCamera",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

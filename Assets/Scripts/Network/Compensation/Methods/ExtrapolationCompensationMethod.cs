@@ -23,15 +23,15 @@ public class ExtrapolationCompensationMethod : ICompensationMethod
     
         float predTime = Mathf.Clamp(renderTime - latestSample.timestamp, 0.0f, 0.2f);
 
-        Vector3 headVel = PlayerPoseBuffer.CalculateVelocity(
+        Vector3 headVel = PoseMathHelpers.CalculateVelocity(
             latestSample.pose.headPos, previousSample.pose.headPos, 
             latestSample.timestamp, previousSample.timestamp
         );
-        Vector3 lHandVel = PlayerPoseBuffer.CalculateVelocity(
+        Vector3 lHandVel = PoseMathHelpers.CalculateVelocity(
             latestSample.pose.lhandPos, previousSample.pose.lhandPos, 
             latestSample.timestamp, previousSample.timestamp
         );
-        Vector3 rHandVel = PlayerPoseBuffer.CalculateVelocity(
+        Vector3 rHandVel = PoseMathHelpers.CalculateVelocity(
             latestSample.pose.rhandPos, previousSample.pose.rhandPos, 
             latestSample.timestamp, previousSample.timestamp
         );
@@ -39,11 +39,14 @@ public class ExtrapolationCompensationMethod : ICompensationMethod
         return new()
         {
             headPos = latestSample.pose.headPos + (headVel * predTime),
-            headRot = latestSample.pose.headRot,
+            headRot = latestSample.pose.headRot, // TODO: calculate angular velocity
+
             lhandPos = latestSample.pose.lhandPos + (lHandVel * predTime),
             lhandRot = latestSample.pose.lhandRot,
+
             rhandPos = latestSample.pose.rhandPos + (rHandVel * predTime),
             rhandRot = latestSample.pose.rhandRot,
+
             gripL = latestSample.pose.gripL,
             gripR = latestSample.pose.gripR
         };
