@@ -1,5 +1,6 @@
 {
     "serverIP": "10.21.68.11",
     "serverPort": 27015,
+	"endToEndDelay": 100,
     "joinAsTrainer": false
 }

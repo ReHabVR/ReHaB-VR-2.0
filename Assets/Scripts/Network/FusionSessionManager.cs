@@ -46,10 +46,8 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     public bool startAsHost = false;
 
     [Header("Simulated Network Latency")]
-    [Range(0, 100)]
-    public uint simulatedLatency = 0;
-    [Range(0, 20)]
-    public uint simulatedJitter = 0;
+    [Range(0, 1000), Tooltip("End-to-end latency. For RTT, multiply by 2.")]
+    public uint endToEndDelay = 100;
 
     [Header("Session Settings")]
     public EPlayerRole localPlayerRole = EPlayerRole.Player;
@@ -129,7 +127,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         _sessionRunner = runnerObject.AddComponent<NetworkRunner>();
         _sceneManager = runnerObject.AddComponent<NetworkSceneManagerDefault>();
         DontDestroyOnLoad(runnerObject);
-
         Debug.Log($"[Fusion] SceneManager: {_sceneManager}");
 
         _sessionRunner.ProvideInput = !_isHost;
@@ -139,9 +136,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             LoadConfig();
         }
-
-        Debug.LogWarning($"[Fusion] runner.ProvideInput: {_sessionRunner.ProvideInput}, runner.Mode={_sessionRunner.GameMode}");
-
+        Debug.Log($"[Fusion] runner.ProvideInput: {_sessionRunner.ProvideInput}, runner.Mode={_sessionRunner.GameMode}");
+        
+        ApplyNetworkConditions();
         StartGameArgs args = new()
         {
             GameMode = _isHost ? GameMode.Server : GameMode.Client,
@@ -390,12 +387,10 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         return true;
 #elif HMD_CLIENT
         return false;
-#else
-    #if UNITY_EDITOR
+#elif UNITY_EDITOR
         return startAsHost;
-    #else
+#else
         return false;
-    #endif
 #endif
     }
 
@@ -453,6 +448,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             hostAddress = config.serverIP;
             port = (ushort)config.serverPort;
             localPlayerRole = config.joinAsTrainer ? EPlayerRole.Trainer : EPlayerRole.Player;
+            endToEndDelay = (uint)Math.Max(0, config.endToEndDelay);
         }
         else
         {
@@ -464,7 +460,22 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     #endif
     }
 
-    private static void HandleCommand(string command)
+    private void ApplyNetworkConditions()
+    {
+        NetworkSimulationConfiguration nc = _sessionRunner.Config.NetworkConditions;
+        if (nc == null)
+        {
+            Debug.LogError("Unable to access NetworkSimulationConfiguration!");
+            return;
+        }
+
+        nc.Enabled = endToEndDelay > 0;
+        nc.DelayMin = endToEndDelay;
+        nc.DelayMax = endToEndDelay;
+        nc.AdditionalJitter = 0; // no jitter; keep latency relatively stable
+    }
+
+    private void HandleCommand(string command)
     {
     #if UNITY_SERVER
         if (string.IsNullOrWhiteSpace(command))
@@ -480,32 +491,17 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             case "lat":
             {
-                if (parts.Length > 1)
-                {
-                    if (int.TryParse(parts[1], out int latency))
-                    {
-                        int jitter = experimentController.Jitter;
-                        if (parts.Length >= 3)
-                        {
-                            int.TryParse(parts[2], out jitter);
-                        }
-
-                        experimentController.Latency = Mathf.Clamp(latency, 0, 1000);
-                        experimentController.Jitter  = Mathf.Clamp(jitter, 0, 1000);
-                    }
-                }
-
-                Debug.Log($"[SERVER] Latency: {experimentController.Latency} ms | Jitter: {experimentController.Jitter} ms");
+                Debug.Log($"[SERVER] Latency: {endToEndDelay} ms (RTT = {endToEndDelay * 2} ms)");
                 break;
             }
-
+            
             case "pred":
             {
                 if (parts.Length > 1)
                 {
                     if (int.TryParse(parts[1], out int predMode))
                     {
-                        experimentController.CurrentCompensationMode = (ECompensationMode)Mathf.Clamp(predMode, 0, 2);
+                        experimentController.CurrentCompensationMode = (ECompensationMode)Mathf.Clamp(predMode, 0, 4);
                     }
                 }
 
@@ -542,5 +538,6 @@ public class ConnectionConfig
 {
     public string serverIP = "127.0.0.1";
     public int serverPort = 27015;
+    public int endToEndDelay = 100; 
     public bool joinAsTrainer = false;
 }
