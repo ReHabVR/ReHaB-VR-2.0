@@ -38,4 +38,21 @@ public static class PoseMathHelpers
         float dt = currentTimestamp - previousTimestamp;
         return dt > 0f ? (currentPos - previousPos) / dt : Vector3.zero;
     }
+
+    public static Vector3 CalculateAngularVelocity(Quaternion from, Quaternion to, float dt)
+    {
+        Quaternion delta = to * Quaternion.Inverse(from);
+        delta.ToAngleAxis(out float angle, out Vector3 axis);
+        if (angle > 180f) 
+        {
+            angle -= 360f;
+        }
+
+        if (Mathf.Approximately(dt, 0f)) 
+        {
+            return Vector3.zero;
+        }
+        
+        return axis.normalized * (angle * Mathf.Deg2Rad / dt);
+    }
 }

@@ -4,20 +4,32 @@ using UnityEngine;
 
 public class DeadReckoningCompensationMethod : ICompensationMethod
 {
+    private const float BLEND_DURATION = 0.1f;
+
     private readonly PlayerPoseBuffer _poseBuffer;
 
     private PoseSample _lastProcessedSample;
+
     private PoseData _estimatedPose;
+    private PoseData _networkPose;
+    private PoseData _blendPose;
     
     private Vector3 _headVel;
     private Vector3 _lHandVel;
     private Vector3 _rHandVel;
 
-    private float _lastEstimationTime = -1.0f;
+    private Vector3 _headAngVel;
+    private Vector3 _lHandAngVel;
+    private Vector3 _rHandAngVel;
+
+    private float _lastEstimationTime = -1f;
+    private float _blendTimer = 0.0f;
+    private bool _isBlending = false;
 
     public DeadReckoningCompensationMethod(PlayerPoseBuffer poseBuffer)
     {
         _poseBuffer = poseBuffer;
+        Reset();
         _lastProcessedSample = _poseBuffer.GetLastSample();
     }
 
@@ -26,51 +38,126 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
         PoseSample latestSample = _poseBuffer.GetLastSample();
         if (_poseBuffer.Samples.Count < 2)
         {
-            UpdateState(latestSample);
-            return networkPose;
+            Initialize(latestSample);
+            return latestSample.pose;
         }
+
+        if (_lastEstimationTime < 0.0f)
+        {
+            _lastEstimationTime = renderTime;
+            Initialize(latestSample);
+            return _estimatedPose;
+        }
+
+        float deltaRenderTime = Mathf.Max(renderTime - _lastEstimationTime, 0.001f);
+        _lastEstimationTime = renderTime;
 
         // Check if new networked sample has arrived (was added to buffer)
         if (!Mathf.Approximately(_lastProcessedSample.timestamp, latestSample.timestamp))
         {
-            _headVel = PoseMathHelpers.CalculateVelocity(
-                latestSample.pose.headPos, _lastProcessedSample.pose.headPos, 
-                latestSample.timestamp, _lastProcessedSample.timestamp
-            );
-            _lHandVel = PoseMathHelpers.CalculateVelocity(
-                latestSample.pose.lhandPos, _lastProcessedSample.pose.lhandPos, 
-                latestSample.timestamp, _lastProcessedSample.timestamp
-            );
-            _rHandVel = PoseMathHelpers.CalculateVelocity(
-                latestSample.pose.rhandPos, _lastProcessedSample.pose.rhandPos, 
-                latestSample.timestamp, _lastProcessedSample.timestamp
-            );
-            
-            // TODO: calculate angular velocity
-            UpdateState(latestSample);
+            _blendPose = _estimatedPose;
+            float dtNet = latestSample.timestamp - _lastProcessedSample.timestamp;
+            if (dtNet > 0.0f)
+            {
+                _headVel = (latestSample.pose.headPos - _lastProcessedSample.pose.headPos) / dtNet;
+                _lHandVel = (latestSample.pose.lhandPos - _lastProcessedSample.pose.lhandPos) / dtNet;
+                _rHandVel = (latestSample.pose.rhandPos - _lastProcessedSample.pose.rhandPos) / dtNet;
+
+                _headAngVel = PoseMathHelpers.CalculateAngularVelocity(
+                    _lastProcessedSample.pose.headRot, latestSample.pose.headRot, dtNet);
+                _lHandAngVel = PoseMathHelpers.CalculateAngularVelocity(
+                    _lastProcessedSample.pose.lhandRot, latestSample.pose.lhandRot, dtNet);
+                _rHandAngVel = PoseMathHelpers.CalculateAngularVelocity(
+                    _lastProcessedSample.pose.rhandRot, latestSample.pose.rhandRot, dtNet);
+            }
+
+            _networkPose = latestSample.pose;
+            _lastProcessedSample = latestSample;
+            _blendTimer = 0f;
+            _isBlending = true;
         }
 
-        // Update estimation
-        float dt = Mathf.Clamp(renderTime - _lastEstimationTime, 0.0f, 0.2f);
-        _estimatedPose.headPos += _headVel * dt;
-        _estimatedPose.lhandPos += _lHandVel * dt;
-        _estimatedPose.rhandPos += _rHandVel * dt;
+        ExtrapolatePose(ref _networkPose, deltaRenderTime);
+        if (_isBlending)
+        {
+            _blendTimer += deltaRenderTime;
+            float t = _blendTimer / BLEND_DURATION;
+            if (t >= 1.0f)
+            {
+                _isBlending = false;
+                _estimatedPose = _networkPose;
+            }
+            else
+            {
+                ExtrapolatePose(ref _blendPose, deltaRenderTime);
 
-        _lastEstimationTime = renderTime;
+                _estimatedPose.headPos = Vector3.Lerp(_blendPose.headPos, _networkPose.headPos, t);
+                _estimatedPose.lhandPos = Vector3.Lerp(_blendPose.lhandPos, _networkPose.lhandPos, t);
+                _estimatedPose.rhandPos = Vector3.Lerp(_blendPose.rhandPos, _networkPose.rhandPos, t);
+
+                _estimatedPose.headRot = Quaternion.Slerp(_blendPose.headRot, _networkPose.headRot, t);
+                _estimatedPose.lhandRot = Quaternion.Slerp(_blendPose.lhandRot, _networkPose.lhandRot, t);
+                _estimatedPose.rhandRot = Quaternion.Slerp(_blendPose.rhandRot, _networkPose.rhandRot, t);
+                
+                _estimatedPose.gripL = Mathf.Lerp(_blendPose.gripL, _networkPose.gripL, t);
+                _estimatedPose.gripR = Mathf.Lerp(_blendPose.gripR, _networkPose.gripR, t);
+            }
+        }
+        else
+        {
+            _estimatedPose = _networkPose;
+        }
+
         return _estimatedPose;
+    }
+
+    private void Initialize(PoseSample sample)
+    {
+        _lastProcessedSample = sample;
+        _estimatedPose = sample.pose;
+        _networkPose = sample.pose;
+        _blendPose = sample.pose;
+    }
+
+    private void ExtrapolatePose(ref PoseData pose, float dt)
+    {
+        pose.headPos += _headVel * dt;
+        pose.lhandPos += _lHandVel * dt;
+        pose.rhandPos += _rHandVel * dt;
+
+        pose.headRot = ApplyAngularVelocity(pose.headRot, _headAngVel, dt);
+        pose.lhandRot = ApplyAngularVelocity(pose.lhandRot, _lHandAngVel, dt);
+        pose.rhandRot = ApplyAngularVelocity(pose.rhandRot, _rHandAngVel, dt);
+    }
+
+    private Quaternion ApplyAngularVelocity(Quaternion currentRot, Vector3 angVel, float dt)
+    {
+        float angleRad = angVel.magnitude * dt;
+        if (Mathf.Approximately(angleRad, 0f))
+        {
+            return currentRot;
+        }
+
+        Quaternion delta = Quaternion.AngleAxis(angleRad * Mathf.Rad2Deg, angVel.normalized);
+        return delta * currentRot;
     }
 
     public void Reset()
     {
         _lastProcessedSample = default;
-        _lastEstimationTime = -1.0f;
-        _estimatedPose = default;
-    }
 
-    private void UpdateState(PoseSample sample)
-    {
-        _lastProcessedSample = sample;
-        _lastEstimationTime = sample.timestamp;
-        _estimatedPose = sample.pose;
+        _estimatedPose = default;
+        _networkPose = default;
+        _blendPose = default;
+
+        _lastEstimationTime = -1f;
+        _isBlending = false;
+
+        _headVel = Vector3.zero;
+        _lHandVel = Vector3.zero;
+        _rHandVel = Vector3.zero;
+        _headAngVel = Vector3.zero;
+        _lHandAngVel = Vector3.zero;
+        _rHandAngVel = Vector3.zero;
     }
 }

@@ -5,40 +5,51 @@ public class KalmanFilter1D
     public float position = 0.0f;
     public float velocity = 0.0f;
 
+    // Covariance matrix
     public float[,] P = {
         {1, 0}, 
         {0, 1}
     };
 
-    public float qPosition = 0.001f;
-    public float qVelocity = 0.01f;
-    public float measurementNoise = 0.1f;
-    
-    public float Update(float measurement, float dt)
+    public float accelerationNoise = 0.5f; // player movement acceleration
+    public float networkNoise = 0.05f; // network jitter
+
+    public void Predict(float dt)
     {
-        // Predict state
         position += velocity * dt;
 
-        // Predict covariance
-        float pred_p00 = P[0,0];
-        float pred_p01 = P[0,1];
-        float pred_p10 = P[1,0];
-        float pred_p11 = P[1,1];
+        // P = F * P * F^T + Q
+        float p00 = P[0,0];
+        float p01 = P[0,1];
+        float p10 = P[1,0];
+        float p11 = P[1,1];
 
-        P[0,0] = pred_p00 + dt * (pred_p10 + pred_p01) + dt * dt * P[1,1];
-        P[0,1] = pred_p01 + dt * pred_p11;
-        P[1,0] = pred_p10 + dt * pred_p11;
+        // F * P * F^T
+        P[0,0] = p00 + dt * (p10 + p01) + dt * dt * p11;
+        P[0,1] = p01 + dt * p11;
+        P[1,0] = p10 + dt * p11;
+        P[1,1] = p11;
 
-        P[0, 0] += qPosition;
-        P[1, 1] += qVelocity;
+        // Add noise (Q)
+        float dt2 = dt * dt;
+        float dt3 = dt2 * dt;
+        float dt4 = dt3 * dt;
 
+        P[0,0] += 0.25f * dt4 * accelerationNoise;
+        P[0,1] += 0.5f * dt3 * accelerationNoise;
+        P[1,0] += 0.5f * dt3 * accelerationNoise;
+        P[1,1] += dt2 * accelerationNoise;
+    }
+    
+    public void Correct(float measurement)
+    {
         // Innovation
         float y = measurement - position;
         
-        // Innovation covariance
-        float S = P[0,0] + measurementNoise;
+        // S = H * P * H^T + R
+        float S = P[0,0] + networkNoise;
 
-        // Kalman gain
+        // K = P * H^T * S^-1
         float k0 = P[0,0] / S;
         float k1 = P[1,0] / S;
 
@@ -46,24 +57,21 @@ public class KalmanFilter1D
         position += k0 * y;
         velocity += k1 * y;
 
-        // Update covariance
-        float update_p00 = P[0,0];
-        float update_p01 = P[0,1];
-        float update_p10 = P[1,0];
-        float update_p11 = P[1,1];
+        // P = (I - K * H) * P
+        float prev_p00 = P[0,0];
+        float prev_p01 = P[0,1];
+        float prev_p10 = P[1,0];
+        float prev_p11 = P[1,1];
 
-        P[0,0] = (1 - k0) * update_p00;
-        P[0,1] = (1 - k0) * update_p01;
-        P[1,0] = update_p10 - (k1 * pred_p00);
-        P[1,1] = update_p11 - (k1 * pred_p01);
-
-        // Return axis value
-        return position; 
+        P[0,0] = (1.0f - k0) * prev_p00;
+        P[0,1] = (1.0f - k0) * prev_p01;
+        P[1,0] = prev_p10 - (k1 * prev_p00);
+        P[1,1] = prev_p11 - (k1 * prev_p01);
     }
 
-    public void Reset()
+    public void Reset(float startPosition = 0.0f)
     {
-        position = 0.0f;
+        position = startPosition;
         velocity = 0.0f;
 
         P[0,0] = 1.0f;
@@ -75,7 +83,7 @@ public class KalmanFilter1D
 
 /// <summary>
 /// PoseKalmanFilter uses three independent KalmanFilter1D - one for each axis.
-/// It assumes X, Y and Z are independent from one another.
+/// It assumes X, Y and Z axes are independent from one another.
 /// </summary>
 public class PoseKalmanFilter
 {
@@ -83,12 +91,26 @@ public class PoseKalmanFilter
     private readonly KalmanFilter1D Y = new();
     private readonly KalmanFilter1D Z = new();
 
-    public Vector3 Update(Vector3 measurement, float dt)
+    public void Predict(float dt)
     {
-        return new(
-            X.Update(measurement.x, dt),
-            Y.Update(measurement.y, dt),
-            Z.Update(measurement.z, dt)
-        );
+        X.Predict(dt); 
+        Y.Predict(dt); 
+        Z.Predict(dt);
+    }
+
+    public void Correct(Vector3 measurement)
+    {
+        X.Correct(measurement.x);
+        Y.Correct(measurement.y);
+        Z.Correct(measurement.z);
+    }
+
+    public Vector3 GetPosition() => new(X.position, Y.position, Z.position);
+
+    public void Reset(Vector3 startPos)
+    {
+        X.Reset(startPos.x);
+        Y.Reset(startPos.y);
+        Z.Reset(startPos.z);
     }
 }
