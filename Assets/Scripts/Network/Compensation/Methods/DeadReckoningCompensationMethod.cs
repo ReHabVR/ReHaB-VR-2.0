@@ -10,9 +10,9 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
 
     private PoseSample _lastProcessedSample;
 
-    private PoseData _estimatedPose;
-    private PoseData _networkPose;
-    private PoseData _blendPose;
+    private PoseData _renderedPose; // final estimated pose that is actually rendered
+    private PoseData _predictedPose; // latest state received from the network
+    private PoseData _blendPose; // pose being displayed until new update arrives
     
     private Vector3 _headVel;
     private Vector3 _lHandVel;
@@ -30,11 +30,15 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
     {
         _poseBuffer = poseBuffer;
         Reset();
-        _lastProcessedSample = _poseBuffer.GetLastSample();
     }
 
     public PoseData Compensate(PoseData networkPose, float renderTime)
     {
+        if (_poseBuffer.Samples.Count == 0)
+        {
+            return networkPose;
+        }
+
         PoseSample latestSample = _poseBuffer.GetLastSample();
         if (_poseBuffer.Samples.Count < 2)
         {
@@ -46,7 +50,7 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
         {
             _lastEstimationTime = renderTime;
             Initialize(latestSample);
-            return _estimatedPose;
+            return _renderedPose;
         }
 
         float deltaRenderTime = Mathf.Max(renderTime - _lastEstimationTime, 0.001f);
@@ -55,7 +59,7 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
         // Check if new networked sample has arrived (was added to buffer)
         if (!Mathf.Approximately(_lastProcessedSample.timestamp, latestSample.timestamp))
         {
-            _blendPose = _estimatedPose;
+            _blendPose = _renderedPose;
             float dtNet = latestSample.timestamp - _lastProcessedSample.timestamp;
             if (dtNet > 0.0f)
             {
@@ -71,51 +75,51 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
                     _lastProcessedSample.pose.rhandRot, latestSample.pose.rhandRot, dtNet);
             }
 
-            _networkPose = latestSample.pose;
+            _predictedPose = latestSample.pose;
             _lastProcessedSample = latestSample;
             _blendTimer = 0f;
             _isBlending = true;
         }
 
-        ExtrapolatePose(ref _networkPose, deltaRenderTime);
+        ExtrapolatePose(ref _predictedPose, deltaRenderTime);
         if (_isBlending)
         {
             _blendTimer += deltaRenderTime;
-            float t = _blendTimer / BLEND_DURATION;
+            float t = Mathf.Clamp01(_blendTimer / BLEND_DURATION);
             if (t >= 1.0f)
             {
                 _isBlending = false;
-                _estimatedPose = _networkPose;
+                _renderedPose = _predictedPose;
             }
             else
             {
                 ExtrapolatePose(ref _blendPose, deltaRenderTime);
 
-                _estimatedPose.headPos = Vector3.Lerp(_blendPose.headPos, _networkPose.headPos, t);
-                _estimatedPose.lhandPos = Vector3.Lerp(_blendPose.lhandPos, _networkPose.lhandPos, t);
-                _estimatedPose.rhandPos = Vector3.Lerp(_blendPose.rhandPos, _networkPose.rhandPos, t);
+                _renderedPose.headPos = Vector3.Lerp(_blendPose.headPos, _predictedPose.headPos, t);
+                _renderedPose.lhandPos = Vector3.Lerp(_blendPose.lhandPos, _predictedPose.lhandPos, t);
+                _renderedPose.rhandPos = Vector3.Lerp(_blendPose.rhandPos, _predictedPose.rhandPos, t);
 
-                _estimatedPose.headRot = Quaternion.Slerp(_blendPose.headRot, _networkPose.headRot, t);
-                _estimatedPose.lhandRot = Quaternion.Slerp(_blendPose.lhandRot, _networkPose.lhandRot, t);
-                _estimatedPose.rhandRot = Quaternion.Slerp(_blendPose.rhandRot, _networkPose.rhandRot, t);
+                _renderedPose.headRot = Quaternion.Slerp(_blendPose.headRot, _predictedPose.headRot, t);
+                _renderedPose.lhandRot = Quaternion.Slerp(_blendPose.lhandRot, _predictedPose.lhandRot, t);
+                _renderedPose.rhandRot = Quaternion.Slerp(_blendPose.rhandRot, _predictedPose.rhandRot, t);
                 
-                _estimatedPose.gripL = Mathf.Lerp(_blendPose.gripL, _networkPose.gripL, t);
-                _estimatedPose.gripR = Mathf.Lerp(_blendPose.gripR, _networkPose.gripR, t);
+                _renderedPose.gripL = Mathf.Lerp(_blendPose.gripL, _predictedPose.gripL, t);
+                _renderedPose.gripR = Mathf.Lerp(_blendPose.gripR, _predictedPose.gripR, t);
             }
         }
         else
         {
-            _estimatedPose = _networkPose;
+            _renderedPose = _predictedPose;
         }
 
-        return _estimatedPose;
+        return _renderedPose;
     }
 
     private void Initialize(PoseSample sample)
     {
         _lastProcessedSample = sample;
-        _estimatedPose = sample.pose;
-        _networkPose = sample.pose;
+        _renderedPose = sample.pose;
+        _predictedPose = sample.pose;
         _blendPose = sample.pose;
     }
 
@@ -146,8 +150,8 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
     {
         _lastProcessedSample = default;
 
-        _estimatedPose = default;
-        _networkPose = default;
+        _renderedPose = default;
+        _predictedPose = default;
         _blendPose = default;
 
         _lastEstimationTime = -1f;

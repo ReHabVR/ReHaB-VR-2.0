@@ -1,3 +1,4 @@
+using System;
 using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -18,13 +19,19 @@ public class GrabbableObject : NetworkBehaviour
     [SerializeField]
     private XRGrabInteractable grab;
 
+    public bool IsHeld => HoldingPlayer != PlayerRef.None;
+
     void Awake()
     {
         if (rb == null)
+        {
             rb = GetComponent<Rigidbody>();
+        }
 
         if (grab == null)
+        {
             grab = GetComponent<XRGrabInteractable>();
+        }
 
         grab.selectEntered.AddListener(OnGrab);
         grab.selectExited.AddListener(OnRelease);
