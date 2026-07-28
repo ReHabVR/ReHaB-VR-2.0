@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
@@ -15,16 +13,19 @@ public class StackingTaskManager : NetworkBehaviour, IMinigameManager
         Checking = 3,  // stability evaluation
         Success = 4    // task completed
     }
-
+    
     public event Action OnMove;
     public event Action OnCorrectMove;
 
     [SerializeField]
     private StackableCylinder redCylinder;
+    
     [SerializeField]
     private StackableCylinder blueCylinder;
 
     public float requiredStabilityTime = 2.0f;
+    public float maxVelocityThreshold = 1.0f;
+    public float maxAngularVelocityThreshold = 1.0f;
 
     private EStackingTaskState _taskState = EStackingTaskState.Waiting;
 
@@ -157,17 +158,19 @@ public class StackingTaskManager : NetworkBehaviour, IMinigameManager
 
     private bool ValidatePlayers()
     {
+        if (redCylinder.grab.HoldingPlayer == PlayerRef.None ||  blueCylinder.grab.HoldingPlayer == PlayerRef.None)
+        {
+            return false;
+        }
+
         return redCylinder.grab.HoldingPlayer != blueCylinder.grab.HoldingPlayer;
-        //return true; //testing only
     }
     
     private bool EvaluateStability()
     {
-        Vector3 velocity = blueCylinder.rb.velocity;
-        Vector3 angularVelocity = blueCylinder.rb.angularVelocity;
-
-        return true;
-        //return velocity.magnitude < maxVelocityThreshold && angularVelocity.magnitude < maxAngularVelocityThreshold && IsPlacedOnRed();
+        return blueCylinder.IsTouching(redCylinder)
+            && blueCylinder.rb.velocity.sqrMagnitude < maxVelocityThreshold * maxVelocityThreshold
+            && blueCylinder.rb.angularVelocity.sqrMagnitude < maxAngularVelocityThreshold * maxAngularVelocityThreshold;
     }
 
 #region IMinigameManager

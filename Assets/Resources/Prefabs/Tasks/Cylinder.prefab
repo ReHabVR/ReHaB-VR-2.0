@@ -91,6 +91,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   grab: {fileID: 7232891604144641736}
+  rb: {fileID: 4390218206170409793}
+  col: {fileID: 4458388748107572951}
 --- !u!33 &2001693580808294130
 MeshFilter:
   m_ObjectHideFlags: 0

@@ -51,6 +51,8 @@ MonoBehaviour:
   redCylinder: {fileID: 1325823916058010012}
   blueCylinder: {fileID: 7875685151217117885}
   requiredStabilityTime: 2
+  maxVelocityThreshold: 1
+  maxAngularVelocityThreshold: 1
 --- !u!114 &1706440053156271263
 MonoBehaviour:
   m_ObjectHideFlags: 0

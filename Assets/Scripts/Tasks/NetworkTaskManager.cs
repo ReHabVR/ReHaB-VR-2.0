@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class NetworkTaskManager : NetworkBehaviour
 {
-
     public enum ECurrentTask
     {
         None = 0,
@@ -22,8 +21,9 @@ public class NetworkTaskManager : NetworkBehaviour
     public List<NetworkObject> taskPrefabs = new();
     public List<Transform> taskSpawnPositions = new();
 
-    private ECurrentTask currentTask = ECurrentTask.None;
-    private NetworkObject spawnedObjectReference;
+    private ECurrentTask _currentTask = ECurrentTask.None;
+    private NetworkObject _spawnedObjectReference;
+    private IMinigameManager _currentTaskManager;
 
     public static NetworkTaskManager Instance { get; private set; }
 
@@ -40,7 +40,7 @@ public class NetworkTaskManager : NetworkBehaviour
         }
     }
 
-    public ECurrentTask GetCurrentTask() => currentTask;
+    public ECurrentTask GetCurrentTask() => _currentTask;
 
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     public void RPC_ToggleTask(int id)
@@ -82,7 +82,7 @@ public class NetworkTaskManager : NetworkBehaviour
     [Rpc(RpcSources.StateAuthority, RpcTargets.All)]
     private void RPC_TaskStarted(ECurrentTask newTask)
     {
-        currentTask = newTask;
+        _currentTask = newTask;
         OnTaskStarted?.Invoke();
     }
 
@@ -90,7 +90,7 @@ public class NetworkTaskManager : NetworkBehaviour
     private void RPC_TaskStopped()
     {
         OnTaskStopped?.Invoke();
-        currentTask = ECurrentTask.None;
+        _currentTask = ECurrentTask.None;
     }
 
     private void SpawnTask(NetworkObject objectToSpawn, Transform spawnPoint)
@@ -107,38 +107,54 @@ public class NetworkTaskManager : NetworkBehaviour
             return;
         }
 
-        spawnedObjectReference = Runner.Spawn(
+        _spawnedObjectReference = Runner.Spawn(
             objectToSpawn, 
             spawnPoint.position,
             spawnPoint.rotation
         );
+
+        if (_spawnedObjectReference == null)
+        {
+            Debug.LogError("Unable to spawn task!");
+            return;
+        }
+
+        _currentTaskManager = _spawnedObjectReference.GetComponent<IMinigameManager>();
+        if (_currentTaskManager != null)
+        {
+            _currentTaskManager.OnMove += HandleMove;
+            _currentTaskManager.OnCorrectMove += HandleCorrectMove;
+        }
+
     }
 
     private void DeleteCurrentTask()
     {
-        if (spawnedObjectReference != null) 
+        if (_currentTaskManager != null)
         {
-            if (Runner.IsServer)
-            {
-                Runner.Despawn(spawnedObjectReference);
-            }
+            _currentTaskManager.OnMove -= HandleMove;
+            _currentTaskManager.OnCorrectMove -= HandleCorrectMove;
+            _currentTaskManager = null;
+        }
 
-            spawnedObjectReference = null;
+        if (_spawnedObjectReference != null && Runner.IsServer)
+        {
+            Runner.Despawn(_spawnedObjectReference);
+            _spawnedObjectReference = null;
         }
     }
 
-    private void IncrementGrabCount() => OnMove?.Invoke();
-    private void IncrementCorrectMovesCount() => OnCorrectMove?.Invoke();
-
+    private void HandleMove() => OnMove?.Invoke();
+    private void HandleCorrectMove() => OnCorrectMove?.Invoke();
     
     #region DEBUG
     public void DebugMove(bool correctMove)
+    {
+        HandleMove();
+        if (correctMove)
         {
-            IncrementGrabCount();
-            if (correctMove)
-            {
-                IncrementCorrectMovesCount();
-            }
+            HandleCorrectMove();
         }
+    }
     #endregion
 }

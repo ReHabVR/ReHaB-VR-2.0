@@ -7,11 +7,9 @@ using UnityEngine;
 
 public class PoseLogger : MonoBehaviour
 {
-    [SerializeField] 
-    private ExternalPoseProvider poseProvider;
-
     private NetworkTaskManager _taskman;
     private NetworkObject _netObj;
+    private NetworkRunner _runner;
 
     private readonly List<string> _buffer = new();
 
@@ -24,31 +22,20 @@ public class PoseLogger : MonoBehaviour
     private string _path;
     private string _header;
     
-    private bool _isLocal;
     private bool _taskStarted;
+    
+    public bool IsLocal { get; set; }
 
-    private void Start()
+    public void Initialize(NetworkTaskManager taskManager, bool isLocal)
     {
-        _taskman = NetworkTaskManager.Instance;
-        if (_taskman == null)
-        {
-            Debug.LogError("NetworkTaskManager not found!");
-            return;
-        }
-
         _netObj = GetComponentInParent<NetworkObject>();
-        //TODO: for testing purposes only, remove once confirming logging works everywhere
-        //_isLocal = _netObj != null && _netObj.HasInputAuthority;
-        _isLocal = true; 
+        _runner = _netObj.Runner;
 
-        if (!_isLocal || poseProvider == null)
-        {
-            return;
-        }
+        IsLocal = isLocal;
+        _taskman = taskManager;
 
         _taskman.OnTaskStarted += OnTaskStarted;
         _taskman.OnTaskStopped += OnTaskStopped;
-
     }
 
     private void OnDestroy()
@@ -63,34 +50,30 @@ public class PoseLogger : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (_isLocal && _taskStarted)
+        if (_taskStarted && Time.time >= _nextFlushTime)
         {
-            RecordPose();
-            if (Time.time >= _nextFlushTime)
-            {
-                FlushBuffer();
-                _nextFlushTime = Time.time + _flushInterval;
-            }
+            FlushBuffer();
+            _nextFlushTime = Time.time + _flushInterval;
         }
     }
 
-    private void RecordPose()
+    public void RecordPose(PoseData pose)
     {
-        poseProvider.headBridge.GetLocalPositionAndRotation(out Vector3 head, out Quaternion headRot);
-        poseProvider.lhandBridge.GetLocalPositionAndRotation(out Vector3 lhand, out Quaternion lhandRot);
-        poseProvider.rhandBridge.GetLocalPositionAndRotation(out Vector3 rhand, out Quaternion rhandRot);
-        
-        float gripL = poseProvider.GripL;
-        float gripR = poseProvider.GripR;
+        if (!_taskStarted) // Do not log pose outside of tasks
+        {
+            return;
+        }
 
-        float timestamp = Time.time - _startTime;
+        int tick = _runner.Tick.Raw; // raw frame number
+        float renderTime = _runner.LocalRenderTime;
+        float taskTime = Time.time - _startTime;
 
         string row = string.Join(",",
-            FormatFloat(timestamp),
-            FormatVector3(head), FormatQuaternion(headRot),
-            FormatVector3(lhand), FormatQuaternion(lhandRot),
-            FormatVector3(rhand), FormatQuaternion(rhandRot),
-            FormatFloat(gripL), FormatFloat(gripR)
+            tick, FormatFloat(renderTime), FormatFloat(taskTime),
+            FormatVector3(pose.headPos), FormatQuaternion(pose.headRot),
+            FormatVector3(pose.lhandPos), FormatQuaternion(pose.lhandRot),
+            FormatVector3(pose.rhandPos), FormatQuaternion(pose.rhandRot),
+            FormatFloat(pose.gripL), FormatFloat(pose.gripR)
         );
 
         _buffer.Add(row);
@@ -115,13 +98,15 @@ public class PoseLogger : MonoBehaviour
         _taskStarted = true;
 
         string playerID = _netObj.InputAuthority.RawEncoded.ToString();
-        string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_PoseLog.csv";
+        string peerType = IsLocal ? "Local" : "Remote";
+        string fname = $"{DateTime.Now:yyyy-MM-dd_HH-mm-ss}_Player{playerID}_{peerType}_PoseLog.csv";
 
         _path = Path.Combine(Application.persistentDataPath, fname);
-        _header = "time,head_x,head_y,head_z,head_qx,head_qy,head_qz,head_qw," +
-                  "lhand_x,lhand_y,lhand_z,lhand_qx,lhand_qy,lhand_qz,lhand_qw," +
-                  "rhand_x,rhand_y,rhand_z,rhand_qx,rhand_qy,rhand_qz,rhand_qw" +
-                  "grip_l, grip_r";
+        _header = "tick,render_time,task_time," + 
+                "head_x,head_y,head_z,head_qx,head_qy,head_qz,head_qw," +
+                "lhand_x,lhand_y,lhand_z,lhand_qx,lhand_qy,lhand_qz,lhand_qw," +
+                "rhand_x,rhand_y,rhand_z,rhand_qx,rhand_qy,rhand_qz,rhand_qw," +
+                "grip_l,grip_r";
 
         // Write header immediately
         File.WriteAllText(_path, _header + Environment.NewLine);

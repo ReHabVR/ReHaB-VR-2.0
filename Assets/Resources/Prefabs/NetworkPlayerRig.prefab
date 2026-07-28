@@ -94,6 +94,7 @@ MonoBehaviour:
   handAnimator: {fileID: 1234631036693041730}
   compensationManager: {fileID: 5411393470500104065}
   poseBuffer: {fileID: 3688803735217105646}
+  poseLogger: {fileID: 3554515778949706491}
   XRHead: {fileID: 27148098970488338}
   XRLeftHand: {fileID: 27148097521359858}
   XRRightHand: {fileID: 27148098549569796}
@@ -1995,7 +1996,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 254fdbcb93775bd4a8f61bf36c91f418, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poseProvider: {fileID: 116082068721429891}
   _flushInterval: 5
 --- !u!1 &2511340750567777552
 GameObject:

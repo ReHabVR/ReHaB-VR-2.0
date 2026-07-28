@@ -33,6 +33,8 @@ public class NetworkPoseBridge : NetworkBehaviour
     private CompensationManager compensationManager;
     [SerializeField]
     private PlayerPoseBuffer poseBuffer;
+    [SerializeField]
+    private PoseLogger poseLogger;
 
     [Header("XR Controllers")]
     [SerializeField]
@@ -68,6 +70,7 @@ public class NetworkPoseBridge : NetworkBehaviour
     private InputDeviceCharacteristics controllerL;
     [SerializeField]
     private InputDeviceCharacteristics controllerR;
+
     private static readonly List<InputDevice> _devices = new();
     private InputDevice _targetDeviceL;
     private InputDevice _targetDeviceR;
@@ -82,7 +85,7 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (Object.HasStateAuthority)
+        if (HasStateAuthority)
         {
             (NetworkHandResolver.Instance as NetworkHandResolver).RegisterBridge(Object.InputAuthority, this);
         }
@@ -105,6 +108,7 @@ public class NetworkPoseBridge : NetworkBehaviour
         TryGetDevices();
     #endif
 
+        poseLogger.Initialize(NetworkTaskManager.Instance, HasInputAuthority);
         IsReady = true;
     }
 
@@ -152,19 +156,27 @@ public class NetworkPoseBridge : NetworkBehaviour
             return;
         }
 
-        // _localPose = local motion for the player
-        // NetworkPose = pose replicated to other peers (what the server "sees")
-        // renderedPose = what the client sees in VR
+        // _localPose = local motion for the player (from HMD trackers)
+        // NetworkPose = pose replicated to other peers (latest pose received over the network)
+        // renderedPose = what the client sees in VR after compensations
         // For local movement, use _localPose - for the other player, renderedPose is NetworkPose with compensation
 
-        if (HasInputAuthority)
+        PoseData logPose;
+        if (HasInputAuthority) // Local player
         {
+            logPose = _localPose;
             ApplyPose(_localPose);
         }
-        else // Remote client
+        else // Remote peer
         {
             PoseData renderedPose = compensationManager.ApplyCompensation(NetworkPose, Runner.LocalRenderTime);
+            logPose = renderedPose;
             ApplyPose(renderedPose);
+        }
+
+        if (!HasStateAuthority) // Do not log pose on server
+        {
+            poseLogger.RecordPose(logPose);
         }
     }
 
