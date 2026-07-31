@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 108257489013706171}
   - component: {fileID: 5388242517825825886}
+  - component: {fileID: 902914062390347366}
   - component: {fileID: 9149316700764233288}
   - component: {fileID: 993496054505282797}
   - component: {fileID: 967499303339751702}
@@ -58,9 +59,27 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
+  - {fileID: 902914062390347366}
   - {fileID: 1849769600488080372}
   - {fileID: 6305790572847401420}
   ForceRemoteRenderTimeframe: 0
+--- !u!114 &902914062390347366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1331455201270447300}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 158639473, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _stateAuthorityChangeErrorCorrectionDelta: 0
+  SyncScale: 0
+  SyncParent: 0
+  _autoAOIOverride: 1
+  DisableSharedModeInterpolation: 0
 --- !u!33 &9149316700764233288
 MeshFilter:
   m_ObjectHideFlags: 0

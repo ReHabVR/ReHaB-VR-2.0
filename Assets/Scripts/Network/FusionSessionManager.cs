@@ -45,9 +45,9 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [HideInInspector]
     public bool startAsHost = false;
 
-    [Header("Simulated Network Latency")]
-    [Range(0, 1000), Tooltip("End-to-end latency. For RTT, multiply by 2.")]
-    public uint endToEndDelay = 100;
+    //[Header("Simulated Network Latency")]
+    //[Range(0, 1000), Tooltip("End-to-end latency. For RTT, multiply by 2.")]
+    //public uint endToEndDelay = 100;
 
     [Header("Session Settings")]
     public EPlayerRole localPlayerRole = EPlayerRole.Player;
@@ -138,7 +138,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         }
         Debug.Log($"[Fusion] runner.ProvideInput: {_sessionRunner.ProvideInput}, runner.Mode={_sessionRunner.GameMode}");
         
-        ApplyNetworkConditions();
+        //ApplyNetworkConditions();
         StartGameArgs args = new()
         {
             GameMode = _isHost ? GameMode.Server : GameMode.Client,
@@ -448,7 +448,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             hostAddress = config.serverIP;
             port = (ushort)config.serverPort;
             localPlayerRole = config.joinAsTrainer ? EPlayerRole.Trainer : EPlayerRole.Player;
-            endToEndDelay = (uint)Math.Max(0, config.endToEndDelay);
+            //endToEndDelay = (uint)Math.Max(0, config.endToEndDelay);
         }
         else
         {
@@ -460,8 +460,16 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     #endif
     }
 
+    /*
     private void ApplyNetworkConditions()
     {
+        NetworkProjectConfig config = _sessionRunner.Config;
+        if (config == null)
+        {
+            Debug.LogError("Unable to access NetworkProjectConfig!");
+            return;
+        }
+
         NetworkSimulationConfiguration nc = _sessionRunner.Config.NetworkConditions;
         if (nc == null)
         {
@@ -474,6 +482,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         nc.DelayMax = endToEndDelay;
         nc.AdditionalJitter = 0; // no jitter; keep latency relatively stable
     }
+    */
 
     private void HandleCommand(string command)
     {
@@ -489,11 +498,13 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         NetworkTaskManager _taskman = NetworkTaskManager.Instance;
         switch (cmd)
         {
+            /*
             case "lat":
             {
                 Debug.Log($"[SERVER] Latency: {endToEndDelay} ms (RTT = {endToEndDelay * 2} ms)");
                 break;
             }
+            */
             
             case "pred":
             {
