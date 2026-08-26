@@ -45,6 +45,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [HideInInspector]
     public bool startAsHost = false;
 
+    //DEPRECATED - now set directly in config SO
     //[Header("Simulated Network Latency")]
     //[Range(0, 1000), Tooltip("End-to-end latency. For RTT, multiply by 2.")]
     //public uint endToEndDelay = 100;
@@ -60,23 +61,17 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField]
     private NetworkObject trainerPrefab;
     [SerializeField]
-    private NetworkObject playerState;
+    private NetworkObject sessionExperimentControllerPrefab;
     [SerializeField]
-    private NetworkObject latencyControllerPrefab;
+    private ServerConsoleHandler _consoleHandler;
 
     private NetworkRunner _sessionRunner;
-    
     private NetworkSceneManagerDefault _sceneManager;
     private NetworkPoseBridge _localPlayerBridge;
 
     [HideInInspector]
     public SessionExperimentController experimentController;
-
-
-#if UNITY_SERVER
-    private readonly ConcurrentQueue<string> _consoleQueue = new();
-    private int _hasPendingCommands_Interlocked = 0; // 0 = false, 1 = true; atomic
-#endif
+    
 
     private readonly List<PlayerRef> _activePlayers = new();
     private readonly Dictionary<PlayerRef, List<NetworkObject>> _playerObjects = new();
@@ -84,7 +79,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     private readonly Queue<EPlayerRole> _pendingRoles = new();
 
     private bool _sceneLoaded = false;
-
+    
     public static FusionSessionManager Instance { get; private set; }
 
     public ECompensationMode CurrentCompensationMode
@@ -154,12 +149,15 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
         if (result.Ok)
         {
         #if UNITY_SERVER
-            StartConsoleHandler();
+            _consoleHandler.StartConsoleHandler();
         #endif
-
             if (_isHost) 
             {
                 Debug.Log($"[Fusion] Dedicated server started on {hostAddress}:{port}.");
+            }
+            else 
+            {
+                Debug.Log($"[Fusion] Connected to server ({hostAddress}:{port}).");
             }
         }
         else
@@ -167,37 +165,15 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             Debug.LogError("[Fusion] Connection failed: " + result.ShutdownReason);
         }
     }
-    
-#if UNITY_SERVER
-    private void Update()
-    {
-        // Only enter if signaled
-        if (Interlocked.Exchange(ref _hasPendingCommands_Interlocked, 0) == 1)
-        {
-            while (_consoleQueue.TryDequeue(out string command))
-            {
-                HandleCommand(command);
-            }
-        }
-    }
-#endif
 
-    private void StartConsoleHandler()
-    {
-    #if UNITY_SERVER
-        Task.Run(() =>
+    public void SetLocalBridge(NetworkPoseBridge bridge) 
+    { 
+        // Only allow setting NetworkBridge reference if LocalPlayer matches InputAuthority
+        // (ie. on the same client)
+        if (bridge.Object.InputAuthority == _sessionRunner.LocalPlayer)
         {
-            while (true)
-            {
-                string input = Console.ReadLine();
-                if (!string.IsNullOrWhiteSpace(input))
-                {
-                    _consoleQueue.Enqueue(input.Trim());
-                    Interlocked.Exchange(ref _hasPendingCommands_Interlocked, 1);
-                }
-            }
-        });
-    #endif
+            _localPlayerBridge = bridge;
+        }
     }
     
 #region INetworkRunnerCallbacks
@@ -343,7 +319,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     {
         if (_sessionRunner.IsServer && experimentController == null)
         {
-            NetworkObject obj = _sessionRunner.Spawn(latencyControllerPrefab);
+            NetworkObject obj = _sessionRunner.Spawn(sessionExperimentControllerPrefab);
             experimentController = obj.GetComponent<SessionExperimentController>();
         }
 
@@ -371,24 +347,14 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     }
     #endregion
 
-    public void SetLocalBridge(NetworkPoseBridge bridge) 
-    { 
-        // Only allow setting NetworkBridge reference if LocalPlayer matches InputAuthority
-        // (ie. on the same client)
-        if (bridge.Object.InputAuthority == _sessionRunner.LocalPlayer)
-        {
-            _localPlayerBridge = bridge;
-        }
-    }
-
     private bool ResolveHost()
     {
 #if DEDICATED_SERVER
-        return true;
+        return true; // Server is always the host
 #elif HMD_CLIENT
-        return false;
+        return false; // HMD clients can never be the host
 #elif UNITY_EDITOR
-        return startAsHost;
+        return startAsHost; // Determine whether editor acts as server or a client
 #else
         return false;
 #endif
@@ -448,7 +414,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             hostAddress = config.serverIP;
             port = (ushort)config.serverPort;
             localPlayerRole = config.joinAsTrainer ? EPlayerRole.Trainer : EPlayerRole.Player;
-            //endToEndDelay = (uint)Math.Max(0, config.endToEndDelay);
         }
         else
         {
@@ -457,89 +422,6 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     #else
         // HMD builds use whatever is set in Inspector
         return;
-    #endif
-    }
-
-    /*
-    private void ApplyNetworkConditions()
-    {
-        NetworkProjectConfig config = _sessionRunner.Config;
-        if (config == null)
-        {
-            Debug.LogError("Unable to access NetworkProjectConfig!");
-            return;
-        }
-
-        NetworkSimulationConfiguration nc = _sessionRunner.Config.NetworkConditions;
-        if (nc == null)
-        {
-            Debug.LogError("Unable to access NetworkSimulationConfiguration!");
-            return;
-        }
-
-        nc.Enabled = endToEndDelay > 0;
-        nc.DelayMin = endToEndDelay;
-        nc.DelayMax = endToEndDelay;
-        nc.AdditionalJitter = 0; // no jitter; keep latency relatively stable
-    }
-    */
-
-    private void HandleCommand(string command)
-    {
-    #if UNITY_SERVER
-        if (string.IsNullOrWhiteSpace(command))
-        {
-            return;
-        }
-
-        string[] parts = command.Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        string cmd = parts[0].ToLower();
-
-        NetworkTaskManager _taskman = NetworkTaskManager.Instance;
-        switch (cmd)
-        {
-            /*
-            case "lat":
-            {
-                Debug.Log($"[SERVER] Latency: {endToEndDelay} ms (RTT = {endToEndDelay * 2} ms)");
-                break;
-            }
-            */
-            
-            case "pred":
-            {
-                if (parts.Length > 1)
-                {
-                    if (int.TryParse(parts[1], out int predMode))
-                    {
-                        experimentController.CurrentCompensationMode = (ECompensationMode)Mathf.Clamp(predMode, 0, 4);
-                    }
-                }
-
-                Debug.Log($"[SERVER] Prediction mode: {experimentController.CurrentCompensationMode}");
-                break;
-            }
-
-            case "task":
-            {
-                if (parts.Length > 1)
-                {
-                    if (int.TryParse(parts[1], out int taskType))
-                    {
-                        _taskman.RPC_ToggleTask(taskType);
-                    }
-                }
-
-                Debug.Log($"[SERVER] Current task: {_taskman.GetCurrentTask()}");
-                break;
-            }
-
-            default:
-            {
-                Debug.Log($"[SERVER] Unknown command: {cmd}");
-                break;
-            }
-        }
     #endif
     }
 }

@@ -114,7 +114,7 @@ public class NetworkPoseBridge : NetworkBehaviour
 
     public override void Despawned(NetworkRunner runner, bool hasState)
     {
-        if (Object.HasStateAuthority)
+        if (HasStateAuthority)
         {
             (NetworkHandResolver.Instance as NetworkHandResolver).UnregisterBridge(Object.InputAuthority);
         }

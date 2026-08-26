@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 629959403}
   - component: {fileID: 629959404}
+  - component: {fileID: 629959405}
   m_Layer: 0
   m_Name: NetworkHelpers
   m_TagString: Untagged
@@ -166,6 +167,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89099a32f6d43a04e921999803f2a89c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &629959405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 629959402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32be350a7d37f4b43b3ac52d75e3d417, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1167505156
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,18 +211,15 @@ MonoBehaviour:
   hostAddress: 192.168.50.146
   port: 27015
   startAsHost: 0
-  simulatedLatency: 100
-  simulatedJitter: 0
   localPlayerRole: 0
   compensationMode: 0
   playerPrefab: {fileID: 4051770860812974642, guid: 529b60bdd4c3cd741b60661d348de01d,
     type: 3}
   trainerPrefab: {fileID: 4051770860812974642, guid: fba387262495c1e4da29fc005f433291,
     type: 3}
-  playerState: {fileID: 5102999956502205173, guid: faa8d2fcbca07354e87216e688828779,
+  sessionExperimentControllerPrefab: {fileID: 6992223513944181068, guid: 88c1bfd5ed6cb324398915f1b110427a,
     type: 3}
-  latencyControllerPrefab: {fileID: 6992223513944181068, guid: 88c1bfd5ed6cb324398915f1b110427a,
-    type: 3}
+  _consoleHandler: {fileID: 629959405}
   experimentController: {fileID: 0}
 --- !u!4 &1167505159
 Transform:
