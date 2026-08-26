@@ -56,11 +56,6 @@ public class SortingSetup : NetworkBehaviour
             }
         }
 
-        foreach(NetworkObject no in SpawnedBalls)
-        {
-            no.transform.SetParent(gameObject.transform, true);
-        }
-
         OnBallsSpawned?.Invoke();
     }
 }

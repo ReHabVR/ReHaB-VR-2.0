@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 108257489013706171}
   - component: {fileID: 5388242517825825886}
-  - component: {fileID: 902914062390347366}
+  - component: {fileID: 6263038696299515978}
   - component: {fileID: 9149316700764233288}
   - component: {fileID: 993496054505282797}
   - component: {fileID: 967499303339751702}
@@ -59,11 +59,11 @@ MonoBehaviour:
   Flags: 262145
   NestedObjects: []
   NetworkedBehaviours:
-  - {fileID: 902914062390347366}
+  - {fileID: 6263038696299515978}
   - {fileID: 1849769600488080372}
   - {fileID: 6305790572847401420}
   ForceRemoteRenderTimeframe: 0
---- !u!114 &902914062390347366
+--- !u!114 &6263038696299515978
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
