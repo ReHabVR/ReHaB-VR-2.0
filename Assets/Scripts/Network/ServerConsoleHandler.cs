@@ -7,10 +7,7 @@ using UnityEngine;
 
 public class ServerConsoleHandler : MonoBehaviour
 {
-    private NetworkTaskManager _taskman;
-    
-    private SessionExperimentController _expController;
-
+#if UNITY_SERVER
     private readonly ConcurrentQueue<string> _consoleQueue = new();
     private int _hasPendingCommands_Interlocked;
 
@@ -29,26 +26,6 @@ public class ServerConsoleHandler : MonoBehaviour
     public void StartConsoleHandler()
     {
         Debug.Log("[SERVER] Starting console handler.");
-
-        if (NetworkTaskManager.Instance == null)
-        {
-            Debug.LogError("[SERVER] Failed to start console handler: NetworkTaskManager not found!");
-            return;
-        }
-        _taskman = NetworkTaskManager.Instance;
-
-        if (FusionSessionManager.Instance == null)
-        {
-            Debug.LogError("[SERVER] Failed to start console handler: FusionSessionManager not found!");
-            return;
-        }
-
-        if (FusionSessionManager.Instance.experimentController == null)
-        {
-            Debug.LogError("[SERVER] Failed to start console handler: SessionExperimentController not found!");
-        }
-        _expController = FusionSessionManager.Instance.experimentController;
-
         Task.Run(() =>
         {
             while (true)
@@ -77,6 +54,7 @@ public class ServerConsoleHandler : MonoBehaviour
         {
             case "pred":
             {
+                SessionExperimentController _expController = FusionSessionManager.Instance.experimentController;
                 if (parts.Length > 1)
                 {
                     if (int.TryParse(parts[1], out int predMode))
@@ -91,6 +69,7 @@ public class ServerConsoleHandler : MonoBehaviour
 
             case "task":
             {
+                NetworkTaskManager _taskman = NetworkTaskManager.Instance;
                 if (parts.Length > 1)
                 {
                     if (int.TryParse(parts[1], out int taskType))
@@ -134,4 +113,5 @@ public class ServerConsoleHandler : MonoBehaviour
         nc.AdditionalJitter = 0; // no jitter; keep latency relatively stable
     }
     */
+#endif
 }

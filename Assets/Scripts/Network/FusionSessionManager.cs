@@ -14,7 +14,8 @@ using System.Threading.Tasks;
 public enum EPlayerRole
 {
     Player,
-    Trainer
+    Trainer,
+    Spectator
 }
 
 public enum ECompensationMode
@@ -45,14 +46,18 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
     [HideInInspector]
     public bool startAsHost = false;
 
+
     //DEPRECATED - now set directly in config SO
     //[Header("Simulated Network Latency")]
     //[Range(0, 1000), Tooltip("End-to-end latency. For RTT, multiply by 2.")]
     //public uint endToEndDelay = 100;
 
-    [Header("Session Settings")]
+    [Header("Player Settings")]
     public EPlayerRole localPlayerRole = EPlayerRole.Player;
+    [Tooltip("Editor only. Joining as spectator does not spawn a player avatar.")]
+    public bool joinAsSpectator = true;
 
+    [Header("Session Settings")]
     public ECompensationMode compensationMode = ECompensationMode.None;
 
     [Header("Object References")]
@@ -275,6 +280,14 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
 
         _playerRoles[player] = role;
 
+        #if UNITY_EDITOR
+        if (joinAsSpectator)
+        {
+            Debug.Log($"[SERVER] Player {player} joined as spectator.");
+            return;
+        }
+        #endif
+
         StartCoroutine(
             SpawnDeferred(player, _activePlayers.IndexOf(player))
         );
@@ -301,7 +314,7 @@ public class FusionSessionManager : MonoBehaviour, INetworkRunnerCallbacks
             _activePlayers.Remove(player);
             _playerRoles.Remove(player);
 
-            Debug.Log($"[SessionManager] Player {player} left.");
+            Debug.Log($"[SERVER] Player {player} left.");
         }
     }
 
