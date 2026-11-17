@@ -76,6 +76,8 @@ public class DeadReckoningCompensationMethod : ICompensationMethod
             }
 
             _predictedPose = latestSample.pose;
+            ExtrapolatePose(ref _predictedPose, Mathf.Max(renderTime - latestSample.timestamp, 0f)); 
+            
             _lastProcessedSample = latestSample;
             _blendTimer = 0f;
             _isBlending = true;

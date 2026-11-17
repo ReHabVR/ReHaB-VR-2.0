@@ -19,13 +19,13 @@ public class NetworkAnimationController : NetworkBehaviour
     [SerializeField]
     private Animator animator;
 
-    [SerializeField] 
+    [SerializeField]
     private AnimationCommandSource currentAdapter;
 
-    [Networked] 
+    [Networked, HideInInspector]
     public string ClipName { get; set; }
 
-    [Networked] 
+    [Networked, HideInInspector] 
     public int PlayId { get; set; }
 
     private int _lastPlayedId = -1;
@@ -45,6 +45,34 @@ public class NetworkAnimationController : NetworkBehaviour
     {
     }
 
+    private void OnGUI()
+    {
+        if (!Object || !Object.IsValid || !HasInputAuthority)
+        {
+            return;
+        }
+
+        GUILayout.BeginArea(new Rect(20, 20, 200, 200));
+
+        GUILayout.Label("Animations");
+        if (GUILayout.Button("Movement"))
+        {
+            RPC_RequestPlay("Movement");
+        }
+
+        if (GUILayout.Button("Rest"))
+        {
+            RPC_RequestPlay("Rest");
+        }
+
+        if (GUILayout.Button("Idle"))
+        {
+            RPC_RequestPlay("Idle");
+        }
+
+        GUILayout.EndArea();
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (!Object || !Object.IsValid || Runner == null)
@@ -54,7 +82,7 @@ public class NetworkAnimationController : NetworkBehaviour
 
         if (Object.HasStateAuthority)
         {
-            if (currentAdapter && currentAdapter.TryGetCommand(out var cmd))
+            if (currentAdapter && currentAdapter.TryGetCommand(out AnimationCommand cmd))
             {
                 Debug.Log($"Command from adapter: {cmd.ClipKey}");
                 RequestPlay(cmd.ClipKey);
@@ -76,7 +104,6 @@ public class NetworkAnimationController : NetworkBehaviour
         if (string.IsNullOrEmpty(ClipName))
             return;
 
-        //animator.Play(_cachedClipHash, DEFAULT_LAYER, 0.0f);
         animator.Play(ClipName, DEFAULT_LAYER, 0.0f);
         _lastPlayedId = PlayId;
     }
@@ -88,5 +115,11 @@ public class NetworkAnimationController : NetworkBehaviour
             ClipName = clipName;
             PlayId++;
         }
+    }
+
+    [Rpc(RpcSources.InputAuthority, RpcTargets.StateAuthority)]
+    public void RPC_RequestPlay(string clipName)
+    {
+        RequestPlay(clipName);
     }
 }

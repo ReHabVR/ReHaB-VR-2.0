@@ -106,6 +106,7 @@ public class PoseKalmanFilter
     }
 
     public Vector3 GetPosition() => new(X.position, Y.position, Z.position);
+    public Vector3 GetVelocity() => new(X.velocity, Y.velocity, Z.velocity);
 
     public void Reset(Vector3 startPos)
     {
